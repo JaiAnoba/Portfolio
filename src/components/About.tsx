@@ -37,7 +37,7 @@ export default function About() {
         <div className="about-socials">
           {SOCIALS.map((s) => (
             <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name}>
-              <img src={s.icon} alt="" width={38} height={38} />
+              <img src={s.icon} alt="" width={34} height={34} />
             </a>
           ))}
         </div>
@@ -45,9 +45,12 @@ export default function About() {
 
       <div className="about-portrait-wrap">
         <img
-          src="/images/about-portrait.jpg"
+          src="/images/about-portrait.png"
           alt="Jamaica Anuba portrait"
           className="about-portrait"
+          width={859}
+          height={1024}
+          decoding="async"
         />
       </div>
     </section>
