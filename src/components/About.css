@@ -3,50 +3,69 @@
   display: grid;
   grid-template-columns: 1fr 0.7fr;
   gap: 3rem;
-  padding: 0 4rem 5rem 6rem;
+  padding: 0 4rem 2rem 6rem;
   min-height: 700px;
   align-items: center;
+  isolation: isolate;
 }
 
-.about-glow {
-  background: var(--red-dark);
-  opacity: 0.95;
+/* =========================
+   BACKGROUND GLOW LAYER
+========================= */
+
+/* Left glow */
+.about::before {
+  content: "";
   position: absolute;
+  width: 360px;
+  height: 500px;
+  left: -18rem;
+  top: -15rem;
+
+  background: var(--red-dark);
+  opacity: 0.8;
+  filter: blur(130px);
+  border-radius: 50%;
+
   z-index: 0;
-  mix-blend-mode: screen;
+  pointer-events: none;
 }
 
-/* Right: behind the portrait */
-.about-glow-portrait {
+/* Right glow */
+.about::after {
+  content: "";
+  position: absolute;
   width: 540px;
   height: 310px;
   right: 2%;
   top: 6%;
+
+  background: var(--red-dark);
+  opacity: 0.85;
   filter: blur(150px);
+  border-radius: 50%;
+
+  z-index: 0;
+  pointer-events: none;
 }
+
+/* =========================
+   CONTENT
+========================= */
 
 .about-content {
   position: relative;
   z-index: 2;
   max-width: 669px;
-  isolation: isolate;
-}
-
-.about-glow-name {
-  width: 360px;
-  height: 400px;
-  left: -25rem;
-  top: -15rem;
-  filter: blur(130px);
 }
 
 .about-location {
   margin-bottom: 0.5rem;
-  font-size: clamp(1rem, 2vw, 1.5rem) !important; 
+  font-size: clamp(1rem, 2vw, 1.5rem) !important;
 }
 
 .about-heading {
-  font-size: clamp(2.5rem, 6vw, 6rem);
+  font-size: clamp(3rem, 7vw, 6rem) !important;
   margin-bottom: 2.5rem;
 }
 
@@ -56,7 +75,7 @@
 }
 
 .about-text {
-  font-size: clamp(0.93rem, 1.5vw, 0.95rem);
+  font-size: clamp(0.93rem, 1.5vw, 0.8rem);
   line-height: 1.375;
   margin-bottom: 1.25rem;
 }
@@ -75,29 +94,40 @@
   opacity: 0.75;
 }
 
+/* =========================
+   PORTRAIT
+========================= */
+
 .about-portrait-wrap {
   position: relative;
   z-index: 2;
+
   justify-self: end;
   width: 100%;
   max-width: min(859px, 100%);
+
   overflow: hidden;
   pointer-events: none;
   background: transparent;
-  transform: scaleX(-1);
 }
 
 .about-portrait {
   display: block;
-  width: 100%;
+  width: 108%;
+  max-width: none;
   height: auto;
-  max-width: 859px;
+
   object-fit: contain;
   object-position: center top;
   image-rendering: auto;
+
   mask-image: linear-gradient(to bottom, #000 44%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, #000 44%, transparent 100%);
 }
+
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media (max-width: 1024px) {
   .about {
@@ -107,22 +137,20 @@
 
   .about-portrait-wrap {
     order: -1;
-  }
-
-  .about-portrait-wrap {
     justify-self: center;
     max-width: 480px;
   }
 
-  .about-glow-name {
+  /* Adjust left glow */
+  .about::before {
     left: -1rem;
     top: 3rem;
     width: 260px;
     height: 220px;
-    z-index: 0;
   }
 
-  .about-glow-portrait {
+  /* Adjust right glow */
+  .about::after {
     right: 50%;
     top: 0;
     transform: translateX(50%);

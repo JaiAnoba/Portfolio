@@ -12,7 +12,7 @@
   height: auto;
   min-height: 0;
   max-height: none;
-  padding-bottom: clamp(1.5rem, 4vh, 0);
+  padding-bottom: clamp(0px, 2vh, 1rem); 
   /* border: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
@@ -155,6 +155,9 @@
   padding: 0 var(--hero-pad-x);
   pointer-events: none;
   transform: translateY(-7.5rem);
+  /* REDUCED SPACE FIX: Cancels out the blank physical room 
+     left behind by the negative visual transform */
+  margin-bottom: -7.5rem; 
 }
 
 .hero-role {
@@ -217,12 +220,14 @@
 
   .hero-stage {
     padding-top: clamp(1.5rem, 5vw, 4.5rem);
-    padding-bottom: 0.5rem;
+    padding-bottom: 0px; /* REDUCED SPACE FIX: Strip out staging padding */
   }
 
   .hero-roles {
     margin-top: 0;
     transform: translateY(clamp(-10rem, -8vw, -7.5rem));
+    /* REDUCED SPACE FIX: Matches the responsive dynamic shift on desktop */
+    margin-bottom: calc(-1 * clamp(7.5rem, 8vw, 10rem)); 
   }
 }
 
@@ -236,7 +241,7 @@
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .hero {
-    padding-bottom: 1.25rem;
+    padding-bottom: 0px; /* REDUCED SPACE FIX: Remove bottom padding blocks */
   }
 
   .hero-location {
@@ -279,6 +284,8 @@
 
   .hero-roles {
     transform: translateY(-4.5rem);
+    /* REDUCED SPACE FIX: Pulls layout bounding box back up on mobile screens */
+    margin-bottom: -4.5rem; 
   }
 }
 
@@ -302,5 +309,7 @@
 
   .hero-roles {
     transform: translateY(-3.75rem);
+    /* REDUCED SPACE FIX: Final layout sync for very tight mobile displays */
+    margin-bottom: -3.75rem; 
   }
-}
+} 
