@@ -18,9 +18,9 @@
   content: "";
   position: absolute;
   width: 360px;
-  height: 500px;
+  height: 400px;
   left: -18rem;
-  top: -15rem;
+  top: -10rem;
 
   background: var(--red-dark);
   opacity: 0.8;
