@@ -2,7 +2,6 @@
   position: relative;
   padding: 2rem 2rem 3rem;
   text-align: center;
-  /* border: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 .services-sub {
@@ -135,9 +134,9 @@
 .services-carousel-viewport {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 430px; /* ↑ was 400px, give cards more vertical room */
   z-index: 2;
-  overflow: hidden;
+  overflow: visible; /* ← was hidden; allow card 3 to be visible outside tight bounds */
 }
 
 .services-carousel-track {
@@ -146,6 +145,7 @@
   height: 100%;
 }
 
+/* Base card — all shared defaults */
 .services-carousel-card {
   position: absolute;
   top: 50%;
@@ -157,16 +157,17 @@
   overflow: hidden;
   border-radius: 14px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
-  aspect-ratio: 294 / 350; /* ← was 294 / 400 */
-  width: 200px;
+  aspect-ratio: 294 / 350;
+  width: 290px; /* ← base width matches active so transitions are smooth */
   transform-origin: center center;
+  /* ↓ ALL properties that change between offsets must be listed here */
   transition:
     transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
     width 0.6s cubic-bezier(0.4, 0, 0.2, 1),
     filter 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.6s ease,
-    box-shadow 0.6s ease;
-  will-change: transform, filter, width;
+    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, filter, width, opacity;
 }
 
 .services-carousel-card img {
@@ -178,13 +179,13 @@
   transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Active — large, sharp, left */
+/* ── OFFSET 0 — Active: full size, sharp, front ── */
 .services-carousel-card[data-offset='0'] {
   width: min(290px, 42vw);
   z-index: 4;
-  transform: translateY(-50%) translateX(0) scale(1);
-  filter: none;
+  transform: translateY(-50%) translateX(0px) scale(1);
   opacity: 1;
+  filter: none;
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
 }
 
@@ -192,30 +193,32 @@
   filter: none;
 }
 
-/* Next — smaller, blurred, right */
+/* ── OFFSET 1 — Next: slightly smaller, shifted right, light blur ── */
 .services-carousel-card[data-offset='1'] {
-  width: 188px;
+  width: min(290px, 42vw);
   z-index: 3;
-  transform: translateY(-50%) translateX(248px) scale(0.9);
-  opacity: 0.92;
+  /* ↓ translateX pushes it right so it peeks behind the active card */
+  transform: translateY(-50%) translateX(230px) scale(0.88);
+  opacity: 0.82;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 .services-carousel-card[data-offset='1'] img {
-  filter: blur(7px) brightness(0.88);
+  filter: blur(2.5px) brightness(0.82); /* ← light blur, visible content */
 }
 
-/* Following — smaller, more blurred, further right */
+/* ── OFFSET 2 — Third: further right, smaller, more faded ── */
 .services-carousel-card[data-offset='2'] {
-  width: 168px;
+  width: min(290px, 42vw);
   z-index: 2;
-  transform: translateY(-50%) translateX(412px) scale(0.84);
-  opacity: 0.78;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+  /* ↓ further right than offset 1 */
+  transform: translateY(-50%) translateX(390px) scale(0.76);
+  opacity: 0.55;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
 .services-carousel-card[data-offset='2'] img {
-  filter: blur(11px) brightness(0.82);
+  filter: blur(4px) brightness(0.65); /* ← moderate blur, still recognizable */
 }
 
 .services-dots {
@@ -285,13 +288,15 @@
   }
 
   .services-carousel-card[data-offset='1'] {
-    transform: translateY(-50%) translateX(210px) scale(0.88);
-    width: 160px;
+    transform: translateY(-50%) translateX(180px) scale(0.85);
+    width: min(240px, 52vw);
+    opacity: 0.78;
   }
 
   .services-carousel-card[data-offset='2'] {
-    transform: translateY(-50%) translateX(350px) scale(0.8);
-    width: 140px;
+    transform: translateY(-50%) translateX(300px) scale(0.74);
+    width: min(240px, 52vw);
+    opacity: 0.5;
   }
 
   .services-dots {
@@ -302,21 +307,23 @@
 
 @media (max-width: 520px) {
   .services-carousel-viewport {
-    height: 340px;
+    height: 360px;
   }
 
   .services-carousel-card[data-offset='0'] {
-    width: min(240px, 58vw);
+    width: min(220px, 56vw);
   }
 
   .services-carousel-card[data-offset='1'] {
-    transform: translateY(-50%) translateX(178px) scale(0.86);
-    width: 130px;
+    transform: translateY(-50%) translateX(150px) scale(0.83);
+    width: min(220px, 56vw);
+    opacity: 0.72;
   }
 
   .services-carousel-card[data-offset='2'] {
-    transform: translateY(-50%) translateX(290px) scale(0.78);
-    width: 115px;
+    transform: translateY(-50%) translateX(250px) scale(0.72);
+    width: min(220px, 56vw);
+    opacity: 0.45;
   }
 }
 
