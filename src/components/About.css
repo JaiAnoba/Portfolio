@@ -3,47 +3,41 @@
   display: grid;
   grid-template-columns: 1fr 0.7fr;
   gap: 3rem;
-  padding: 0 5rem 5rem;
+  padding: 0 4rem 5rem 6rem;
   min-height: 700px;
   align-items: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .about-glow {
-  width: 503px;
-  height: 656px;
-  background: var(--red-glow);
-  right: 10%;
-  top: 20%;
-}
-
-.about-blur {
+  background: var(--red-dark);
+  opacity: 0.95;
   position: absolute;
-  background: var(--black);
-  filter: blur(75px);
-  pointer-events: none;
-  z-index: 1;
+  z-index: 0;
+  mix-blend-mode: screen;
 }
 
-.about-blur-top {
-  width: 636px;
-  height: 243px;
-  left: 28%;
-  top: 0;
-}
-
-.about-blur-bottom {
-  width: 697px;
-  height: 243px;
-  right: 0;
-  bottom: 0;
-  filter: blur(100px);
+/* Right: behind the portrait */
+.about-glow-portrait {
+  width: 540px;
+  height: 310px;
+  right: 2%;
+  top: 6%;
+  filter: blur(150px);
 }
 
 .about-content {
   position: relative;
   z-index: 2;
   max-width: 669px;
+  isolation: isolate;
+}
+
+.about-glow-name {
+  width: 360px;
+  height: 400px;
+  left: -25rem;
+  top: -15rem;
+  filter: blur(130px);
 }
 
 .about-location {
@@ -101,8 +95,8 @@
   object-fit: contain;
   object-position: center top;
   image-rendering: auto;
-  mask-image: linear-gradient(to bottom, #000 52%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to bottom, #000 52%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 44%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 44%, transparent 100%);
 }
 
 @media (max-width: 1024px) {
@@ -118,5 +112,21 @@
   .about-portrait-wrap {
     justify-self: center;
     max-width: 480px;
+  }
+
+  .about-glow-name {
+    left: -1rem;
+    top: 3rem;
+    width: 260px;
+    height: 220px;
+    z-index: 0;
+  }
+
+  .about-glow-portrait {
+    right: 50%;
+    top: 0;
+    transform: translateX(50%);
+    width: 420px;
+    height: 500px;
   }
 }

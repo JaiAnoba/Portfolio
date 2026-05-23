@@ -10,11 +10,10 @@ const SOCIALS = [
 export default function About() {
   return (
     <section className="about" id="about">
-      <div className="red-glow about-glow" aria-hidden />
-      <div className="about-blur about-blur-top" aria-hidden />
-      <div className="about-blur about-blur-bottom" aria-hidden />
+      <div className="red-glow about-glow about-glow-portrait" aria-hidden />
 
       <div className="about-content">
+        <div className="red-glow about-glow about-glow-name" aria-hidden />
         <p className="hand-label-sm about-location">Based in Cebu, PH</p>
 
         <h2 className="about-heading oswald-display">
