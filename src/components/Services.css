@@ -197,28 +197,26 @@
 .services-carousel-card[data-offset='1'] {
   width: min(290px, 42vw);
   z-index: 3;
-  /* ↓ translateX pushes it right so it peeks behind the active card */
-  transform: translateY(-50%) translateX(230px) scale(0.88);
+  transform: translateY(-50%) translateX(300px) scale(0.88); /* ← gap from card 1 */
   opacity: 0.82;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
 
 .services-carousel-card[data-offset='1'] img {
-  filter: blur(2.5px) brightness(0.82); /* ← light blur, visible content */
+  filter: blur(2.5px) brightness(0.82);
 }
 
 /* ── OFFSET 2 — Third: further right, smaller, more faded ── */
 .services-carousel-card[data-offset='2'] {
   width: min(290px, 42vw);
   z-index: 2;
-  /* ↓ further right than offset 1 */
-  transform: translateY(-50%) translateX(390px) scale(0.76);
+  transform: translateY(-50%) translateX(565px) scale(0.76); /* ← same gap from card 2 */
   opacity: 0.55;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
 
 .services-carousel-card[data-offset='2'] img {
-  filter: blur(4px) brightness(0.65); /* ← moderate blur, still recognizable */
+  filter: blur(4px) brightness(0.65);
 }
 
 .services-dots {
