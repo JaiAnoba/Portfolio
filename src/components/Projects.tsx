@@ -1,44 +1,51 @@
-import { useState } from 'react'
+import { useRef } from 'react'
 import './Projects.css'
 
 const PROJECTS = [
   {
     src: '/images/project-burgify.png',
     alt: 'Burgify mobile app UI prototype across multiple phone screens',
-    width: 1024,
-    height: 630,
   },
   {
     src: '/images/project-1.jpg',
     alt: 'Web dashboard project',
-    width: 1024,
-    height: 630,
   },
   {
     src: '/images/project-2.jpg',
     alt: 'Mobile app project',
-    width: 1024,
-    height: 630,
   },
   {
     src: '/images/project-3.jpg',
     alt: 'Travel website project',
-    width: 1024,
-    height: 630,
   },
   {
     src: '/images/project-4.jpg',
     alt: 'Interface design project',
-    width: 1024,
-    height: 630,
   },
-] as const
+]
+
+const SLIDE_WIDTH = 580 // px — must match CSS card width + gap
 
 export default function Projects() {
-  const [index, setIndex] = useState(0)
+  const trackRef = useRef<HTMLDivElement>(null)
 
-  const prev = () => setIndex((i) => (i === 0 ? PROJECTS.length - 1 : i - 1))
-  const next = () => setIndex((i) => (i === PROJECTS.length - 1 ? 0 : i + 1))
+  // Manually shift the marquee by one card width on button press
+  const shift = (direction: 'prev' | 'next') => {
+    const track = trackRef.current
+    if (!track) return
+    // Temporarily pause animation and nudge scroll
+    track.style.animationPlayState = 'paused'
+    const current = new DOMMatrix(getComputedStyle(track).transform).m41
+    const nudge = direction === 'next' ? -SLIDE_WIDTH : SLIDE_WIDTH
+    track.style.transform = `translateX(${current + nudge}px)`
+    // Resume after a short delay
+    setTimeout(() => {
+      track.style.transform = ''
+      track.style.animationPlayState = 'running'
+    }, 600)
+  }
+
+  const items = [...PROJECTS, ...PROJECTS]
 
   return (
     <section className="projects" id="projects">
@@ -61,34 +68,35 @@ export default function Projects() {
         </p>
       </div>
 
-      <div className="projects-carousel">
-        {PROJECTS.map((p, i) => (
-          <div
-            key={p.src}
-            className={`projects-slide ${i === index ? 'active' : ''} ${'width' in p && 'height' in p ? 'projects-slide--natural' : ''}`}
-            style={
-              {
-                '--offset': i - index,
-                ...('width' in p && 'height' in p
-                  ? { '--slide-aspect': `${p.width} / ${p.height}` }
-                  : {}),
-              } as React.CSSProperties
-            }
-          >
-            <img
-              src={p.src}
-              alt={p.alt}
-              {...('width' in p && 'height' in p ? { width: p.width, height: p.height } : {})}
-            />
+      <div className="projects-carousel" aria-label="Projects showcase">
+        <div className="projects-fade projects-fade--left" aria-hidden />
+        <div className="projects-fade projects-fade--right" aria-hidden />
+
+        <div className="projects-marquee-outer">
+          <div className="projects-marquee-track" ref={trackRef}>
+            {items.map((p, i) => (
+              <div className="projects-slide" key={`${p.src}-${i}`}>
+                <img src={p.src} alt={p.alt} loading="lazy" />
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
+      {/* Nav buttons kept */}
       <div className="projects-nav">
-        <button type="button" onClick={prev} aria-label="Previous project">
+        <button
+          type="button"
+          onClick={() => shift('prev')}
+          aria-label="Previous project"
+        >
           &lt;
         </button>
-        <button type="button" onClick={next} aria-label="Next project">
+        <button
+          type="button"
+          onClick={() => shift('next')}
+          aria-label="Next project"
+        >
           &gt;
         </button>
       </div>
