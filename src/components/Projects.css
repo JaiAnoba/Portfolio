@@ -1,0 +1,127 @@
+.projects {
+  position: relative;
+  padding: 6rem 0 8rem;
+  overflow: hidden;
+}
+
+.projects-glow {
+  width: 591px;
+  height: 350px;
+  background: var(--red-dark);
+  left: 30%;
+  top: 40%;
+}
+
+.projects-header {
+  position: relative;
+  padding: 0 8.875rem;
+  margin-bottom: 3rem;
+  z-index: 2;
+}
+
+.projects-accent {
+  position: absolute;
+  left: 9.5rem;
+  top: -1rem;
+  opacity: 0.9;
+  pointer-events: none;
+  text-transform: lowercase;
+}
+
+.projects-title {
+  font-family: var(--font-oswald);
+  font-weight: 700;
+  font-size: clamp(3rem, 8vw, 6rem);
+  line-height: 0.99;
+  text-shadow: 0 4px 24px rgba(201, 0, 0, 0.4);
+}
+
+.projects-desc {
+  margin-top: 1rem;
+  max-width: 595px;
+  font-size: 1rem;
+  line-height: 1.375;
+}
+
+.projects-carousel {
+  position: relative;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0 2rem;
+  z-index: 2;
+}
+
+.projects-slide {
+  position: absolute;
+  width: min(590px, 70vw);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  opacity: 0.4;
+  transform: scale(0.85) rotate(-8deg);
+  pointer-events: none;
+}
+
+.projects-slide.active {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.projects-slide:not(.active) {
+  transform: scale(0.9) rotate(5deg) translateX(calc(var(--offset) * 120px));
+}
+
+.projects-slide img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.projects-nav {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+  z-index: 2;
+  position: relative;
+}
+
+.projects-nav button {
+  background: none;
+  border: none;
+  color: var(--white);
+  font-family: var(--font-poppins);
+  font-size: 2rem;
+  cursor: pointer;
+  text-shadow: 0 4px 4px rgba(245, 245, 245, 0.9);
+  padding: 0.5rem 1rem;
+  transition: color 0.2s;
+}
+
+.projects-nav button:hover {
+  color: var(--red);
+}
+
+@media (max-width: 768px) {
+  .projects-header {
+    padding: 0 1.5rem;
+  }
+
+  .projects-accent {
+    display: none;
+  }
+
+  .projects-carousel {
+    height: 280px;
+  }
+
+  .projects-slide img {
+    height: 240px;
+  }
+}

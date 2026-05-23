@@ -1,0 +1,116 @@
+.about {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  padding: 6rem 8.875rem 8rem;
+  min-height: 700px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-glow {
+  width: 503px;
+  height: 656px;
+  background: var(--red-glow);
+  right: 10%;
+  top: 20%;
+}
+
+.about-blur {
+  position: absolute;
+  background: var(--black);
+  filter: blur(75px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.about-blur-top {
+  width: 636px;
+  height: 243px;
+  left: 28%;
+  top: 0;
+}
+
+.about-blur-bottom {
+  width: 697px;
+  height: 243px;
+  right: 0;
+  bottom: 0;
+  filter: blur(100px);
+}
+
+.about-content {
+  position: relative;
+  z-index: 2;
+  max-width: 669px;
+}
+
+.about-location {
+  margin-bottom: 1.5rem;
+}
+
+.about-heading {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+  margin-bottom: 2rem;
+}
+
+.about-name {
+  color: var(--red);
+}
+
+.about-text {
+  font-size: 1rem;
+  line-height: 1.375;
+  margin-bottom: 1.25rem;
+}
+
+.about-socials {
+  display: flex;
+  gap: 2.25rem;
+  margin-top: 2rem;
+}
+
+.about-socials a {
+  transition: opacity 0.2s;
+}
+
+.about-socials a:hover {
+  opacity: 0.75;
+}
+
+.about-portrait-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-portrait {
+  width: 100%;
+  max-width: 519px;
+  height: auto;
+  object-fit: cover;
+  transform: scaleY(-1) rotate(180deg);
+  mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+}
+
+@media (max-width: 1024px) {
+  .about {
+    grid-template-columns: 1fr;
+    padding: 4rem 1.5rem;
+  }
+
+  .about-portrait-wrap {
+    order: -1;
+  }
+
+  .about-portrait {
+    max-width: 400px;
+    transform: none;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
