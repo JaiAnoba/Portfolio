@@ -84,7 +84,7 @@ export default function Projects() {
       </div>
 
       {/* Nav buttons kept */}
-      <div className="projects-nav">
+      {/* <div className="projects-nav">
         <button
           type="button"
           onClick={() => shift('prev')}
@@ -99,7 +99,7 @@ export default function Projects() {
         >
           &gt;
         </button>
-      </div>
+      </div> */}
     </section>
   )
 }

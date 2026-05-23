@@ -66,7 +66,7 @@
   display: flex;
   gap: 1.5rem;
   width: max-content;
-  animation: marquee-scroll 28s linear infinite;
+  animation: marquee-scroll 40s linear infinite;
 }
 
 .projects-marquee-track:hover {
@@ -125,7 +125,7 @@
 }
 
 /* ── Nav buttons ── */
-.projects-nav {
+/* .projects-nav {
   display: flex;
   justify-content: center;
   gap: 2rem;
@@ -148,7 +148,7 @@
 
 .projects-nav button:hover {
   color: var(--red);
-}
+} */
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
@@ -167,7 +167,7 @@
 
   .projects-marquee-track {
     gap: 1rem;
-    animation-duration: 22s;
+    animation-duration: 45s;
   }
 
   .projects-fade {
@@ -187,7 +187,7 @@
 
   .projects-marquee-track {
     gap: 0.75rem;
-    animation-duration: 18s;
+    animation-duration: 45s;
   }
 
   .projects-fade {
