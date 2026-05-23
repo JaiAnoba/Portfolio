@@ -1,6 +1,6 @@
 .contact {
   position: relative;
-  padding: 6rem 8.875rem 4rem;
+  padding: 4rem 8.875rem 3rem;
   overflow: hidden;
 }
 
@@ -110,7 +110,7 @@
 
 @media (max-width: 768px) {
   .contact {
-    padding: 4rem 1.5rem 3rem;
+    padding: 3rem 1.5rem 2.5rem;
   }
 
   .contact-row {
