@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import './Services.css'
 
 const SLIDES = [
@@ -23,6 +23,7 @@ const SLIDES = [
 ] as const
 
 const AUTOPLAY_MS = 5000
+const STACK_FADE_MS = 400 // only controls fade-OUT delay; stack fades IN with the new active card
 
 function slideOffset(index: number, active: number, total: number) {
   return (index - active + total) % total
@@ -30,17 +31,39 @@ function slideOffset(index: number, active: number, total: number) {
 
 export default function Services() {
   const [active, setActive] = useState(0)
+  const [stackSwitching, setStackSwitching] = useState(false)
+  const stackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const slide = SLIDES[active]
 
   const goTo = useCallback((index: number) => {
-    setActive(((index % SLIDES.length) + SLIDES.length) % SLIDES.length)
+    const next = ((index % SLIDES.length) + SLIDES.length) % SLIDES.length
+
+    // 1. Fade stack out quickly
+    setStackSwitching(true)
+
+    // Clear any pending timeout to avoid overlapping transitions
+    if (stackTimeoutRef.current) clearTimeout(stackTimeoutRef.current)
+
+    stackTimeoutRef.current = setTimeout(() => {
+      // 2. Switch slide AND fade stack back in simultaneously
+      setActive(next)
+      setStackSwitching(false)
+    }, STACK_FADE_MS)
   }, [])
 
+  // Autoplay
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActive((prev) => (prev + 1) % SLIDES.length)
+      goTo((active + 1) % SLIDES.length)
     }, AUTOPLAY_MS)
     return () => window.clearInterval(timer)
+  }, [active, goTo])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (stackTimeoutRef.current) clearTimeout(stackTimeoutRef.current)
+    }
   }, [])
 
   return (
@@ -62,7 +85,12 @@ export default function Services() {
         <div className="services-visual">
           <div className="services-carousel" aria-roledescription="carousel">
             <div className="services-carousel-glow" aria-hidden />
-            <div className="services-stack" aria-hidden>
+
+            {/* Stack fades out quickly, then fades in together with the new active card */}
+            <div
+              className={`services-stack${stackSwitching ? ' is-switching' : ''}`}
+              aria-hidden
+            >
               <div className="services-stack-card services-stack-card--back" />
               <div className="services-stack-card services-stack-card--mid" />
             </div>

@@ -15,7 +15,7 @@
   font-weight: 700;
   font-size: clamp(3rem, 8vw, 6rem);
   line-height: 0.99;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .services-grid {
@@ -78,7 +78,7 @@
   min-height: 430px;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .services-carousel-glow {
@@ -97,46 +97,85 @@
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Scatter animation — cards start straight and fan out to final rotated positions */
+@keyframes stack-scatter-back {
+  from {
+    transform: rotate(0deg) translateY(0px);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(-6deg) translateY(6px);
+    opacity: 1;
+  }
+}
+
+@keyframes stack-scatter-mid {
+  from {
+    transform: rotate(0deg) translateY(0px);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(-13deg) translateY(10px);
+    opacity: 1;
+  }
+}
+
+/* Stack cards — decorative red cards behind the active card */
 .services-stack {
   position: absolute;
-  left: 0;
-  top: 50%;
-  width: 200px;
-  height: 320px;
+  left: -5px;
+  top: 44%;
+  width: 290px;
+  height: 308px;
   transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.15s ease 0s;
+}
+
+/* Applied via JS during card switch — fade out instantly */
+.services-stack.is-switching {
+  opacity: 0;
+  transition: opacity 0.4s ease-out 0s;
 }
 
 .services-stack-card {
   position: absolute;
   border-radius: 14px;
-  background: rgba(145, 2, 2, 0.28);
-  border: 1px solid rgba(145, 2, 2, 0.35);
+  background: rgba(145, 2, 2, 0.35);
+  border: 1px solid rgba(145, 2, 2, 0.4);
+  width: 100%;
+  height: 100%;
 }
 
+/* Slightly tilted, close behind — scatters after active card lands */
 .services-stack-card--back {
-  width: 200px;
-  height: 260px;
-  left: 0;
-  top: 24px;
-  transform: rotate(-13.5deg);
+  transform-origin: bottom center;
+  transform: rotate(-6deg) translateY(6px);
 }
 
+/* More tilted, furthest behind — scatters slightly after --back */
 .services-stack-card--mid {
-  width: 168px;
-  height: 220px;
-  left: 28px;
-  top: 48px;
-  transform: rotate(-20.85deg);
+  transform-origin: bottom center;
+  transform: rotate(-13deg) translateY(10px);
+}
+
+/* Trigger scatter when is-switching is removed */
+.services-stack:not(.is-switching) .services-stack-card--back {
+  animation: stack-scatter-back 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
+}
+
+.services-stack:not(.is-switching) .services-stack-card--mid {
+  animation: stack-scatter-mid 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both;
 }
 
 .services-carousel-viewport {
   position: relative;
   width: 100%;
-  height: 430px; /* ↑ was 400px, give cards more vertical room */
+  height: 430px;
   z-index: 2;
-  overflow: visible; /* ← was hidden; allow card 3 to be visible outside tight bounds */
+  overflow: visible;
 }
 
 .services-carousel-track {
@@ -158,15 +197,14 @@
   border-radius: 14px;
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
   aspect-ratio: 294 / 350;
-  width: 290px; /* ← base width matches active so transitions are smooth */
+  width: 290px;
   transform-origin: center center;
-  /* ↓ ALL properties that change between offsets must be listed here */
   transition:
-    transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    width 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, filter, width, opacity;
 }
 
@@ -176,7 +214,7 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: filter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: filter 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ── OFFSET 0 — Active: full size, sharp, front ── */
@@ -197,7 +235,7 @@
 .services-carousel-card[data-offset='1'] {
   width: min(290px, 42vw);
   z-index: 3;
-  transform: translateY(-50%) translateX(300px) scale(0.88); /* ← gap from card 1 */
+  transform: translateY(-50%) translateX(300px) scale(0.88);
   opacity: 0.82;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
 }
@@ -210,7 +248,7 @@
 .services-carousel-card[data-offset='2'] {
   width: min(290px, 42vw);
   z-index: 2;
-  transform: translateY(-50%) translateX(565px) scale(0.76); /* ← same gap from card 2 */
+  transform: translateY(-50%) translateX(565px) scale(0.76);
   opacity: 0.55;
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
 }
@@ -222,17 +260,17 @@
 .services-dots {
   display: flex;
   gap: 0.5rem;
-  margin-top: 1.25rem;
   z-index: 5;
-  padding-right: 0.25rem;
+  padding-right: 0;
+  align-self: center;
 }
 
 .services-dots button {
   padding: 0;
   border: none;
   cursor: pointer;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--gray-border);
   transition:
@@ -243,7 +281,7 @@
 
 .services-dots button.active {
   background: var(--white);
-  width: 38px;
+  width: 18px;
   border-radius: 4px;
 }
 
@@ -282,7 +320,9 @@
   }
 
   .services-stack {
-    left: 4%;
+    left: -10px;
+    width: 240px;
+    height: 290px;
   }
 
   .services-carousel-card[data-offset='1'] {
@@ -300,12 +340,19 @@
   .services-dots {
     align-self: center;
     padding-right: 0;
+    margin-top: 1.25rem;
   }
 }
 
 @media (max-width: 520px) {
   .services-carousel-viewport {
     height: 360px;
+  }
+
+  .services-stack {
+    left: -8px;
+    width: 200px;
+    height: 240px;
   }
 
   .services-carousel-card[data-offset='0'] {
@@ -329,6 +376,7 @@
   .services-carousel-card,
   .services-carousel-card img,
   .services-carousel-glow,
+  .services-stack,
   .services-copy-title,
   .services-copy-text,
   .services-dots button {
