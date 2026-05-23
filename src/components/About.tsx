@@ -44,7 +44,7 @@ export default function About() {
 
       <div className="about-portrait-wrap">
         <img
-          src="/images/about-portrait.png"
+          src="/images/about pic.png"
           alt="Jamaica Anuba portrait"
           className="about-portrait"
           width={859}
