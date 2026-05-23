@@ -20,9 +20,16 @@ export default function Projects() {
 
       <div className="projects-header">
         <span className="script-accent projects-accent" aria-hidden>
-          projects
+          <span className="pa-p">p</span>
+          <span className="pa-r">r</span>
+          <span className="pa-o">o</span>
+          <span className="pa-j">j</span>
+          <span className="pa-e">e</span>
+          <span className="pa-c">c</span>
+          <span className="pa-t">t</span>
+          <span className="pa-s">s</span>
         </span>
-        <h2 className="projects-title">PROJECTS</h2>
+        <h2 className="projects-title">PROJECTS</h2> 
         <p className="projects-desc">
           A showcase of web systems, responsive interfaces, and cross-platform mobile development.
         </p>

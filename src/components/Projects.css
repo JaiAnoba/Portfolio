@@ -1,7 +1,8 @@
 .projects {
   position: relative;
-  padding: 4rem 0 5rem;
+  padding: 4rem 0 4rem 0;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .projects-glow {
@@ -14,18 +15,42 @@
 
 .projects-header {
   position: relative;
-  padding: 0 8.875rem;
+  padding: 0 5.6rem;
   margin-bottom: 3rem;
   z-index: 2;
 }
 
 .projects-accent {
   position: absolute;
-  left: 9.5rem;
-  top: -1rem;
+  left: clamp(1.5rem, 12vw, 6.2rem);
+  top: clamp(0.5rem, 1vw, 0.8rem);
   opacity: 0.9;
   pointer-events: none;
   text-transform: lowercase;
+  letter-spacing: 0.38em !important;
+  display: flex;
+  font-size: clamp(3rem, 8vw, 6rem);
+}
+
+.projects-accent span {
+  position: relative;
+}
+
+.pa-r {
+  left: 0.13em;
+}
+
+.pa-o {
+  left: 0.16em;
+}
+
+.pa-j {
+  left: 0.12em;
+}
+
+.pa-t {
+  top: 0.1em;
+  right: 0.1em;
 }
 
 .projects-title {
@@ -33,13 +58,12 @@
   font-weight: 700;
   font-size: clamp(3rem, 8vw, 6rem);
   line-height: 0.99;
-  text-shadow: 0 4px 24px rgba(201, 0, 0, 0.4);
 }
 
 .projects-desc {
-  margin-top: 1rem;
+  margin-top: 1.8rem;
   max-width: 595px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.375;
 }
 
@@ -113,8 +137,10 @@
     padding: 0 1.5rem;
   }
 
+  /* ← no longer display: none — stays visible at all sizes */
   .projects-accent {
-    display: none;
+    left: 1.5rem; /* ← matches mobile header padding */
+    top: 0.4rem;
   }
 
   .projects-carousel {
@@ -123,5 +149,12 @@
 
   .projects-slide img {
     height: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .projects-accent {
+    left: 1.5rem;
+    top: 0.3rem;
   }
 }
