@@ -18,6 +18,16 @@
   }
 }
 
+@keyframes project-panel-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.project-panel.is-closing {
+  animation: project-panel-out 0.3s ease forwards;
+  pointer-events: none;
+}
+
 .project-panel-glow {
   position: fixed;
   border-radius: 50%;

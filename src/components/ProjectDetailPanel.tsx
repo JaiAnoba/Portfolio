@@ -29,6 +29,8 @@ export default function ProjectDetailPanel({
   onClose,
 }: ProjectDetailPanelProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [isClosing, setIsClosing] = useState(false)
+
   const activeImage = project.images[activeImageIndex] ?? project.images[0]
 
   useEffect(() => {
@@ -37,7 +39,7 @@ export default function ProjectDetailPanel({
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose()
+      if (event.key === 'Escape') handleClose()
     }
 
     document.body.style.overflow = 'hidden'
@@ -49,12 +51,21 @@ export default function ProjectDetailPanel({
     }
   }, [onClose])
 
+  function handleClose() {
+    setIsClosing(true)
+  }
+
+  function handleAnimationEnd() {
+    if (isClosing) onClose()
+  }
+
   return createPortal(
     <div
-      className="project-panel"
+      className={`project-panel${isClosing ? ' is-closing' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="project-panel-title"
+      onAnimationEnd={handleAnimationEnd}
     >
       <div className="project-panel-glow project-panel-glow--left" aria-hidden />
       <div className="project-panel-glow project-panel-glow--right" aria-hidden />
@@ -62,7 +73,7 @@ export default function ProjectDetailPanel({
       <button
         type="button"
         className="project-panel-close"
-        onClick={onClose}
+        onClick={handleClose}
         aria-label="Close project details"
       >
         <img
