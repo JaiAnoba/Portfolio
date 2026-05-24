@@ -14,7 +14,7 @@ const PROJECTS: ProjectDetail[] = [
       'To bridge the gap between digital art and physical galleries, I built the client-side architecture for a virtual art gallery system. I utilized Three.js to develop interactive 3D digital exhibitions that allow users to navigate art spaces. The main focus was building responsive interfaces, implementing smooth UI transitions, and connecting components directly with APIs to handle a real-time chatbox, online payments, and e-commerce transactions.',
     images: [
       {
-        src: '/images/project-1.jpg',
+        src: '/images/worxist.png',
         alt: 'Worxist virtual art gallery dashboard',
       },
     ],
@@ -30,7 +30,7 @@ const PROJECTS: ProjectDetail[] = [
       'Managing group financial logistics often leads to calculation errors and disagreement. This web utility was built to completely automate group expense management from the ground up. The system processes dynamic data inputs, tracks shared costs in real time, and automatically calculates precise individual balances, ensuring a clear process from data entry to the final breakdown.',
     images: [
       {
-        src: '/images/project-2.jpg',
+        src: '/images/splitbill.png',
         alt: 'SplitBill expense management interface',
       },
     ],
@@ -46,7 +46,7 @@ const PROJECTS: ProjectDetail[] = [
       'To build a complete user path for the travel industry, I created a flight booking concept. The platform features a search console, dynamic ticket selection, and a clean checkout flow. I focused on semantic HTML, advanced CSS layouts, and logical data routing to ensure a clean, responsive, and working user path across the entire travel platform.',
     images: [
       {
-        src: '/images/project-3.jpg',
+        src: '/images/airlux.png',
         alt: 'AirLux Odyssey flight booking platform',
       },
     ],
@@ -62,7 +62,7 @@ const PROJECTS: ProjectDetail[] = [
       'I built the mobile application interface for a recipe platform designed for easy cooking exploration. Leveraging React Native and Expo, I built a fluid, cross-platform mobile experience that connects with external APIs to fetch recipe data. The development focused on turning design wireframes into interactive components and setting up Firebase services so users can browse ingredients, follow preparation guides, and save custom creations.',
     images: [
       {
-        src: '/images/project-burgify.png',
+        src: '/images/burgify.png',
         alt: 'Burgify mobile app UI prototype across multiple phone screens',
         width: 1024,
         height: 630,
@@ -80,7 +80,7 @@ const PROJECTS: ProjectDetail[] = [
       'Online sales optimization and high-end visual presentation are critical for luxury service brands. This responsive service platform landing page was built specifically for a jewelry photo editing business. Development involved crafting a clean, minimal layout, creating frontend galleries to display high-resolution portfolios, optimization for quick load times, and structuring clear buttons to drive client inquiries.',
     images: [
       {
-        src: '/images/project-4.jpg',
+        src: '/images/jfe.png',
         alt: 'Jewelry Foto Editor luxury landing page',
       },
     ],
