@@ -20,7 +20,7 @@
     90deg,
     #ffffff 0%,
     #e48080 40.67%,
-    #7a0000 85.73% /* ← was #c90000, now darker */
+    #7a0000 85.73% 
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -94,6 +94,7 @@
   height: 2px;
   background: var(--red-dark);
   margin-top: 2rem;
+  border-radius: 10px;
 }
 
 .services-visual {
@@ -130,7 +131,7 @@
   transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Scatter animation — cards start straight and fan out to final rotated positions */
+/* Scatter animation */
 @keyframes stack-scatter-back {
   from {
     transform: rotate(0deg) translateY(0px);
@@ -156,10 +157,10 @@
 /* Stack cards — decorative red cards behind the active card */
 .services-stack {
   position: absolute;
-  left: -5px;
-  top: 43%;
+  left: 1.5px;
+  top: 44%;
   width: 290px;
-  height: 285px;
+  height: 290px;
   transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
