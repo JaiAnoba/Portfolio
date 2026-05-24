@@ -91,8 +91,15 @@ function getCardImage(project: ProjectDetail) {
   return project.images[0]
 }
 
+function isInFadeZone(carousel: HTMLDivElement, mouseX: number): boolean {
+  const { left, right, width } = carousel.getBoundingClientRect()
+  const fadeWidth = width * 0.16
+  return mouseX < left + fadeWidth || mouseX > right - fadeWidth
+}
+
 export default function Projects() {
   const trackRef = useRef<HTMLDivElement>(null)
+  const carouselRef = useRef<HTMLDivElement>(null)
   const [hoveredSlideKey, setHoveredSlideKey] = useState<string | null>(null)
   const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(
     null,
@@ -108,8 +115,23 @@ export default function Projects() {
         : 'running'
   }, [hoveredSlideKey, activeProjectIndex])
 
-  const handleSlideEnter = (slideKey: string) => {
+  const handleCarouselMouseMove = (e: React.MouseEvent) => {
     if (activeProjectIndex !== null) return
+    const carousel = carouselRef.current
+    if (!carousel) return
+
+    if (isInFadeZone(carousel, e.clientX)) {
+      setHoveredSlideKey(null)
+    }
+  }
+
+  const handleSlideEnter = (slideKey: string, e: React.MouseEvent) => {
+    if (activeProjectIndex !== null) return
+    const carousel = carouselRef.current
+    if (!carousel) return
+
+    if (isInFadeZone(carousel, e.clientX)) return
+
     setHoveredSlideKey(slideKey)
   }
 
@@ -156,7 +178,9 @@ export default function Projects() {
 
       <div
         className="projects-carousel"
+        ref={carouselRef}
         aria-label="Projects showcase"
+        onMouseMove={handleCarouselMouseMove}
         onMouseLeave={handleCarouselLeave}
       >
         <div className="projects-fade projects-fade--left" aria-hidden />
@@ -192,7 +216,7 @@ export default function Projects() {
                         } as React.CSSProperties)
                       : undefined
                   }
-                  onMouseEnter={() => handleSlideEnter(slideKey)}
+                  onMouseEnter={(e) => handleSlideEnter(slideKey, e)}
                 >
                   <img
                     src={cardImage.src}
