@@ -91,7 +91,7 @@ export default function ProjectDetailPanel({
           <h2 id="project-panel-title" className="project-panel-title">
             {project.title}
           </h2>
-          <p className="project-panel-type">({project.subtitle.toUpperCase()})</p>
+          <p className="project-panel-type">{project.subtitle.toUpperCase()}</p>
 
           <div className="project-panel-stack">
             {project.stack.map((item) => (

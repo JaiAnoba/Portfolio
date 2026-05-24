@@ -7,11 +7,11 @@ const PROJECTS: ProjectDetail[] = [
     title: 'Worxist',
     subtitle: 'Virtual Art Gallery System',
     description:
-      'Web-based platform for artists and collectors to host digital exhibitions, manage live auctions, and securely sell original artwork.',
+      'Web-based platform for artists and collectors to host digital exhibitions, manage auctions, and securely sell original artwork.',
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Vite', 'Three.js'],
     category: 'Front-End Development',
     detailDescription:
-      'To bridge the gap between digital art and physical galleries, I built the client-side architecture for a virtual art gallery system. I utilized Three.js to develop interactive 3D digital exhibitions that allow users to navigate art spaces. The main focus was building responsive interfaces, implementing smooth UI transitions, and connecting components directly with APIs to handle a real-time chatbox, online payments, and e-commerce transactions.',
+      'Bridging the gap between digital art and physical galleries required an immersive user experience. I built the client-side architecture for a virtual art gallery system using Three.js for interactive 3D digital exhibitions. The work focused on responsive interfaces and API integration to handle a real-time chatbox, online payments, and e-commerce transactions.',
     images: [
       {
         src: '/images/worxist.png',
@@ -27,7 +27,7 @@ const PROJECTS: ProjectDetail[] = [
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Vite'],
     category: 'Full-Stack',
     detailDescription:
-      'Managing group financial logistics often leads to calculation errors and disagreement. This web utility was built to completely automate group expense management from the ground up. The system processes dynamic data inputs, tracks shared costs in real time, and automatically calculates precise individual balances, ensuring a clear process from data entry to the final breakdown.',
+      'This web utility was built to completely automate group expense management from the ground up. The system processes dynamic data inputs, tracks shared costs in real time, and automatically calculates precise individual balances, ensuring a clear calculation process from initial data entry to the final bill breakdown.',
     images: [
       {
         src: '/images/splitbill.png',
@@ -43,7 +43,7 @@ const PROJECTS: ProjectDetail[] = [
     stack: ['HTML', 'CSS'],
     category: 'Full-Stack Development',
     detailDescription:
-      'To build a complete user path for the travel industry, I created a flight booking concept. The platform features a search console, dynamic ticket selection, and a clean checkout flow. I focused on semantic HTML, advanced CSS layouts, and logical data routing to ensure a clean, responsive, and working user path across the entire travel platform.',
+      'To build a complete user path for the travel industry, I created a flight booking concept featuring a search console, ticket selection, and a clean checkout flow. The project relied on semantic HTML and advanced CSS layouts to ensure a clean, responsive user experience across the platform.',
     images: [
       {
         src: '/images/airlux.png',
@@ -59,7 +59,7 @@ const PROJECTS: ProjectDetail[] = [
     stack: ['React Native', 'Expo', 'API', 'Firebase'],
     category: 'Front-End Development',
     detailDescription:
-      'I built the mobile application interface for a recipe platform designed for easy cooking exploration. Leveraging React Native and Expo, I built a fluid, cross-platform mobile experience that connects with external APIs to fetch recipe data. The development focused on turning design wireframes into interactive components and setting up Firebase services so users can browse ingredients, follow preparation guides, and save custom creations.',
+      'To provide an easy cooking exploration experience, I built a mobile application interface for a recipe platform using React Native and Expo. I turned design wireframes into interactive components and connected external APIs and Firebase services so users can browse ingredients and save custom creations.',
     images: [
       {
         src: '/images/burgify.png',
@@ -77,7 +77,7 @@ const PROJECTS: ProjectDetail[] = [
     stack: ['WordPress'],
     category: 'Front-End Development',
     detailDescription:
-      'Online sales optimization and high-end visual presentation are critical for luxury service brands. This responsive service platform landing page was built specifically for a jewelry photo editing business. Development involved crafting a clean, minimal layout, creating frontend galleries to display high-resolution portfolios, optimization for quick load times, and structuring clear buttons to drive client inquiries.',
+      'This responsive service platform landing page was built specifically for a jewelry photo editing business. Development involved crafting a clean, minimal layout, creating frontend galleries to display high-resolution portfolios, optimizing the site for quick load times, and structuring clear buttons to drive client inquiries.',
     images: [
       {
         src: '/images/jfe.png',

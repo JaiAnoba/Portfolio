@@ -29,8 +29,8 @@
 .project-panel-glow--left {
   width: 420px;
   height: 420px;
-  left: -8rem;
-  top: 20%;
+  left: -20rem;
+  top: -10rem;
   background: var(--red-dark);
   opacity: 0.75;
 }
@@ -38,8 +38,8 @@
 .project-panel-glow--right {
   width: 480px;
   height: 320px;
-  right: -6rem;
-  top: 35%;
+  right: -23rem;
+  top: 70%;
   background: var(--red-dark);
   opacity: 0.8;
 }
@@ -47,7 +47,7 @@
 .project-panel-close {
   position: fixed;
   top: clamp(1.25rem, 3vw, 2rem);
-  right: clamp(1.25rem, 3vw, 2rem);
+  right: clamp(1.25rem, 3vw, 5rem);
   z-index: 10;
   border: none;
   background: none;
@@ -63,26 +63,26 @@
   display: block;
   width: 24px;
   height: 24px;
-  filter: brightness(0) invert(1);
+  filter: brightness(6) invert(1);
 }
 
-.project-panel-close:hover {
+/* .project-panel-close:hover {
   transform: scale(1.05);
   opacity: 0.85;
-}
+} */
 
 .project-panel-layout {
   position: relative;
   z-index: 1;
   flex: 1;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.75fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
   align-items: center;
   width: 100%;
-  max-width: 1320px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(4rem, 10vh, 6rem) clamp(1.5rem, 4vw, 3rem)
+  padding: clamp(4rem, 10vh, 6rem) clamp(0.5rem, 2vw, 1.5rem)
     clamp(5rem, 12vh, 7rem);
 }
 
@@ -93,10 +93,10 @@
 .project-panel-media img {
   display: block;
   width: 100%;
-  max-height: min(72vh, 640px);
+  max-height: min(82vh, 740px); 
   object-fit: cover;
   border-radius: 12px;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  /* box-shadow: 0 15px 30px rgb(57, 0, 0); */
 }
 
 .project-panel-media-img--natural {
@@ -105,56 +105,60 @@
 }
 
 .project-panel-copy {
-  max-width: 520px;
+  max-width: 450px;
 }
 
 .project-panel-title {
   font-family: var(--font-hand);
-  font-size: clamp(3rem, 7vw, 5rem);
-  font-weight: 400;
+  font-size: clamp(3rem, 7vw, 3.5rem);
+  font-weight: medium;
   line-height: 0.95;
   color: var(--red);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.7rem;
 }
 
 .project-panel-type {
-  font-family: var(--font-oswald);
-  font-size: clamp(0.95rem, 1.4vw, 1.15rem);
-  font-weight: 700;
+  font-family: var(--font-poppins);
+  font-size: clamp(0.65rem, 1vw, 0.8rem);
+  font-weight: 200;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--white);
   margin-bottom: 1.75rem;
 }
 
+/* ── Stack chips ── */
 .project-panel-stack {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  margin-bottom: 1.25rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.55rem;
+  margin-bottom: 1.75rem;
 }
 
 .project-panel-stack span {
   font-family: var(--font-poppins);
-  font-size: clamp(0.875rem, 1.1vw, 0.98rem);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(0.75rem, 1vw, 0.6rem);
+  font-weight: 200;
+  line-height: 1;
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+  white-space: nowrap;
 }
 
+/* category label hidden — not shown in the design */
 .project-panel-category {
-  font-family: var(--font-poppins);
-  font-size: clamp(0.875rem, 1.1vw, 0.98rem);
-  font-weight: 600;
-  line-height: 1.55;
-  color: var(--white);
-  margin-bottom: 1.25rem;
+  display: none;
 }
 
 .project-panel-desc {
   font-family: var(--font-poppins);
-  font-size: clamp(0.875rem, 1.1vw, 0.98rem);
+  font-size: clamp(0.88rem, 1vw, 0.88rem);
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.9);
+  text-align: justify;
 }
 
 .project-panel-dots {
@@ -208,5 +212,9 @@
 
   .project-panel-type {
     margin-bottom: 1.25rem;
+  }
+
+  .project-panel-stack {
+    gap: 0.4rem 0.45rem;
   }
 }
