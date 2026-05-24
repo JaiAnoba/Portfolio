@@ -155,8 +155,6 @@
   padding: 0 var(--hero-pad-x);
   pointer-events: none;
   transform: translateY(-7.5rem);
-  /* REDUCED SPACE FIX: Cancels out the blank physical room 
-     left behind by the negative visual transform */
   margin-bottom: -7.5rem; 
 }
 

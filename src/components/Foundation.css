@@ -33,10 +33,10 @@
 }
 
 .foundation-script {
-  font-family: var(--font-freehand);
-  font-weight: 400;
+  font-family: var(--font-hand);
+  font-weight: 800;
   color: var(--red);
-  font-size: clamp(3rem, 7vw, 5.3125rem);
+  font-size: clamp(3rem, 7vw, 10rem);
 }
 
 .foundation-grid {
@@ -64,7 +64,7 @@
 .foundation-line {
   width: 231px;
   height: 2px;
-  background: var(--white);
+  background: #c90000;
   margin-bottom: 2.5rem;
 }
 

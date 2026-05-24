@@ -33,7 +33,7 @@ export default function Foundation() {
   return (
     <section className="foundation" id="foundation">
       <div className="red-glow foundation-glow-left" aria-hidden />
-      <div className="red-glow foundation-glow-right" aria-hidden />
+      {/* <div className="red-glow foundation-glow-right" aria-hidden /> */}
 
       <h2 className="foundation-heading">
         <span>THE</span>
