@@ -54,12 +54,18 @@
 .projects-carousel {
   position: relative;
   z-index: 2;
+  min-height: clamp(220px, 32vw, 380px);
 }
 
 .projects-marquee-outer {
+  position: relative;
   overflow: hidden;
   width: 100%;
   padding: 1rem 0;
+}
+
+.projects--hovered .projects-marquee-outer {
+  overflow: visible;
 }
 
 .projects-marquee-track {
@@ -67,10 +73,6 @@
   gap: 1.5rem;
   width: max-content;
   animation: marquee-scroll 40s linear infinite;
-}
-
-.projects-marquee-track:hover {
-  animation-play-state: paused;
 }
 
 @keyframes marquee-scroll {
@@ -84,16 +86,23 @@
 
 /* ── Individual slide ── */
 .projects-slide {
+  position: relative;
+  isolation: isolate;
   flex-shrink: 0;
   width: clamp(280px, 38vw, 560px);
   aspect-ratio: 16 / 10;
+  border: none;
+  padding: 0;
+  background: #0d0d0d;
   border-radius: 14px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+  text-align: left;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
 }
 
-.projects-slide:hover {
-  transform: scale(1.03) translateY(-4px);
+.projects-slide--natural {
+  aspect-ratio: var(--slide-aspect, 16 / 10);
 }
 
 .projects-slide img {
@@ -102,9 +111,111 @@
   height: 100%;
   object-fit: cover;
   border-radius: 14px;
+  transition: transform 0.35s ease;
 }
 
-/* ── Black edge fades ── */
+.projects-slide--natural img {
+  object-fit: contain;
+  background: #0d0d0d;
+}
+
+/* In-card hover detail — bottom half only */
+.projects-slide-detail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.projects-slide--expanded .projects-slide-detail {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.projects-slide-detail-backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: 0 0 14px 14px;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.82) 45%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.projects-slide-detail-copy {
+  position: relative;
+  z-index: 1;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.projects-slide-detail-title {
+  font-family: var(--font-hand);
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+
+.projects-slide-detail-desc {
+  font-family: var(--font-poppins);
+  font-size: clamp(0.72rem, 1vw, 0.85rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 0.85rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.projects-slide-detail-link {
+  display: inline-block;
+  border: none;
+  background: none;
+  padding: 0;
+  font-family: var(--font-poppins);
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  font-weight: 700;
+  color: var(--red);
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.projects-slide-detail-link:hover {
+  color: #ff3333;
+  transform: translateX(3px);
+}
+
+/* ── Hover state ── */
+.projects-slide--expanded {
+  z-index: 20;
+  transform: scale(1.05) translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.projects-slide--dimmed {
+  filter: blur(3px);
+  opacity: 0.45;
+}
+
+.projects--hovered .projects-glow {
+  opacity: 0.2;
+  transition: opacity 0.35s ease;
+}
+
 .projects-fade {
   position: absolute;
   top: 0;
@@ -123,32 +234,6 @@
   right: 0;
   background: linear-gradient(to left, #000000 0%, transparent 100%);
 }
-
-/* ── Nav buttons ── */
-/* .projects-nav {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 2rem;
-  z-index: 2;
-  position: relative;
-}
-
-.projects-nav button {
-  background: none;
-  border: none;
-  color: var(--white);
-  font-family: var(--font-poppins);
-  font-size: 2rem;
-  cursor: pointer;
-  text-shadow: 0 4px 4px rgba(245, 245, 245, 0.9);
-  padding: 0.5rem 1rem;
-  transition: color 0.2s;
-}
-
-.projects-nav button:hover {
-  color: var(--red);
-} */
 
 /* ── Responsive ── */
 @media (max-width: 768px) {
@@ -173,6 +258,10 @@
   .projects-fade {
     width: 12%;
   }
+
+  .projects-slide-detail-desc {
+    -webkit-line-clamp: 3;
+  }
 }
 
 @media (max-width: 480px) {
@@ -192,6 +281,10 @@
 
   .projects-fade {
     width: 10%;
+  }
+
+  .projects-slide-detail-desc {
+    -webkit-line-clamp: 2;
   }
 }
 
