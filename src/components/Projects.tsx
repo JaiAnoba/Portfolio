@@ -18,11 +18,15 @@ const PROJECTS: ProjectDetail[] = [
         alt: 'Worxist virtual art gallery dashboard',
       },
       {
-        src: '/images/bid.png',
+        src: '/images/exhibit.png',
+        alt: 'Worxist virtual art gallery exhibit dashboard',
+      },
+      {
+        src: '/images/auction.png',
         alt: 'Worxist virtual art gallery auction dashboard',
       },
       {
-        src: '/images/marketplace.png',
+        src: '/images/sell.png',
         alt: 'Worxist virtual art gallery marketplace dashboard',
       },
     ],
