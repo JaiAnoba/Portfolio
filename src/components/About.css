@@ -65,7 +65,7 @@
 }
 
 .about-heading {
-  font-size: clamp(3rem, 7vw, 6rem) !important;
+  font-size: clamp(3rem, 7vw, 5rem) !important;
   margin-bottom: 2.5rem;
 }
 
@@ -104,7 +104,7 @@
 
   justify-self: end;
   width: 100%;
-  max-width: min(859px, 100%);
+  max-width: min(450px, 100%);
 
   overflow: hidden;
   pointer-events: none;
@@ -113,7 +113,7 @@
 
 .about-portrait {
   display: block;
-  width: 108%;
+  width: 100%;
   max-width: none;
   height: auto;
 

@@ -29,35 +29,19 @@ export default function ProjectDetailPanel({
   onClose,
 }: ProjectDetailPanelProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
-  const [displayedIndex, setDisplayedIndex] = useState(0)
-  const [visible, setVisible] = useState(true)
   const [isClosing, setIsClosing] = useState(false)
   const [autoplay, setAutoplay] = useState(true)
 
-  const displayedImage = project.images[displayedIndex] ?? project.images[0]
+  // Grab active image instantly without delay hooks
+  const displayedImage = project.images[activeImageIndex] ?? project.images[0]
 
   useEffect(() => {
     setActiveImageIndex(0)
-    setDisplayedIndex(0)
-    setVisible(true)
+    setIsClosing(false)
     setAutoplay(true)
   }, [project.title])
 
-  // When activeImageIndex changes, fade out → swap → fade in
-  useEffect(() => {
-    if (activeImageIndex === displayedIndex) return
-
-    setVisible(false)
-
-    const swap = setTimeout(() => {
-      setDisplayedIndex(activeImageIndex)
-      setVisible(true)
-    }, 300) // matches fade-out duration
-
-    return () => clearTimeout(swap)
-  }, [activeImageIndex])
-
-  // Auto-advance every 5 seconds
+  // Auto-advance every 2 seconds
   useEffect(() => {
     if (!autoplay || project.images.length <= 1) return
     const timer = setInterval(() => {
@@ -130,7 +114,6 @@ export default function ProjectDetailPanel({
             alt={displayedImage.alt}
             className={[
               'project-panel-img',
-              visible ? 'project-panel-img--visible' : 'project-panel-img--hidden',
               displayedImage.width && displayedImage.height
                 ? 'project-panel-media-img--natural'
                 : '',

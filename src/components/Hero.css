@@ -113,6 +113,10 @@
   pointer-events: none;
   overflow: hidden;
   flex-shrink: 0;
+
+  /* ── SMOOTH ANIMATION ADDITION ── */
+  opacity: 0; /* Prevents visual flash before animation triggers */
+  animation: slideUpFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .hero-photo {
@@ -304,7 +308,18 @@
 
   .hero-roles {
     transform: translateY(-3.75rem);
-    /* REDUCED SPACE FIX: Final layout sync for very tight mobile displays */
     margin-bottom: -3.75rem; 
   }
-} 
+}
+
+/* ── ANIMATION KEYFRAMES ── */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(100px); /* Adjust distance as needed */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
