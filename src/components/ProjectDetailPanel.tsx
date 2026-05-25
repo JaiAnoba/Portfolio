@@ -29,27 +29,60 @@ export default function ProjectDetailPanel({
   onClose,
 }: ProjectDetailPanelProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const [displayedIndex, setDisplayedIndex] = useState(0)
+  const [visible, setVisible] = useState(true)
   const [isClosing, setIsClosing] = useState(false)
+  const [autoplay, setAutoplay] = useState(true)
 
-  const activeImage = project.images[activeImageIndex] ?? project.images[0]
+  const displayedImage = project.images[displayedIndex] ?? project.images[0]
 
   useEffect(() => {
     setActiveImageIndex(0)
+    setDisplayedIndex(0)
+    setVisible(true)
+    setAutoplay(true)
   }, [project.title])
+
+  // When activeImageIndex changes, fade out → swap → fade in
+  useEffect(() => {
+    if (activeImageIndex === displayedIndex) return
+
+    setVisible(false)
+
+    const swap = setTimeout(() => {
+      setDisplayedIndex(activeImageIndex)
+      setVisible(true)
+    }, 400) // matches fade-out duration
+
+    return () => clearTimeout(swap)
+  }, [activeImageIndex])
+
+  // Auto-advance every 5 seconds
+  useEffect(() => {
+    if (!autoplay || project.images.length <= 1) return
+    const timer = setInterval(() => {
+      setActiveImageIndex(prev => (prev + 1) % project.images.length)
+    }, 5000)
+    return () => clearInterval(timer)
+  }, [autoplay, project.images.length])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') handleClose()
     }
-
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', handleKeyDown)
-
     return () => {
       document.body.style.overflow = ''
       window.removeEventListener('keydown', handleKeyDown)
     }
   }, [onClose])
+
+  function handleDotClick(index: number) {
+    setActiveImageIndex(index)
+    setAutoplay(false)
+    setTimeout(() => setAutoplay(true), 5000)
+  }
 
   function handleClose() {
     setIsClosing(true)
@@ -67,37 +100,65 @@ export default function ProjectDetailPanel({
       aria-labelledby="project-panel-title"
       onAnimationEnd={handleAnimationEnd}
     >
-      <div className="project-panel-glow project-panel-glow--left" aria-hidden />
-      <div className="project-panel-glow project-panel-glow--right" aria-hidden />
-
-      <button
-        type="button"
-        className="project-panel-close"
-        onClick={handleClose}
-        aria-label="Close project details"
-      >
-        <img
-          width={24}
-          height={24}
-          src="https://img.icons8.com/puffy-filled/32/delete-sign.png"
-          alt="Close panel"
-        />
-      </button>
-
       <div className="project-panel-layout">
-        <div className="project-panel-media">
-          <img
-            key={activeImage.src}
-            src={activeImage.src}
-            alt={activeImage.alt}
-            className={
-              activeImage.width && activeImage.height
-                ? 'project-panel-media-img--natural'
-                : undefined
-            }
-          />
+
+        {/* Glows */}
+        <div className="project-panel-glow project-panel-glow--left" aria-hidden />
+        <div className="project-panel-glow project-panel-glow--right" aria-hidden />
+
+        {/* Row 1: topbar */}
+        <div className="project-panel-topbar">
+          <button
+            type="button"
+            className="project-panel-close"
+            onClick={handleClose}
+            aria-label="Close project details"
+          >
+            <img
+              width={24}
+              height={24}
+              src="https://img.icons8.com/puffy-filled/32/delete-sign.png"
+              alt="Close panel"
+            />
+          </button>
         </div>
 
+        {/* Row 2: media column */}
+        <div className="project-panel-media">
+          <img
+            src={displayedImage.src}
+            alt={displayedImage.alt}
+            className={[
+              'project-panel-img',
+              visible ? 'project-panel-img--visible' : 'project-panel-img--hidden',
+              displayedImage.width && displayedImage.height
+                ? 'project-panel-media-img--natural'
+                : '',
+            ].filter(Boolean).join(' ')}
+          />
+
+          {project.images.length > 1 && (
+            <div
+              className="project-panel-dots"
+              role="tablist"
+              aria-label={`${project.title} gallery navigation`}
+            >
+              {project.images.map((image, index) => (
+                <button
+                  key={image.src}
+                  type="button"
+                  role="tab"
+                  className={`project-panel-dot${index === activeImageIndex ? ' project-panel-dot--active' : ''}`}
+                  aria-label={`View image ${index + 1} of ${project.images.length}`}
+                  aria-selected={index === activeImageIndex}
+                  onClick={() => handleDotClick(index)}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Row 2: copy column */}
         <div className="project-panel-copy">
           <h2 id="project-panel-title" className="project-panel-title">
             {project.title}
@@ -113,27 +174,8 @@ export default function ProjectDetailPanel({
           <p className="project-panel-category">{project.category}</p>
           <p className="project-panel-desc">{project.detailDescription}</p>
         </div>
-      </div>
 
-      {project.images.length > 1 && (
-        <div
-          className="project-panel-dots"
-          role="tablist"
-          aria-label={`${project.title} gallery navigation`}
-        >
-          {project.images.map((image, index) => (
-            <button
-              key={image.src}
-              type="button"
-              role="tab"
-              className={`project-panel-dot${index === activeImageIndex ? ' project-panel-dot--active' : ''}`}
-              aria-label={`View image ${index + 1} of ${project.images.length}`}
-              aria-selected={index === activeImageIndex}
-              onClick={() => setActiveImageIndex(index)}
-            />
-          ))}
-        </div>
-      )}
+      </div>
     </div>,
     document.body,
   )

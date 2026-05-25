@@ -64,10 +64,6 @@
   padding: 1rem 0;
 }
 
-.projects--hovered .projects-marquee-outer {
-  overflow: visible;
-}
-
 .projects-marquee-track {
   display: flex;
   gap: 1.5rem;

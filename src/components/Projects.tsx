@@ -49,6 +49,10 @@ const PROJECTS: ProjectDetail[] = [
         src: '/images/airlux.png',
         alt: 'AirLux Odyssey flight booking platform',
       },
+      {
+        src: '/images/a_booking.png',
+        alt: 'AirLux Odyssey flight booking platform',
+      },
     ],
   },
   {
@@ -61,6 +65,12 @@ const PROJECTS: ProjectDetail[] = [
     detailDescription:
       'To provide an easy cooking exploration experience, I built a mobile application interface for a recipe platform using React Native and Expo. I turned design wireframes into interactive components and connected external APIs and Firebase services so users can browse ingredients and save custom creations.',
     images: [
+      {
+        src: '/images/burgify_2.png',
+        alt: 'Burgify mobile app UI prototype across multiple phone screens',
+        width: 1024,
+        height: 630,
+      },
       {
         src: '/images/burgify.png',
         alt: 'Burgify mobile app UI prototype across multiple phone screens',
@@ -80,8 +90,22 @@ const PROJECTS: ProjectDetail[] = [
       'This responsive service platform landing page was built specifically for a jewelry photo editing business. Development involved crafting a clean, minimal layout, creating frontend galleries to display high-resolution portfolios, optimizing the site for quick load times, and structuring clear buttons to drive client inquiries.',
     images: [
       {
-        src: '/images/jfe.png',
-        alt: 'Jewelry Foto Editor luxury landing page',
+        src: '/images/home-jfe.png',
+        alt: 'Jewelry Foto Editor luxury home page',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/services-jfe.png',
+        alt: 'Jewelry Foto Editor luxury services page',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/blog-jfe.png',
+        alt: 'Jewelry Foto Editor luxury blogs page',
+        width: 1024,
+        height: 630,
       },
     ],
   },
