@@ -1,1 +1,10 @@
-/* App-level layout handled per section */
+html, body {
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* Internet Explorer and Edge */
+  }
+  
+  /* Chrome, Safari, and Opera */
+  html::-webkit-scrollbar, 
+  body::-webkit-scrollbar {
+    display: none;
+  }

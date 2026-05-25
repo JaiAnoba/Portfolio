@@ -32,10 +32,10 @@
 }
 
 .foundation-script {
-  font-family: var(--font-hand);
+  font-family: var(--font-oswald);
   font-weight: 800;
   color: var(--red);
-  font-size: clamp(5rem, 8vw, 10rem);
+  font-size: clamp(5rem, 7vw, 6rem);
 }
 
 .foundation-grid {
