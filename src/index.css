@@ -109,6 +109,43 @@ ul {
   line-height: 1;
 }
 
+/* Shared display sizes — tablet/mobile only (laptop uses component defaults) */
+@media (max-width: 1024px) {
+  :root {
+    --section-display-title: clamp(3.75rem, 14vw, 6rem);
+    --section-display-accent: clamp(2.25rem, 7.5vw, 3.75rem);
+    --about-heading-size: clamp(2.65rem, 10.5vw, 4rem);
+    --hero-display-title: clamp(5.75rem, 22vw, 8.75rem);
+  }
+
+  .script-accent {
+    font-size: var(--section-display-accent);
+    letter-spacing: 0.18em;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-display-title: clamp(3.5rem, 15vw, 5.75rem);
+    --section-display-accent: clamp(2rem, 7vw, 3.35rem);
+    --about-heading-size: clamp(2.45rem, 10vw, 3.65rem);
+    --hero-display-title: clamp(5.25rem, 22vw, 8rem);
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-display-title: clamp(3.25rem, 14vw, 5rem);
+    --section-display-accent: clamp(1.85rem, 6.5vw, 3rem);
+    --about-heading-size: clamp(2.25rem, 9.5vw, 3.25rem);
+    --hero-display-title: clamp(4.75rem, 21vw, 7.25rem);
+  }
+
+  .script-accent {
+    letter-spacing: 0.16em;
+  }
+}
+
 .section-label {
   font-size: 0.9375rem;
   letter-spacing: 0.047em;

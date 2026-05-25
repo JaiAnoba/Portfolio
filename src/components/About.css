@@ -10,10 +10,10 @@
 }
 
 /* =========================
-   BACKGROUND GLOW LAYER
+   BACKGROUND GLOW LAYER (Desktop)
 ========================= */
 
-/* Left glow */
+/* Left glow (Desktop Default) */
 .about::before {
   content: "";
   position: absolute;
@@ -31,7 +31,7 @@
   pointer-events: none;
 }
 
-/* Right glow */
+/* Right glow (Desktop Default) */
 .about::after {
   content: "";
   position: absolute;
@@ -126,35 +126,109 @@
 }
 
 /* =========================
-   RESPONSIVE
+   RESPONSIVE LAYOUT MODIFICATIONS
 ========================= */
 
 @media (max-width: 1024px) {
   .about {
     grid-template-columns: 1fr;
-    padding: 3rem 1.5rem;
+    min-height: 0;
+    gap: 2.5rem;
+    
+    /* ENHANCED PADDING: Deepened both vertical and horizontal spacing channels */
+    padding: clamp(5rem, 10vw, 7rem) clamp(2rem, 6vw, 4rem) clamp(4rem, 8vw, 6rem);
   }
 
-  .about-portrait-wrap {
-    order: -1;
-    justify-self: center;
-    max-width: 480px;
-  }
-
-  /* Adjust left glow */
+  /* THE LINE: Repositioned coordinates dynamically follow the increased side padding */
   .about::before {
-    left: -1rem;
-    top: 3rem;
-    width: 260px;
-    height: 220px;
+    content: "";
+    display: block;
+    position: absolute;
+    
+    top: 0;
+    left: clamp(2rem, 6vw, 4rem);  /* Expanded left buffer */
+    right: clamp(2rem, 6vw, 4rem); /* Expanded right buffer */
+    
+    height: 2px;
+    background-color: #c90000;
+    border-radius: 10px;
+    
+    /* Reset layout properties */
+    width: auto;
+    filter: none;
+    opacity: 1;
+    z-index: 5;
   }
 
-  /* Adjust right glow */
-  .about::after {
-    right: 50%;
-    top: 0;
-    transform: translateX(50%);
-    width: 420px;
-    height: 500px;
+  /* PORTRAIT REMOVED */
+  .about-portrait-wrap {
+    display: none !important;
+  }
+
+  .about-content {
+    order: 1;
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+  }
+
+  .about-location {
+    display: block;
+    padding-top: 0; 
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.35rem, 4.5vw, 2rem) !important;
+  }
+
+  .about-heading {
+    font-size: clamp(3.5rem, 9vw, 4.8rem) !important;
+    line-height: 1.08;
+    margin-bottom: 1.75rem;
+  }
+
+  .about-text {
+    font-size: clamp(0.875rem, 2.4vw, 0.95rem);
+    line-height: 1.45;
+  }
+
+  /* GLOW REMOVALS RETAINED */
+  .about::after,
+  .about-glow-portrait {
+    display: none !important;
+  }
+
+  .about-socials {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .about {
+    /* Enhanced padding baseline for small handheld screens */
+    padding: 4.5rem 2rem 3.5rem;
+  }
+
+  /* Ensures the line snaps nicely to the 480px mobile viewport padding */
+  .about::before {
+    left: 2rem;
+    right: 2rem;
+  }
+
+  .about-name {
+    white-space: normal;
+  }
+
+  .about-heading {
+    /* Hardcoded high static sizes to absolutely bypass clamp boundaries */
+    font-size: 3.6rem !important; 
+    line-height: 1.05 !important;
+  }
+
+  .about-location {
+    font-size: 1.4rem !important;
+  }
+
+  .about-text {
+    font-size: 0.95rem;
   }
 }
