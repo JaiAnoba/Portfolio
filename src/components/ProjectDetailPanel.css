@@ -66,6 +66,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.75fr);
   grid-template-rows: auto 1fr;
+  align-items: center;
   gap: clamp(1rem, 3vw, 2rem);
   width: 100%;
   max-width: 1200px;
@@ -164,7 +165,7 @@
   position: relative;
   z-index: 2;
   max-width: 450px;
-  margin-top: 2.7rem;
+  align-self: center;
 }
 
 .project-panel-title {
