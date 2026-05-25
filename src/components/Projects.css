@@ -27,7 +27,7 @@
   text-transform: lowercase;
   letter-spacing: 0.38em !important;
   display: flex;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(3rem, 8vw, 4.4rem);
 }
 
 .projects-accent span { position: relative; }
