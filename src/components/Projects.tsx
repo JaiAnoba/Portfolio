@@ -124,6 +124,7 @@ const PROJECTS: ProjectDetail[] = [
 ]
 
 function getCardImage(project: ProjectDetail) {
+  if (project.title === 'Jewelry Foto Editor') return project.images[2]
   return project.images[0]
 }
 

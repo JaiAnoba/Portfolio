@@ -52,7 +52,7 @@ export default function ProjectDetailPanel({
     const swap = setTimeout(() => {
       setDisplayedIndex(activeImageIndex)
       setVisible(true)
-    }, 400) // matches fade-out duration
+    }, 300) // matches fade-out duration
 
     return () => clearTimeout(swap)
   }, [activeImageIndex])
@@ -62,7 +62,7 @@ export default function ProjectDetailPanel({
     if (!autoplay || project.images.length <= 1) return
     const timer = setInterval(() => {
       setActiveImageIndex(prev => (prev + 1) % project.images.length)
-    }, 5000)
+    }, 4000)
     return () => clearInterval(timer)
   }, [autoplay, project.images.length])
 
