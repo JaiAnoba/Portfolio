@@ -1,42 +1,41 @@
 .foundation {
   position: relative;
-  padding: 4rem 8.875rem 5rem;
+  padding: 4rem 5.55rem 5rem;
   overflow: hidden;
+  isolation: isolate;
 }
 
 .foundation-glow-left {
+  position: absolute;
   width: 117px;
   height: 374px;
   background: var(--red-dark);
   left: -35px;
-  top: 20%;
-}
-
-.foundation-glow-right {
-  width: 117px;
-  height: 374px;
-  background: var(--red-dark);
-  right: 0;
-  top: 50%;
+  top: 53%;
+  z-index: 0;
+  filter: blur(80px);
+  pointer-events: none;
 }
 
 .foundation-heading {
   font-family: var(--font-oswald);
   font-weight: 700;
-  font-size: clamp(3.5rem, 8vw, 5.625rem);
+  font-size: clamp(3.5rem, 8vw, 5.5rem);
   line-height: 0.99;
   margin-bottom: 4rem;
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 0.25rem 1rem;
+  position: relative;
+  z-index: 1;
 }
 
 .foundation-script {
   font-family: var(--font-hand);
   font-weight: 800;
   color: var(--red);
-  font-size: clamp(3rem, 7vw, 10rem);
+  font-size: clamp(5rem, 8vw, 10rem);
 }
 
 .foundation-grid {
@@ -44,6 +43,8 @@
   grid-template-columns: 1fr 1.4fr;
   gap: 4rem;
   align-items: start;
+  position: relative;
+  z-index: 1;
 }
 
 .foundation-degree {
@@ -58,14 +59,15 @@
   font-weight: 400;
   font-size: 1.25rem;
   letter-spacing: 0.1em;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .foundation-line {
   width: 231px;
   height: 2px;
   background: #c90000;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
+  border-radius: 10px;
 }
 
 .foundation-awards-label {
@@ -75,7 +77,7 @@
 .foundation-awards {
   font-family: var(--font-oswald);
   font-weight: 500;
-  font-size: 1.375rem;
+  font-size: 1.3rem;
   letter-spacing: 0.1em;
   list-style: disc;
   padding-left: 2rem;
@@ -86,18 +88,33 @@
   line-height: 1.27;
 }
 
+.stack-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: auto;
+}
+
+.foundation-stack-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
 .foundation-stack-title {
   font-family: var(--font-oswald);
   font-weight: 600;
   font-size: 2rem;
-  margin-bottom: 0.5rem;
+  white-space: nowrap;
 }
 
 .foundation-stack-line {
   width: 122px;
+  flex-shrink: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--red), var(--white));
-  margin-bottom: 2rem;
+  background: #c90000;
+  border-radius: 10px;
 }
 
 .stack-grid {
@@ -116,6 +133,13 @@
   flex-direction: column;
   justify-content: flex-start;
   min-height: 126px;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+  cursor: default;
+}
+
+.stack-card:hover {
+  border-color: var(--brand-color);
+  background-color: color-mix(in srgb, var(--brand-color) 10%, transparent);
 }
 
 .stack-large {
@@ -146,17 +170,32 @@
   flex-direction: column;
   gap: 0.5rem;
   height: 100%;
+  justify-content: space-between;
+}
+
+.stack-icons-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
 }
 
 .stack-icon {
   width: 28px;
   height: 28px;
   object-fit: contain;
+  transition: filter 0.3s ease;
+  filter: grayscale(100%) brightness(0.6);
 }
 
 .stack-large .stack-icon {
-  width: 37px;
-  height: 37px;
+  width: 45px;
+  height: 45px;
+}
+
+.stack-card:hover .stack-icon {
+  filter: none;
 }
 
 .stack-name {
@@ -164,6 +203,7 @@
   font-weight: 600;
   font-size: 1.25rem;
   line-height: 1.2;
+  transition: color 0.25s ease;
 }
 
 .stack-large .stack-name {
@@ -173,7 +213,6 @@
 .stack-desc {
   font-size: 0.625rem;
   line-height: 1.3;
-  margin-top: auto;
 }
 
 @media (max-width: 1100px) {
