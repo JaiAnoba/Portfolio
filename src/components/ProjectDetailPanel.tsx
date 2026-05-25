@@ -62,7 +62,7 @@ export default function ProjectDetailPanel({
     if (!autoplay || project.images.length <= 1) return
     const timer = setInterval(() => {
       setActiveImageIndex(prev => (prev + 1) % project.images.length)
-    }, 4000)
+    }, 2000)
     return () => clearInterval(timer)
   }, [autoplay, project.images.length])
 
