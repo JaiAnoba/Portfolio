@@ -14,7 +14,7 @@ const STACK = [
     icons: ['https://img.icons8.com/color/96/figma.png'],
     desc: 'The core of my UI/UX workflow. Mapping user flows, building design systems, and crafting high-fidelity prototypes.',
     size: 'large',
-    brandColor: '#c42d00',
+    brandColor: '#6b0000',
   },
   {
     name: 'TYPESCRIPT',
