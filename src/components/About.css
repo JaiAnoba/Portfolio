@@ -65,7 +65,7 @@
 }
 
 .about-heading {
-  font-size: clamp(3rem, 7vw, 5rem) !important;
+  font-size: clamp(3.5rem, 7vw, 5.3rem) !important;
   margin-bottom: 2.5rem;
 }
 
