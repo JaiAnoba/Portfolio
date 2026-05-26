@@ -11,16 +11,14 @@
     flex-direction: column;
     justify-content: flex-start; 
     background: var(--black);
-    overflow-y: auto;           
+    overflow-y: auto;          
     overflow-x: hidden;
     animation: project-panel-in 0.35s ease;
     
-    /* Hides scrollbars */
     scrollbar-width: none;      
     -ms-overflow-style: none;  
   }
   
-  /* Hide scrollbar for Chrome, Safari and Opera */
   .project-panel::-webkit-scrollbar {
     display: none;
   }
@@ -51,15 +49,6 @@
     z-index: -1;
   }
   
-  /* .project-panel-glow--left {
-    width: 420px;
-    height: 420px;
-    left: -15rem;
-    top: -20rem;
-    background: var(--red-dark);
-    opacity: 0.75;
-  } */
-  
   .project-panel-glow--right {
     width: 480px;
     height: 250px;
@@ -70,21 +59,18 @@
   }
   
   /* ==========================================================================
-     3. LAYOUT GRID (FIXED DESKTOP PADDING)
+     3. LAYOUT GRID (DESKTOP)
      ========================================================================== */
   .project-panel-layout {
     position: relative;
     z-index: 1;
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.75fr);
-    grid-template-rows: 1fr; 
     align-items: center;
     gap: clamp(1rem, 3vw, 2rem);
     width: 100%;
     max-width: 1200px;
     margin: auto; 
-    
-    /* Tightened left & right padding to give content more room to breathe */
     padding: clamp(5rem, 9vh, 7rem) clamp(0.5rem, 1.5vw, 1.25rem) clamp(2.5rem, 5vh, 3.5rem);
   }
   
@@ -124,7 +110,7 @@
   }
   
   /* ==========================================================================
-     5. MEDIA COLUMN & CLEAN CROSSFADE TRANSITIONS (OPTION 1)
+     5. MEDIA COLUMN & CLEAN CROSSFADE TRANSITIONS
      ========================================================================== */
   .project-panel-media {
     position: relative;
@@ -137,36 +123,32 @@
     isolation: isolate;
   }
   
-  /* Protects layout shifts and locks aspect ratios during image transitions */
   .project-panel-img-wrapper {
+    position: relative; 
     width: 100%;
     overflow: hidden;
     border-radius: 12px;
     background: #0d0d0d;
   }
   
-  /* ── Image with slow clean fade ── */
   .project-panel-img {
     display: block;
     width: 100%;
+    height: auto;
     max-height: min(82vh, 740px);
     object-fit: cover;
     border-radius: 12px;
-    
-    /* Pure opacity fade over 0.5s - snappy but smooth */
     transition: opacity 0.5s ease-in-out;
     will-change: opacity; 
   }
   
-  /* Entering Image state */
   .project-panel-img--visible {
     opacity: 1;
   }
   
-  /* Exiting Image state */
   .project-panel-img--hidden {
     opacity: 0;
-    transition: opacity 0.15s ease-in-out; /* Snappy exit so there is no ghosting */
+    transition: opacity 0.15s ease-in-out;
   }
   
   .project-panel-media-img--natural {
@@ -213,7 +195,7 @@
   .project-panel-title {
     font-family: var(--font-oswald);
     font-size: clamp(3rem, 7vw, 3.5rem);
-    font-weight: medium;
+    font-weight: 500;
     line-height: 0.95;
     color: var(--red);
     margin-bottom: 0.7rem;
@@ -230,7 +212,6 @@
     margin-bottom: 1.75rem;
   }
   
-  /* Tech Stack Badges */
   .project-panel-stack {
     display: flex;
     flex-direction: row;
@@ -264,103 +245,148 @@
   }
   
   /* ==========================================================================
-     8. RESPONSIVE BREAKPOINTS (TABLETS & PHONES)
+     8. OVERLAY NAVIGATION BUTTONS
+     ========================================================================== */
+  .project-panel-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(15, 15, 15, 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--white, #ffffff);
+    cursor: pointer;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    z-index: 10;
+    opacity: 0; 
+    transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .project-panel-img-wrapper:hover .project-panel-nav-btn {
+    opacity: 0.8;
+  }
+  
+  .project-panel-nav-btn:hover {
+    opacity: 1 !important;
+    background: rgba(15, 15, 15, 0.8);
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .project-panel-nav-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  
+  .project-panel-nav-btn--prev { left: 1rem; }
+  .project-panel-nav-btn--next { right: 1rem; }
+  
+  .project-panel-nav-btn svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* ==========================================================================
+     9. RESPONSIVE BREAKPOINTS (TABLETS & PHONES)
      ========================================================================== */
   @media (max-width: 1024px) {
     .project-panel-layout {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto auto;
-      padding-top: clamp(4.5rem, 10vh, 6.5rem);
-      
-      /* Tied values securely with desktop rules to eliminate page layout shifts */
-      padding-left: clamp(0.5rem, 2vw, 1.25rem);
-      padding-right: clamp(0.5rem, 2vw, 1.25rem);
-      
+      display: flex; /* Swapped layout engine to flex block layout */
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      padding-top: 5rem;
+      padding-left: 1rem;
+      padding-right: 1rem;
       margin: 0 auto;
       gap: 1.5rem;
     }
   
     .project-panel-media {
       width: 100%;
-      background: #0d0d0d;
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: min(42vh, 380px);
-      max-height: min(52vh, 480px);
-      aspect-ratio: 16 / 10;
+      height: auto; /* Drops rigid container boxes */
+      background: transparent;
+      display: block;
     }
   
-    .project-panel-img {
+    .project-panel-img-wrapper {
       width: 100%;
-      height: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      object-position: center;
-      border-radius: 12px;
+      height: auto;
+      background: transparent;
     }
   
+    .project-panel-img,
     .project-panel-media-img--natural {
-      width: 100%;
-      height: 100%;
-      max-height: 100%;
-      object-fit: contain;
-      object-position: center;
-      background: #0d0d0d;
+      width: 100% !important;
+      height: auto !important; /* Image renders accurately to its own aspect bounds */
+      max-height: 60vh !important; /* Never runs off the viewport screen */
+      object-fit: contain !important; 
+      border-radius: 12px;
     }
   
     .project-panel-copy {
       max-width: none;
-      padding-bottom: 1rem;
+      padding-bottom: 2.5rem;
+    }
+  
+    .project-panel-title {
+      white-space: normal;
     }
   
     .project-panel-desc {
       text-align: left;
     }
   
-    .project-panel-glow--right {
-      width: min(360px, 70vw);
-      right: -8rem;
+    /* Make nav buttons fully interactive and visible on mobile touch viewports */
+    .project-panel-nav-btn {
+      opacity: 0.9 !important;
+      padding: 0.6rem;
+      background: rgba(15, 15, 15, 0.75);
     }
+    .project-panel-nav-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+    .project-panel-nav-btn--prev { left: 0.5rem; }
+    .project-panel-nav-btn--next { right: 0.5rem; }
   }
   
   @media (max-width: 480px) {
     .project-panel-topbar {
-      top: 1rem;
-      right: 1rem;
+      top: 0.75rem;
+      right: 0.75rem;
     }
   
     .project-panel-layout {
-      padding-top: 3.75rem;
-    }
-  
-    .project-panel-media {
-      min-height: min(38vh, 320px);
-      max-height: min(45vh, 400px);
-      aspect-ratio: 4 / 3;
+      padding-top: 3.5rem;
+      gap: 1rem;
     }
   
     .project-panel-title {
-      font-size: clamp(2.25rem, 10vw, 2.75rem);
+      font-size: clamp(2rem, 9vw, 2.5rem);
     }
   
     .project-panel-type {
-      margin-bottom: 1.25rem;
+      margin-bottom: 1rem;
     }
   
     .project-panel-stack {
-      gap: 0.4rem 0.45rem;
+      gap: 0.4rem;
+      margin-bottom: 1.25rem;
     }
   
     .project-panel-stack span {
-      white-space: normal;
-      text-align: center;
+      font-size: 0.7rem;
+      padding: 0.35rem 0.75rem;
     }
   
     .project-panel-img,
     .project-panel-media-img--natural {
-      border-radius: 10px;
+      border-radius: 8px;
+      max-height: 50vh !important;
     }
   }

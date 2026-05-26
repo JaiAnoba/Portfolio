@@ -66,6 +66,10 @@ export default function ProjectDetailPanel({
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') handleClose()
+      if (project.images.length > 1) {
+        if (event.key === 'ArrowRight') handleNextClick()
+        if (event.key === 'ArrowLeft') handlePrevClick()
+      }
     }
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', handleKeyDown)
@@ -73,13 +77,31 @@ export default function ProjectDetailPanel({
       document.body.style.overflow = ''
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [onClose])
+  }, [onClose, activeImageIndex, project.images])
 
-  function handleDotClick(index: number) {
-    if (index === activeImageIndex) return
-    triggerImageChange(index)
+  const resetAutoplayTimer = () => {
     setAutoplay(false)
     setTimeout(() => setAutoplay(true), 8000)
+  }
+
+  function handlePrevClick() {
+    if (isImageChanging) return
+    const prevIndex = (activeImageIndex - 1 + project.images.length) % project.images.length
+    triggerImageChange(prevIndex)
+    resetAutoplayTimer()
+  }
+
+  function handleNextClick() {
+    if (isImageChanging) return
+    const nextIndex = (activeImageIndex + 1) % project.images.length
+    triggerImageChange(nextIndex)
+    resetAutoplayTimer()
+  }
+
+  function handleDotClick(index: number) {
+    if (index === activeImageIndex || isImageChanging) return
+    triggerImageChange(index)
+    resetAutoplayTimer()
   }
 
   function handleClose() {
@@ -135,6 +157,32 @@ export default function ProjectDetailPanel({
                   : '',
               ].filter(Boolean).join(' ')}
             />
+
+            {/* Left and Right Nav Buttons Overlays */}
+            {project.images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  className="project-panel-nav-btn project-panel-nav-btn--prev"
+                  onClick={handlePrevClick}
+                  aria-label="Previous image"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="project-panel-nav-btn project-panel-nav-btn--next"
+                  onClick={handleNextClick}
+                  aria-label="Next image"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                  </svg>
+                </button>
+              </>
+            )}
           </div>
 
           {project.images.length > 1 && (
