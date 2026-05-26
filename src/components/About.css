@@ -126,6 +126,37 @@
   -webkit-mask-image: linear-gradient(to bottom, #000 44%, transparent 100%);
 }
 
+/* ── ABOUT SECTION INTRO ANIMATION ── */
+
+/* Define the base animation */
+@keyframes aboutSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Apply animation to content blocks */
+.about-location,
+.about-heading,
+.about-text,
+.about-socials,
+.about-portrait-wrap {
+  opacity: 0;
+  animation: aboutSlideIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Stagger the entrance for a professional look */
+.about-location     { animation-delay: 0.2s; }
+.about-heading      { animation-delay: 0.4s; }
+.about-text         { animation-delay: 0.6s; }
+.about-socials      { animation-delay: 0.8s; }
+.about-portrait-wrap { animation-delay: 0.5s; }
+
 /* =========================
    RESPONSIVE LAYOUT MODIFICATIONS
 ========================= */
