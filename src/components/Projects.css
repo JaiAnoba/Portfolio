@@ -90,8 +90,7 @@
   position: relative;
   isolation: isolate;
   flex-shrink: 0;
-  /* Updated width setup: Increased view width coefficient and upscaled structural ceiling limits */
-  width: clamp(320px, 45vw, 680px);
+  width: clamp(320px, 40vw, 580px);
   aspect-ratio: 16 / 10;
   border: none;
   padding: 0;
@@ -302,7 +301,7 @@
   }
 
   .projects-slide {
-    width: clamp(300px, 72vw, 540px);
+    width: clamp(300px, 65vw, 500px);
     transform-origin: center center;
   }
 
@@ -352,7 +351,7 @@
   }
 
   .projects-slide {
-    width: clamp(280px, 78vw, 500px);
+    width: clamp(280px, 72vw, 460px); 
   }
 
   .projects-fade {
@@ -392,7 +391,7 @@
   }
 
   .projects-slide {
-    width: clamp(260px, 86vw, 440px);
+    width: clamp(260px, 82vw, 400px); 
   }
 
   .projects-fade {

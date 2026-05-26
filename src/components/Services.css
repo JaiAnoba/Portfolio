@@ -19,7 +19,7 @@
 .services-title {
   font-family: var(--font-oswald), sans-serif;
   font-weight: 700;
-  font-size: clamp(3.5rem, 8vw, 7.8rem);
+  font-size: clamp(3.5rem, 7vw, 7rem);
   line-height: 0.9;
   margin: 0 0 4rem 0;
   padding: 1px;

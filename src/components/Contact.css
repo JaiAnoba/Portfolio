@@ -89,7 +89,6 @@
   display: flex;
   align-items: center;
   gap: 3rem;
-  flex-wrap: wrap;
 }
 
 .contact-copy {
@@ -100,10 +99,6 @@
   padding: 0;
 }
 
-/* .contact-copy:hover {
-  color: var(--red);
-} */
-
 .contact-copied {
   position: absolute;
   left: 100%;
@@ -111,6 +106,14 @@
   font-size: 0.75rem;
   color: var(--red);
   white-space: nowrap;
+}
+
+.contact-copy img {
+  transition: filter 0.3s ease;
+}
+
+.contact-copy:hover img {
+  filter: invert(18%) sepia(94%) saturate(7252%) hue-rotate(359deg) brightness(100%) contrast(118%);
 }
 
 .contact-socials {
@@ -203,6 +206,7 @@
 
   .contact-email-row {
     gap: 1.25rem;
+    white-space: nowrap;
   }
 
   .contact-email {
