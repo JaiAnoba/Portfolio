@@ -1,26 +1,33 @@
 .services {
   position: relative;
-  padding: 2rem 2rem 3rem;
+  padding: 3rem 4rem;
+  background: #000000;
   text-align: center;
-}
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+} 
 
 .services-sub {
-  color: var(--white);
-  margin-bottom: 0.5rem;
-  font-size: clamp(1rem, 2vw, 2rem) !important;
+  font-family: var(--font-hand);
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-style: italic;
 }
 
 .services-title {
-  font-family: var(--font-oswald);
+  font-family: var(--font-oswald), sans-serif;
   font-weight: 700;
-  font-size: clamp(3rem, 8vw, 6rem);
-  line-height: 0.99;
-  margin-bottom: 1rem;
+  font-size: clamp(3.5rem, 8vw, 7.8rem);
+  line-height: 0.9;
+  margin: 0 0 4rem 0;
+  padding: 1px;
+  text-transform: uppercase;
   background: linear-gradient(
-    90deg,
-    #ffffff 0%,
-    #e48080 40.67%,
-    #7a0000 85.73% 
+    180deg, 
+    #ffffff 40%, 
+    #a3a3a3 100%
   );
   -webkit-background-clip: text;
   background-clip: text;
@@ -28,493 +35,106 @@
   -webkit-text-fill-color: transparent;
 }
 
-.services-grid {
+/* ── 4-Card Responsive Grid Layout ── */
+.services-container {
   display: grid;
-  grid-template-columns: minmax(260px, 0.95fr) minmax(380px, 1.4fr);
-  gap: 2rem 3rem;
-  max-width: 1280px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.5rem 2rem;
+  max-width: 1200px;
   margin: 0 auto;
-  align-items: center;
-  text-align: left;
-  padding: 0 clamp(1.5rem, 5vw, 5rem);
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
-.services-copy {
+/* ── Service Card Styles (As shown in mockup) ── */
+.service-card {
   position: relative;
-}
-
-.services-copy::before {
-  content: '';
-  position: absolute;
-  left: -18rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 300px;
-  height: 800px;
-  background: radial-gradient(circle, var(--red-dark) 0%, transparent 70%);
-  opacity: 0.45;
-  filter: blur(60px);
-  pointer-events: none;
-  z-index: -1;
-} 
-
-.services-copy h3 {
-  margin-bottom: 1.5rem;
-  font-family: var(--font-hand);
-  font-size: clamp(2.4rem, 2.4vw, 2.4rem);
-}
-
-.services-copy-text {
-  animation-delay: 0.12s;
-}
-
-.services-copy-title,
-.services-copy-text {
-  animation: services-copy-in 0.7s cubic-bezier(0.4, 0, 0.2, 1); 
-}
-
-@keyframes services-copy-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px); 
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.services-copy p {
-  font-size: 0.9375rem;
-  line-height: 1.27;
-  text-align: justify;
-  max-width: 354px;
-}
-
-.services-underline {
-  width: 122px;
-  height: 2px;
-  background: var(--red-dark);
-  margin-top: 2rem;
-  border-radius: 10px;
-}
-
-.services-visual {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  min-width: 0;
-}
-
-.services-carousel {
-  position: relative;
-  width: 100%;
-  max-width: 720px;
-  min-height: 430px;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-}
-
-.services-carousel-glow {
-  position: absolute;
-  width: 120px;
-  height: 360px;
-  left: 118px;
-  top: 50%;
-  transform: translateY(-50%);
-  background: var(--red-dark);
-  border-radius: 50%;
-  filter: blur(110px);
-  opacity: 0.95;
-  z-index: 0;
-  pointer-events: none;
-  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Scatter animation */
-@keyframes stack-scatter-back {
-  from {
-    transform: rotate(0deg) translateY(0px);
-    opacity: 0;
-  }
-  to {
-    transform: rotate(-6deg) translateY(6px);
-    opacity: 1;
-  }
-}
-
-@keyframes stack-scatter-mid {
-  from {
-    transform: rotate(0deg) translateY(0px);
-    opacity: 0;
-  }
-  to {
-    transform: rotate(-13deg) translateY(10px);
-    opacity: 1;
-  }
-}
-
-/* Stack cards — decorative red cards behind the active card */
-.services-stack {
-  position: absolute;
-  left: 1.5px;
-  top: 44%;
-  width: 290px;
-  height: 290px;
-  transform: translateY(-50%);
-  z-index: 1;
-  pointer-events: none;
-  opacity: 1;
-  transition: opacity 0.15s ease 0s;
-}
-
-/* Applied via JS during card switch — fade out instantly */
-.services-stack.is-switching {
-  opacity: 0;
-  transition: opacity 0.4s ease-out 0s;
-}
-
-.services-stack-card {
-  position: absolute;
-  border-radius: 14px;
-  background: rgba(145, 2, 2, 0.35);
-  border: 1px solid rgba(145, 2, 2, 0.4);
-  width: 100%;
-  height: 100%;
-}
-
-/* Slightly tilted, close behind — scatters after active card lands */
-.services-stack-card--back {
-  transform-origin: bottom center;
-  transform: rotate(-6deg) translateY(6px);
-}
-
-/* More tilted, furthest behind — scatters slightly after --back */
-.services-stack-card--mid {
-  transform-origin: bottom center;
-  transform: rotate(-13deg) translateY(10px);
-}
-
-/* Trigger scatter when is-switching is removed */
-.services-stack:not(.is-switching) .services-stack-card--back {
-  animation: stack-scatter-back 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s both;
-}
-
-.services-stack:not(.is-switching) .services-stack-card--mid {
-  animation: stack-scatter-mid 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s both;
-}
-
-.services-carousel-viewport {
-  position: relative;
-  width: 100%;
-  height: 430px;
-  z-index: 2;
-  overflow: visible;
-}
-
-.services-carousel-track {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-/* Base card — all shared defaults */
-.services-carousel-card {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: #0a0a0a;
+  min-height: 150px;
+  padding: 1.8rem 1.5rem 1.5rem;
+  border-radius: 12px;
+  box-sizing: border-box;
+  text-align: center;
   overflow: hidden;
-  border-radius: 14px;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.55);
-  aspect-ratio: 294 / 330;
-  width: 290px;
-  transform-origin: center center;
-  transition:
-    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform, filter, width, opacity;
+  background: linear-gradient(
+    to bottom,
+    rgba(101, 0, 0, 0.85) 0%, 
+    rgba(10, 10, 10, 1) 100%
+  );
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 }
 
-.services-carousel-card img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-  transition: filter 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(139, 0, 0, 0.15);
+  
+  background: linear-gradient(
+    to bottom,
+    rgba(74, 0, 0, 0.6) 0%,
+    rgba(10, 10, 10, 1) 100%
+  );
 }
 
-/* ── OFFSET 0 — Active: full size, sharp, front ── */
-.services-carousel-card[data-offset='0'] {
-  width: min(290px, 42vw);
-  z-index: 4;
-  transform: translateY(-50%) translateX(0px) scale(1);
-  opacity: 1;
-  filter: none;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
+.service-text {
+  font-family: var(--font-poppins), sans-serif;
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 440px;
+  margin: 0;
 }
 
-.services-carousel-card[data-offset='0'] img {
-  filter: none;
+.service-heading {
+  font-family: var(--font-hand);
+  font-size: clamp(2.2rem, 3.2vw, 3.2rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0.75rem 0 0 0; 
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+  line-height: 1.1;
+}
+/* ── Responsive Viewports ── */
+
+/* Tablet Layout Changes */
+@media (max-width: 900px) {
+  .services-container {
+    gap: 1.5rem;
+  }
+  
+  .service-card {
+    min-height: 240px;
+    padding: 2rem 1.5rem 1.5rem;
+  }
 }
 
-/* ── OFFSET 1 — Next: slightly smaller, shifted right, light blur ── */
-.services-carousel-card[data-offset='1'] {
-  width: min(290px, 42vw);
-  z-index: 3;
-  transform: translateY(-50%) translateX(300px) scale(0.88);
-  opacity: 0.82;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
-}
-
-.services-carousel-card[data-offset='1'] img {
-  filter: blur(2.5px) brightness(0.82);
-}
-
-/* ── OFFSET 2 — Third: further right, smaller, more faded ── */
-.services-carousel-card[data-offset='2'] {
-  width: min(290px, 42vw);
-  z-index: 2;
-  transform: translateY(-50%) translateX(565px) scale(0.76);
-  opacity: 0.55;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-}
-
-.services-carousel-card[data-offset='2'] img {
-  filter: blur(4px) brightness(0.65);
-}
-
-.services-dots {
-  display: flex;
-  gap: 0.5rem;
-  z-index: 5;
-  padding-right: 0;
-  align-self: center;
-}
-
-.services-dots button {
-  padding: 0;
-  border: none;
-  cursor: pointer;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gray-border);
-  transition:
-    width 0.3s ease,
-    background 0.3s ease,
-    border-radius 0.3s ease;
-}
-
-.services-dots button.active {
-  background: var(--white);
-  width: 18px;
-  border-radius: 4px;
-}
-
-.services-dots button:focus-visible {
-  outline: 2px solid var(--white);
-  outline-offset: 3px;
-}
-
-/* Tablet and below — laptop two-column layout unchanged at 1025px+ */
-@media (max-width: 1024px) {
+/* Mobile Layout Changes */
+@media (max-width: 680px) {
   .services {
-    padding: 2rem 0 2.5rem;
-    overflow-x: clip;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    text-align: center;
-    padding: 0;
-  }
-
-  .services-sub,
-  .services-title {
-    padding-left: clamp(1.25rem, 4vw, 2rem);
-    padding-right: clamp(1.25rem, 4vw, 2rem);
+    padding: 3rem 1rem;
   }
 
   .services-title {
-    font-size: var(--section-display-title);
-    line-height: 0.95;
-    margin-bottom: 1.25rem;
+    margin-bottom: 2.5rem;
   }
 
-  .services-copy {
-    padding-left: clamp(1.25rem, 4vw, 2rem);
-    padding-right: clamp(1.25rem, 4vw, 2rem);
+  .services-container {
+    grid-template-columns: 1fr; /* Switch to a vertical row stack */
+    gap: 1.5rem;
+    max-width: 450px;
   }
 
-  .services-copy::before {
-    left: 50%;
-    top: 0;
-    transform: translate(-50%, -30%);
-    width: 220px;
-    height: 320px;
-  }
-
-  .services-copy p {
-    margin: 0 auto;
-    text-align: center;
-    max-width: 100%;
-  }
-
-  .services-underline {
-    margin: 2rem auto 0;
-  }
-
-  .services-visual {
-    justify-content: center;
-    width: 100%;
-    padding: 0;
-    overflow-x: clip;
-  }
-
-  .services-carousel {
-    --services-active-w: min(360px, 94vw);
-    --services-stack-w: calc(var(--services-active-w) * 0.94);
-    --services-active-h: calc(var(--services-active-w) * 330 / 294);
-    --services-stack-h: calc(var(--services-stack-w) * 330 / 294);
-    align-items: center;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    min-height: calc(var(--services-active-h) + 2rem);
-    overflow: hidden;
-    position: relative;
-  }
-
-  .services-carousel-viewport {
-    overflow: hidden;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
-    height: var(--services-active-h);
-    min-height: var(--services-active-h);
-  }
-
-  .services-carousel-glow {
-    left: 50%;
-    transform: translate(calc(-50% - 18px), -50%);
-  }
-
-  /* Stack slightly smaller so tilt does not overflow; active card full width, straight */
-  .services-stack {
-    display: block;
-    left: 50%;
-    top: 50%;
-    width: var(--services-stack-w);
-    height: var(--services-stack-h);
-    transform: translate(calc(-50% - 8px), calc(-50% - 12px));
-    z-index: 1;
-  }
-
-  .services-stack-card--back {
-    transform: rotate(-5deg) translateY(5px);
-  }
-
-  .services-stack-card--mid {
-    transform: rotate(-10deg) translateY(8px);
-  }
-
-  .services-carousel-card {
-    left: 50%;
-    width: var(--services-active-w);
-    height: var(--services-active-h);
-    aspect-ratio: auto;
-  }
-
-  .services-carousel-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .services-carousel-card[data-offset='0'] {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-    visibility: visible;
-    z-index: 4;
-    filter: none;
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.65);
-  }
-
-  .services-carousel-card[data-offset='0'] img {
-    filter: none;
-  }
-
-  .services-carousel-card[data-offset='1'],
-  .services-carousel-card[data-offset='2'] {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translate(-50%, -50%) scale(0.96);
-  }
-
-  .services-dots {
-    align-self: center;
-    padding-right: 0;
-    margin-top: 1.25rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .services-copy h3 {
-    font-size: clamp(1.75rem, 5vw, 2.25rem);
-  }
-
-  .services-carousel {
-    min-height: 0;
-  }
-
-  .services-carousel {
-    --services-active-w: min(352px, 94vw);
-    --services-stack-w: calc(var(--services-active-w) * 0.94);
-    --services-active-h: calc(var(--services-active-w) * 330 / 294);
-    --services-stack-h: calc(var(--services-stack-w) * 330 / 294);
-  }
-
-  .services-stack {
-    transform: translate(calc(-50% - 6px), calc(-50% - 10px));
-  }
-}
-
-@media (max-width: 520px) {
-  .services-carousel {
-    --services-active-w: min(336px, 93vw);
-    --services-stack-w: calc(var(--services-active-w) * 0.93);
-    --services-active-h: calc(var(--services-active-w) * 330 / 294);
-    --services-stack-h: calc(var(--services-stack-w) * 330 / 294);
-  }
-
-  .services-stack {
-    transform: translate(calc(-50% - 5px), calc(-50% - 8px));
+  .service-card {
+    min-height: auto;
+    padding: 2rem 1.5rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .services-carousel-card,
-  .services-carousel-card img,
-  .services-carousel-glow,
-  .services-stack,
-  .services-copy-title,
-  .services-copy-text,
-  .services-dots button {
+  .service-card {
     transition: none;
-    animation: none;
   }
 }
