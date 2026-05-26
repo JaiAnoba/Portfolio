@@ -1,328 +1,366 @@
-.project-panel {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100%;             
-  z-index: 2000;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  background: var(--black);
-  overflow-y: auto;           
-  overflow-x: hidden;
-  animation: project-panel-in 0.35s ease;
-  
-  /* Hides scrollbars */
-  scrollbar-width: none;      
-  -ms-overflow-style: none;  
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.project-panel::-webkit-scrollbar {
-  display: none;
-}
-
-@keyframes project-panel-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes project-panel-out {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-.project-panel.is-closing {
-  animation: project-panel-out 0.3s ease forwards;
-  pointer-events: none;
-}
-
-.project-panel-glow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(150px);
-  pointer-events: none;
-  z-index: -1;
-}
-/* 
-.project-panel-glow--left {
-  width: 420px;
-  height: 420px;
-  left: -15rem;
-  top: -20rem;
-  background: var(--red-dark);
-  opacity: 0.75;
-} */
-
-.project-panel-glow--right {
-  width: 480px;
-  height: 250px;
-  right: -20rem;
-  bottom: 5rem;
-  background: var(--red-dark);
-  opacity: 0.8;
-}
-
-/* ── Layout grid ── */
-.project-panel-layout {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.75fr);
-  grid-template-rows: 1fr; 
-  align-items: center;
-  gap: clamp(1rem, 3vw, 2rem);
-  width: 100%;
-  max-width: 1200px;
-  margin: auto; 
-  padding: clamp(5rem, 9vh, 7rem) clamp(1rem, 4vw, 2.5rem) clamp(2.5rem, 5vh, 3.5rem); /* Kept top padding safe from the fixed close button */
-}
-
-/* ── Topbar (COMPLETELY FIXED & IMMOBILE) ── */
-.project-panel-topbar {
-  position: fixed; /* FIXED: Anchors it to the viewport monitor, making it immune to transitions */
-  top: clamp(1.5rem, 4vh, 2.5rem);
-  right: clamp(1rem, 4vw, 2.5rem);
-  z-index: 2010; /* Ensures it floats cleanly above all content while cards switch */
-  display: flex;
-  justify-content: flex-end;
-  pointer-events: auto;
-}
-
-.project-panel-close {
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease, opacity 0.2s ease;
-}
-
-.project-panel-close:hover {
-  transform: scale(1.1);
-}
-
-.project-panel-close img {
-  display: block;
-  width: 24px;
-  height: 24px;
-  filter: brightness(6) invert(1);
-}
-
-/* ── Media column ── */
-.project-panel-media {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* ── Image with fade in/out ── */
-.project-panel-img {
-  display: block;
-  width: 100%;
-  max-height: min(82vh, 740px);
-  object-fit: cover;
-  border-radius: 12px;
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.project-panel-img--visible {
-  opacity: 1;
-}
-
-.project-panel-img--hidden {
-  opacity: 0;
-}
-
-.project-panel-media-img--natural {
-  object-fit: contain;
-  background: #0d0d0d;
-}
-
-/* ── Dots ── */
-.project-panel-dots {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.8rem;
-}
-
-.project-panel-dot {
-  width: 8px;
-  height: 8px;
-  border: none;
-  border-radius: 50%;
-  padding: 0;
-  background: rgba(255, 255, 255, 0.35);
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.project-panel-dot--active {
-  background: var(--white);
-  transform: scale(1.1);
-}
-
-/* ── Copy column ── */
-.project-panel-copy {
-  position: relative;
-  z-index: 2;
-  max-width: 450px;
-  align-self: center;
-}
-
-.project-panel-title {
-  font-family: var(--font-hand);
-  font-size: clamp(3rem, 7vw, 3.5rem);
-  font-weight: medium;
-  line-height: 0.95;
-  color: var(--red);
-  margin-bottom: 0.7rem;
-}
-
-.project-panel-type {
-  font-family: var(--font-poppins);
-  font-size: clamp(0.65rem, 1vw, 0.8rem);
-  font-weight: 200;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--white);
-  margin-bottom: 1.75rem;
-}
-
-/* ── Stack chips ── */
-.project-panel-stack {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 0.5rem 0.55rem;
-  margin-bottom: 1.75rem;
-}
-
-.project-panel-stack span {
-  font-family: var(--font-poppins);
-  font-size: clamp(0.75rem, 1vw, 0.6rem);
-  font-weight: 200;
-  line-height: 1;
-  color: var(--white);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 999px;
-  padding: 0.4rem 0.95rem;
-  white-space: nowrap;
-}
-
-.project-panel-category {
-  display: none;
-}
-
-.project-panel-desc {
-  font-family: var(--font-poppins);
-  font-size: clamp(0.88rem, 1vw, 0.88rem);
-  line-height: 1.75;
-  color: rgba(255, 255, 255, 0.9);
-  text-align: justify;
-}
-
-/* ── Responsive ── */
-@media (max-width: 1024px) {
-  .project-panel-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    padding-top: clamp(4.5rem, 10vh, 6.5rem);
-    padding-left: clamp(1rem, 4vw, 1.5rem);
-    padding-right: clamp(1rem, 4vw, 1.5rem);
-    margin: 0 auto;
-    gap: 1.5rem;
+/* ==========================================================================
+   1. MAIN PANEL CONTAINER & ANIMATIONS
+   ========================================================================== */
+   .project-panel {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100%;             
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    background: var(--black);
+    overflow-y: auto;           
+    overflow-x: hidden;
+    animation: project-panel-in 0.35s ease;
+    
+    /* Hides scrollbars */
+    scrollbar-width: none;      
+    -ms-overflow-style: none;  
   }
-
-  .project-panel-media {
+  
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .project-panel::-webkit-scrollbar {
+    display: none;
+  }
+  
+  @keyframes project-panel-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  
+  @keyframes project-panel-out {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+  
+  .project-panel.is-closing {
+    animation: project-panel-out 0.3s ease forwards;
+    pointer-events: none;
+  }
+  
+  /* ==========================================================================
+     2. BACKGROUND GLOWS
+     ========================================================================== */
+  .project-panel-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(150px);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  /* .project-panel-glow--left {
+    width: 420px;
+    height: 420px;
+    left: -15rem;
+    top: -20rem;
+    background: var(--red-dark);
+    opacity: 0.75;
+  } */
+  
+  .project-panel-glow--right {
+    width: 480px;
+    height: 250px;
+    right: -20rem;
+    bottom: 5rem;
+    background: var(--red-dark);
+    opacity: 0.8;
+  }
+  
+  /* ==========================================================================
+     3. LAYOUT GRID (FIXED DESKTOP PADDING)
+     ========================================================================== */
+  .project-panel-layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.75fr);
+    grid-template-rows: 1fr; 
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
     width: 100%;
-    background: #0d0d0d;
-    border-radius: 12px;
-    overflow: hidden;
+    max-width: 1200px;
+    margin: auto; 
+    
+    /* Tightened left & right padding to give content more room to breathe */
+    padding: clamp(5rem, 9vh, 7rem) clamp(0.5rem, 1.5vw, 1.25rem) clamp(2.5rem, 5vh, 3.5rem);
+  }
+  
+  /* ==========================================================================
+     4. TOP NAVIGATION BAR & CLOSE BUTTON
+     ========================================================================== */
+  .project-panel-topbar {
+    position: fixed; 
+    top: clamp(1.5rem, 4vh, 2.5rem);
+    right: clamp(1rem, 4vw, 2.5rem);
+    z-index: 2010; 
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: auto;
+  }
+  
+  .project-panel-close {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: min(42vh, 380px);
-    max-height: min(52vh, 480px);
-    aspect-ratio: 16 / 10;
+    transition: transform 0.2s ease, opacity 0.2s ease;
   }
-
-  .project-panel-img {
+  
+  .project-panel-close:hover {
+    transform: scale(1.1);
+  }
+  
+  .project-panel-close img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    filter: brightness(6) invert(1);
+  }
+  
+  /* ==========================================================================
+     5. MEDIA COLUMN & CLEAN CROSSFADE TRANSITIONS (OPTION 1)
+     ========================================================================== */
+  .project-panel-media {
+    position: relative;
+    z-index: 2;
     width: 100%;
-    height: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    isolation: isolate;
+  }
+  
+  /* Protects layout shifts and locks aspect ratios during image transitions */
+  .project-panel-img-wrapper {
+    width: 100%;
+    overflow: hidden;
     border-radius: 12px;
-  }
-
-  .project-panel-media-img--natural {
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    object-position: center;
     background: #0d0d0d;
   }
-
-  .project-panel-copy {
-    max-width: none;
-    padding-bottom: 1rem;
+  
+  /* ── Image with slow clean fade ── */
+  .project-panel-img {
+    display: block;
+    width: 100%;
+    max-height: min(82vh, 740px);
+    object-fit: cover;
+    border-radius: 12px;
+    
+    /* Pure opacity fade over 0.5s - snappy but smooth */
+    transition: opacity 0.5s ease-in-out;
+    will-change: opacity; 
   }
-
-  .project-panel-desc {
-    text-align: left;
+  
+  /* Entering Image state */
+  .project-panel-img--visible {
+    opacity: 1;
   }
-
-  .project-panel-glow--right {
-    width: min(360px, 70vw);
-    right: -8rem;
+  
+  /* Exiting Image state */
+  .project-panel-img--hidden {
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out; /* Snappy exit so there is no ghosting */
   }
-}
-
-@media (max-width: 480px) {
-  .project-panel-topbar {
-    top: 1rem;
-    right: 1rem;
-  }
-
-  .project-panel-layout {
-    padding-top: 3.75rem;
-  }
-
-  .project-panel-media {
-    min-height: min(38vh, 320px);
-    max-height: min(45vh, 400px);
-    aspect-ratio: 4 / 3;
-  }
-
-  .project-panel-title {
-    font-size: clamp(2.25rem, 10vw, 2.75rem);
-  }
-
-  .project-panel-type {
-    margin-bottom: 1.25rem;
-  }
-
-  .project-panel-stack {
-    gap: 0.4rem 0.45rem;
-  }
-
-  .project-panel-stack span {
-    white-space: normal;
-    text-align: center;
-  }
-
-  .project-panel-img,
+  
   .project-panel-media-img--natural {
-    border-radius: 10px;
+    object-fit: contain;
   }
-}
+  
+  /* ==========================================================================
+     6. NAVIGATION DOTS
+     ========================================================================== */
+  .project-panel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.8rem;
+  }
+  
+  .project-panel-dot {
+    width: 8px;
+    height: 8px;
+    border: none;
+    border-radius: 50%;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  
+  .project-panel-dot--active {
+    background: var(--white);
+    transform: scale(1.1);
+  }
+  
+  /* ==========================================================================
+     7. TEXT CONTENT & COPY COLUMN
+     ========================================================================== */
+  .project-panel-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 450px;
+    align-self: center;
+  }
+  
+  .project-panel-title {
+    font-family: var(--font-oswald);
+    font-size: clamp(3rem, 7vw, 3.5rem);
+    font-weight: medium;
+    line-height: 0.95;
+    color: var(--red);
+    margin-bottom: 0.7rem;
+    white-space: nowrap;
+  }
+  
+  .project-panel-type {
+    font-family: var(--font-poppins);
+    font-size: clamp(0.65rem, 1vw, 0.8rem);
+    font-weight: 200;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 1.75rem;
+  }
+  
+  /* Tech Stack Badges */
+  .project-panel-stack {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.55rem;
+    margin-bottom: 1.75rem;
+  }
+  
+  .project-panel-stack span {
+    font-family: var(--font-poppins);
+    font-size: clamp(0.75rem, 1vw, 0.6rem);
+    font-weight: 200;
+    line-height: 1;
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 999px;
+    padding: 0.4rem 0.95rem;
+    white-space: nowrap;
+  }
+  
+  .project-panel-category {
+    display: none;
+  }
+  
+  .project-panel-desc {
+    font-family: var(--font-poppins);
+    font-size: clamp(0.88rem, 1vw, 0.88rem);
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.9);
+    text-align: justify;
+  }
+  
+  /* ==========================================================================
+     8. RESPONSIVE BREAKPOINTS (TABLETS & PHONES)
+     ========================================================================== */
+  @media (max-width: 1024px) {
+    .project-panel-layout {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto;
+      padding-top: clamp(4.5rem, 10vh, 6.5rem);
+      
+      /* Tied values securely with desktop rules to eliminate page layout shifts */
+      padding-left: clamp(0.5rem, 2vw, 1.25rem);
+      padding-right: clamp(0.5rem, 2vw, 1.25rem);
+      
+      margin: 0 auto;
+      gap: 1.5rem;
+    }
+  
+    .project-panel-media {
+      width: 100%;
+      background: #0d0d0d;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: min(42vh, 380px);
+      max-height: min(52vh, 480px);
+      aspect-ratio: 16 / 10;
+    }
+  
+    .project-panel-img {
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      border-radius: 12px;
+    }
+  
+    .project-panel-media-img--natural {
+      width: 100%;
+      height: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      object-position: center;
+      background: #0d0d0d;
+    }
+  
+    .project-panel-copy {
+      max-width: none;
+      padding-bottom: 1rem;
+    }
+  
+    .project-panel-desc {
+      text-align: left;
+    }
+  
+    .project-panel-glow--right {
+      width: min(360px, 70vw);
+      right: -8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .project-panel-topbar {
+      top: 1rem;
+      right: 1rem;
+    }
+  
+    .project-panel-layout {
+      padding-top: 3.75rem;
+    }
+  
+    .project-panel-media {
+      min-height: min(38vh, 320px);
+      max-height: min(45vh, 400px);
+      aspect-ratio: 4 / 3;
+    }
+  
+    .project-panel-title {
+      font-size: clamp(2.25rem, 10vw, 2.75rem);
+    }
+  
+    .project-panel-type {
+      margin-bottom: 1.25rem;
+    }
+  
+    .project-panel-stack {
+      gap: 0.4rem 0.45rem;
+    }
+  
+    .project-panel-stack span {
+      white-space: normal;
+      text-align: center;
+    }
+  
+    .project-panel-img,
+    .project-panel-media-img--natural {
+      border-radius: 10px;
+    }
+  }

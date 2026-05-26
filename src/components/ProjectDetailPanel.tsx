@@ -31,24 +31,37 @@ export default function ProjectDetailPanel({
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [isClosing, setIsClosing] = useState(false)
   const [autoplay, setAutoplay] = useState(true)
-
-  // Grab active image instantly without delay hooks
-  const displayedImage = project.images[activeImageIndex] ?? project.images[0]
+  
+  // State to manage smooth image crossfading
+  const [displayedImage, setDisplayedImage] = useState(project.images[0] || { src: '', alt: '' })
+  const [isImageChanging, setIsImageChanging] = useState(false)
 
   useEffect(() => {
     setActiveImageIndex(0)
+    setDisplayedImage(project.images[0] || { src: '', alt: '' })
     setIsClosing(false)
     setAutoplay(true)
-  }, [project.title])
+  }, [project.title, project.images])
 
-  // Auto-advance every 2 seconds
+  // Handle image changes with a smooth state bridge
+  const triggerImageChange = (nextIndex: number) => {
+    setIsImageChanging(true)
+    setTimeout(() => {
+      setActiveImageIndex(nextIndex)
+      setDisplayedImage(project.images[nextIndex])
+      setIsImageChanging(false)
+    }, 250) // Brief fade out duration before switching sources
+  }
+
+  // Auto-advance every 6 seconds
   useEffect(() => {
     if (!autoplay || project.images.length <= 1) return
     const timer = setInterval(() => {
-      setActiveImageIndex(prev => (prev + 1) % project.images.length)
-    }, 2000)
+      const nextIndex = (activeImageIndex + 1) % project.images.length
+      triggerImageChange(nextIndex)
+    }, 6000)
     return () => clearInterval(timer)
-  }, [autoplay, project.images.length])
+  }, [autoplay, activeImageIndex, project.images.length])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -63,9 +76,10 @@ export default function ProjectDetailPanel({
   }, [onClose])
 
   function handleDotClick(index: number) {
-    setActiveImageIndex(index)
+    if (index === activeImageIndex) return
+    triggerImageChange(index)
     setAutoplay(false)
-    setTimeout(() => setAutoplay(true), 5000)
+    setTimeout(() => setAutoplay(true), 8000)
   }
 
   function handleClose() {
@@ -109,16 +123,19 @@ export default function ProjectDetailPanel({
 
         {/* Row 2: media column */}
         <div className="project-panel-media">
-          <img
-            src={displayedImage.src}
-            alt={displayedImage.alt}
-            className={[
-              'project-panel-img',
-              displayedImage.width && displayedImage.height
-                ? 'project-panel-media-img--natural'
-                : '',
-            ].filter(Boolean).join(' ')}
-          />
+          <div className="project-panel-img-wrapper">
+            <img
+              src={displayedImage.src}
+              alt={displayedImage.alt}
+              className={[
+                'project-panel-img',
+                isImageChanging ? 'project-panel-img--hidden' : 'project-panel-img--visible',
+                displayedImage.width && displayedImage.height
+                  ? 'project-panel-media-img--natural'
+                  : '',
+              ].filter(Boolean).join(' ')}
+            />
+          </div>
 
           {project.images.length > 1 && (
             <div
