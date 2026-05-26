@@ -104,7 +104,7 @@
 .certificate-single-container {
   position: relative;
   width: 100%;
-  max-width: 780px;
+  max-width: 520px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -314,11 +314,11 @@
   .foundation-school { font-size: 1.1rem; margin-bottom: 2rem; }
   .foundation-awards { font-size: 1.1rem; padding-left: 1.25rem; }
   .stack-grid { grid-template-columns: repeat(2, 1fr); }
-  .certificate-single-container { max-width: 580px; }
+  .certificate-single-container { max-width: 520px; }
 }
 
 @media (max-width: 480px) {
   .stack-grid { grid-template-columns: 1fr; }
   .stack-large, .stack-wide { grid-column: span 1; }
-  .certificate-single-container { max-width: 360px; }
+  .certificate-single-container { max-width: 320px; }
 }

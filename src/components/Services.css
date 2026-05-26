@@ -89,7 +89,7 @@
 
 .service-heading {
   font-family: var(--font-hand);
-  font-size: clamp(2.2rem, 3.2vw, 3.2rem);
+  font-size: clamp(2rem, 3vw, 3rem);
   font-weight: 400;
   color: #ffffff;
   margin: 0.75rem 0 0 0; 
