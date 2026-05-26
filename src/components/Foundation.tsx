@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react'
 import './Foundation.css'
 
 const AWARDS = [
-  'Excellence in Web Development & Digital Innovation',
-  'Excellence in Computer Systems & Troubleshooting',
-  'Excellence in Capstone Project',
-  'Project Leadership Excellence Award',
-  'Outstanding iTech Society Officer Award',
+  { text: 'Excellence in Web Development & Digital Innovation', img: 'webwise.jpg' },
+  { text: 'Excellence in Computer Systems & Troubleshooting', img: 'troubleshooting.jpg' },
+  { text: 'Excellence in Capstone Project', img: 'capstone.jpg' },
+  { text: 'Project Leadership Excellence Award', img: 'leadership.jpg' },
+  { text: 'Outstanding iTech Society Officer Award', img: 'itech.jpg' },
 ]
 
 const STACK = [
@@ -94,6 +95,15 @@ function StackCard({ item }: { item: typeof STACK[number] }) {
 }
 
 export default function Foundation() {
+  const [activeAwardIndex, setActiveAwardIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveAwardIndex((prevIndex) => (prevIndex + 1) % AWARDS.length)
+    }, 4000)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
     <section className="foundation" id="foundation">
       <div className="red-glow foundation-glow-left" aria-hidden />
@@ -103,7 +113,7 @@ export default function Foundation() {
         <span className="foundation-script">Foundation</span>
       </h2>
 
-      <div className="foundation-grid">
+      <div className="foundation-main-grid">
         <div className="foundation-left">
           <p className="section-label">EDUCATION</p>
           <h3 className="foundation-degree">BS Information Technology</h3>
@@ -112,25 +122,53 @@ export default function Foundation() {
 
           <p className="section-label foundation-awards-label">RECOGNITIONS & CERTIFICATIONS</p>
           <ul className="foundation-awards">
-            {AWARDS.map((award) => (
-              <li key={award}>{award}</li>
+            {AWARDS.map((award, index) => (
+              <li 
+                key={index}
+                className={index === activeAwardIndex ? 'award-item-active' : ''}
+                onClick={() => setActiveAwardIndex(index)}
+                style={{ cursor: 'pointer' }}
+              >
+                {award.text}
+              </li>
             ))}
           </ul>
         </div>
 
-        <div className="foundation-right">
-          <div className="foundation-stack-header">
-            <h3 className="foundation-stack-title">
-              CORE <span className="gradient-text-stack">STACK</span>
-            </h3>
-            <div className="foundation-stack-line" aria-hidden />
-          </div>
+        <div className="foundation-right-canvas">
+          <div className="certificate-single-container">
+            {AWARDS.map((award, index) => {
+              const isActive = index === activeAwardIndex
 
-          <div className="stack-grid">
-            {STACK.map((item) => (
-              <StackCard key={item.name} item={item} />
-            ))}
+              return (
+                <div
+                  key={index}
+                  className={`certificate-solo-frame ${isActive ? 'solo-active' : 'solo-hidden'}`}
+                >
+                  <img 
+                    src={`/images/${award.img}`} 
+                    alt={award.text} 
+                    className="certificate-asset-render" 
+                  />
+                </div>
+              )
+            })}
           </div>
+        </div>
+      </div>
+
+      <div className="foundation-bottom-stack">
+        <div className="foundation-stack-header">
+          <h3 className="foundation-stack-title">
+            CORE <span className="gradient-text-stack">STACK</span>
+          </h3>
+          <div className="foundation-stack-line" aria-hidden />
+        </div>
+
+        <div className="stack-grid">
+          {STACK.map((item) => (
+            <StackCard key={item.name} item={item} />
+          ))}
         </div>
       </div>
     </section>
