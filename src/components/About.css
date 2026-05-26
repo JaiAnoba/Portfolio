@@ -87,11 +87,12 @@
 }
 
 .about-socials a {
-  transition: opacity 0.2s;
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 .about-socials a:hover {
-  opacity: 0.75;
+  transform: translateY(-6px);
+  animation: float 1.5s ease-in-out infinite;
 }
 
 /* =========================
@@ -200,6 +201,13 @@
     flex-wrap: wrap;
     gap: 1.5rem;
   }
+}
+
+@media (max-width: 768px) {
+  .about-heading {
+    font-size: 4rem !important;
+  }
+
 }
 
 @media (max-width: 480px) {

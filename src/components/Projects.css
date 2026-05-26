@@ -258,12 +258,21 @@
 
   .projects-accent {
     left: clamp(1.25rem, 4vw, 2rem);
-    top: clamp(0.4rem, 1.2vw, 0.75rem);
-    font-size: clamp(2.5rem, 8vw, 4.4rem);
+    top: clamp(0.4rem, 1.5vw, 0.9rem) !important;
+    font-size: clamp(2.5rem, 8vw, 4.4rem) !important;
     letter-spacing: 0.38em !important;
     line-height: 1;
     z-index: 2;
   }
+
+  .pa-p { left: 0.3em !important; }
+  .pa-r { left: 0.32em !important; }
+  .pa-o { left: 0.38em !important; }
+  .pa-j { left: 0.3em !important;}
+  .pa-e { left: 0.13em !important; }
+  .pa-c { left: 0.13em !important;}
+  .pa-t { top: 0.14em !important; left: 0.1em !important; }
+  .pa-s { left: 0.13em !important;}
 
   .projects-title {
     font-size: var(--section-display-title);
@@ -345,10 +354,18 @@
 
   .projects-accent {
     left: 1.5rem;
-    top: clamp(0.35rem, 1.1vw, 0.65rem);
-    font-size: clamp(2.35rem, 8.5vw, 4.4rem);
-    letter-spacing: 0.38em !important;
+    top: clamp(1.2rem, 1.1vw, 2rem) !important;
+    font-size: clamp(3rem, 8.5vw, 5rem) !important;
+    letter-spacing: 0.5em !important;
   }
+
+  .pa-p { left: 0.3em !important; }
+  .pa-r { left: 0.32em !important; }
+  .pa-o { left: 0.38em !important; }
+  .pa-j { left: 0.3em !important;}
+  .pa-e { left: 0.13em !important; }
+  .pa-c { left: 0.13em !important;}
+  .pa-t { top: 0.1em !important; right: 0.1em !important; }
 
   .projects-slide {
     width: clamp(280px, 72vw, 460px); 
@@ -384,6 +401,14 @@
     font-size: clamp(2.15rem, 7.5vw, 3.5rem);
     letter-spacing: 0.36em !important;
   }
+
+  .pa-p { left: 2em !important; }
+  .pa-r { left: 0.13em !important; }
+  .pa-o { left: 0.16em !important; }
+  .pa-j { left: 0.12em !important;}
+  .pa-e { left: 0.13em !important; }
+  .pa-c { left: 0.13em !important;}
+  .pa-t { top: 0.1em !important; right: 0.1em !important; }
 
   .projects-desc {
     font-size: 0.875rem;
