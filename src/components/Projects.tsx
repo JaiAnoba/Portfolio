@@ -186,6 +186,43 @@ export default function Projects() {
     setActiveProjectIndex(null)
   }
 
+  const handlePrevClick = () => {
+    setHoveredSlideKey(null)
+    
+    const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
+    const firstSlide = trackRef.current?.querySelector('.projects-slide')
+    
+    if (outer && firstSlide) {
+      const slideWidth = firstSlide.getBoundingClientRect().width + 24
+      
+      // FIXED BOUNDS: If at the very start, wrap around seamlessly to the half-way point
+      if (outer.scrollLeft <= 0) {
+        outer.scrollLeft = outer.scrollWidth / 2
+      }
+      
+      outer.scrollBy({ left: -slideWidth, behavior: 'smooth' })
+    }
+  }
+
+  const handleNextClick = () => {
+    setHoveredSlideKey(null)
+    
+    const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
+    const firstSlide = trackRef.current?.querySelector('.projects-slide')
+    
+    if (outer && firstSlide) {
+      const slideWidth = firstSlide.getBoundingClientRect().width + 24
+      
+      // FIXED BOUNDS: Check if the user is approaching the end of the cloned sets
+      const maxScrollLeft = outer.scrollWidth - outer.clientWidth
+      if (outer.scrollLeft >= maxScrollLeft - slideWidth) {
+        outer.scrollTo({ left: 0, behavior: 'instant' }) // Instantly jump back to start before moving
+      }
+      
+      outer.scrollBy({ left: slideWidth, behavior: 'smooth' })
+    }
+  }
+
   const items = [...PROJECTS, ...PROJECTS]
 
   return (
@@ -286,6 +323,29 @@ export default function Projects() {
               )
             })}
           </div>
+        </div>
+
+        <div className="projects-nav-controls">
+          <button 
+            type="button" 
+            className="projects-nav-btn projects-nav-btn--prev" 
+            onClick={handlePrevClick}
+            aria-label="Previous projects"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button 
+            type="button" 
+            className="projects-nav-btn projects-nav-btn--next" 
+            onClick={handleNextClick}
+            aria-label="Next projects"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
         </div>
       </div>
 
