@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="red-glow hero-glow-left" aria-hidden />
       <div className="red-glow hero-glow-right" aria-hidden />
 
-      <p className="hero-location">CEBU, PHILIPPINES</p>
+      <p className="hero-signature">Jai Anoba</p>
 
       <div className="hero-stage">
         <div className="hero-head">

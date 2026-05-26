@@ -15,15 +15,14 @@
   padding-bottom: clamp(5rem, 5vh, 5rem); 
 }
 
-.hero-location {
+.hero-signature {
   position: absolute;
   top: clamp(1.5rem, 3.2vw, 2.1rem);
   right: var(--hero-pad-x);
   z-index: 5;
-  font-family: var(--font-poppins);
-  font-weight: 400;
-  font-size: 0.85rem;
-  line-height: 1.2;
+  font-family: var(--font-signature);
+  font-size: 2rem;
+  line-height: 0.5;
   text-align: right;
   white-space: nowrap;
   padding-right: var(--hero-location-pr);
@@ -34,7 +33,7 @@
   width: 100%;
   min-height: 0;
   height: auto;
-  padding-top: clamp(2.5rem, 5vw, 3.5rem);
+  padding-top: clamp(2.5rem, 4vw, 3rem);
   padding-left: 0;
   padding-right: 0;
   display: flex;
@@ -52,7 +51,6 @@
   position: relative;
   width: 100%;
   z-index: 2;
-  margin-top: var(--hero-title-top);
   flex-shrink: 0;
 }
 
@@ -64,7 +62,7 @@
   text-transform: uppercase;
   pointer-events: none;
   user-select: none;
-  font-size: clamp(3rem, 14vw, 15.2rem);
+  font-size: clamp(5rem, 14vw, 15.2rem);
   line-height: 0.9;
   margin: 0;
   padding: 0;
