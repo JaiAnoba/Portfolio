@@ -278,7 +278,7 @@ export default function Projects() {
                           openProjectPanel(projectIndex)
                         }}
                       >
-                        View more &gt;
+                        View Project &gt;
                       </button>
                     </div>
                   </div>
