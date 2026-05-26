@@ -106,8 +106,6 @@ export default function Foundation() {
 
   return (
     <section className="foundation" id="foundation">
-      <div className="red-glow foundation-glow-left" aria-hidden />
-
       <h2 className="foundation-heading">
         <span>THE</span>
         <span className="foundation-script">Foundation</span>
@@ -137,6 +135,8 @@ export default function Foundation() {
 
         <div className="foundation-right-canvas">
           <div className="certificate-single-container">
+            <div className="foundation-glow-shadow" aria-hidden />
+
             {AWARDS.map((award, index) => {
               const isActive = index === activeAwardIndex
 

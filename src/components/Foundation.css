@@ -5,18 +5,6 @@
   isolation: isolate;
 }
 
-.foundation-glow-left {
-  position: absolute;
-  width: 117px;
-  height: 374px;
-  background: var(--red-dark);
-  left: -35px;
-  top: 30%;
-  z-index: 0;
-  filter: blur(80px);
-  pointer-events: none;
-}
-
 .foundation-heading {
   font-family: var(--font-oswald);
   font-weight: 700;
@@ -41,12 +29,12 @@
 /* ── Main Top Layout Grid ── */
 .foundation-main-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1.3fr;
   gap: 4rem;
   align-items: center;
   position: relative;
   z-index: 1;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 .foundation-degree {
@@ -99,51 +87,76 @@
 }
 
 /* ── Single Certificate Canvas (No Stacking) ── */
+.foundation-right-canvas,
+.certificate-single-container {
+  overflow: visible !important;
+}
+
 .foundation-right-canvas {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 440px;
+  min-height: 520px;
 }
 
 .certificate-single-container {
   position: relative;
   width: 100%;
-  max-width: 680px;
-  aspect-ratio: 16 / 10;
+  max-width: 780px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Bright Drop Underglow Shadow */
+.foundation-glow-shadow {
+  position: absolute;
+  width: 90%;
+  height: 25px;
+  background: #ff1a1a;
+  left: 5%;
+  bottom: -15px;
+  z-index: 2;
+  filter: blur(35px);
+  pointer-events: none;
+  opacity: 0.95;
+  mix-blend-mode: screen;
 }
 
 .certificate-solo-frame {
-  position: absolute;
-  inset: 0;
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   border-radius: 6px;
   background: #0d0d0d;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
   overflow: hidden;
   transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  display: none;
 }
 
-.certificate-asset-render {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  display: block;
-}
-
-/* ── Transition States ── */
 .certificate-solo-frame.solo-active {
+  display: block;
   opacity: 1;
   z-index: 5;
   pointer-events: auto;
 }
 
 .certificate-solo-frame.solo-hidden {
+  display: none;
+  position: absolute;
+  inset: 0;
   opacity: 0;
   z-index: 1;
   pointer-events: none;
+}
+
+.certificate-asset-render {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ── Lower Core Tech Grid Space ── */
@@ -152,7 +165,7 @@
   z-index: 1;
   width: 100%;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 2rem;
+  padding-top: 1.5rem;
 }
 
 .foundation-stack-header {
@@ -278,10 +291,15 @@
   .foundation-main-grid {
     grid-template-columns: 1fr;
     gap: 3.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
-  .foundation-right-canvas { min-height: 380px; }
+  .foundation-right-canvas { min-height: 440px; }
   .stack-grid { grid-template-columns: repeat(3, 1fr); }
+  .foundation-glow-shadow {
+    width: 90%;
+    left: 5%;
+    bottom: -10px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -295,7 +313,7 @@
   .foundation-school { font-size: 1.1rem; margin-bottom: 2rem; }
   .foundation-awards { font-size: 1.1rem; padding-left: 1.25rem; }
   .stack-grid { grid-template-columns: repeat(2, 1fr); }
-  .certificate-single-container { max-width: 500px; }
+  .certificate-single-container { max-width: 580px; }
 }
 
 @media (max-width: 480px) {
