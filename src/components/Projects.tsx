@@ -142,15 +142,85 @@ export default function Projects() {
     null,
   )
 
+  // Override State Engines
+  const [isManualMode, setIsManualMode] = useState<boolean>(false)
+  const [manualIndex, setManualIndex] = useState<number>(0)
+  const [slideDirection, setSlideDirection] = useState<'forward' | 'backward'>('forward')
+  
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
+
   useEffect(() => {
     const track = trackRef.current
-    if (!track) return
+    if (!track || isManualMode) return
 
     track.style.animationPlayState =
       hoveredSlideKey !== null && activeProjectIndex === null
         ? 'paused'
         : 'running'
-  }, [hoveredSlideKey, activeProjectIndex])
+  }, [hoveredSlideKey, activeProjectIndex, isManualMode])
+
+  // Handles smooth programmatic jumps during manual sliding layout
+  useEffect(() => {
+    if (!isManualMode) return
+
+    const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
+    const firstSlide = trackRef.current?.querySelector('.projects-slide')
+
+    if (outer && firstSlide) {
+      const slideWidth = firstSlide.getBoundingClientRect().width + 24
+      outer.scrollTo({ left: manualIndex * slideWidth, behavior: 'smooth' })
+    }
+  }, [manualIndex, isManualMode])
+
+  // Handles automated loops with direct bounce parameters while inside manual control window
+  useEffect(() => {
+    if (!isManualMode) {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+      return
+    }
+
+    intervalRef.current = setInterval(() => {
+      setManualIndex((prevIndex) => {
+        const totalItems = PROJECTS.length
+        
+        if (slideDirection === 'forward') {
+          if (prevIndex >= totalItems - 1) {
+            setSlideDirection('backward')
+            return prevIndex - 1
+          }
+          return prevIndex + 1
+        } else {
+          if (prevIndex <= 0) {
+            setSlideDirection('forward')
+            return prevIndex + 1
+          }
+          return prevIndex - 1
+        }
+      })
+    }, 2500) // Transition period when running automatically in manual mode
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
+  }, [isManualMode, slideDirection])
+
+  // Registers manual execution action and starts/renews the 3 second delay count
+  const activateManualOverride = (newTargetIndex: number) => {
+    setHoveredSlideKey(null)
+    setIsManualMode(true)
+    setManualIndex(newTargetIndex)
+
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+
+    timeoutRef.current = setTimeout(() => {
+      setIsManualMode(false)
+      const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
+      if (outer) {
+        outer.scrollTo({ left: 0, behavior: 'instant' })
+      }
+    }, 3000)
+  }
 
   const handleCarouselMouseMove = (e: React.MouseEvent) => {
     if (activeProjectIndex !== null) return
@@ -163,7 +233,7 @@ export default function Projects() {
   }
 
   const handleSlideEnter = (slideKey: string, e: React.MouseEvent) => {
-    if (activeProjectIndex !== null) return
+    if (activeProjectIndex !== null) return // Removed 'isManualMode' constraint here
     const carousel = carouselRef.current
     if (!carousel) return
 
@@ -187,43 +257,36 @@ export default function Projects() {
   }
 
   const handlePrevClick = () => {
-    setHoveredSlideKey(null)
+    let targetIndex = isManualMode ? manualIndex - 1 : PROJECTS.length - 1
     
-    const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
-    const firstSlide = trackRef.current?.querySelector('.projects-slide')
-    
-    if (outer && firstSlide) {
-      const slideWidth = firstSlide.getBoundingClientRect().width + 24
-      
-      // FIXED BOUNDS: If at the very start, wrap around seamlessly to the half-way point
-      if (outer.scrollLeft <= 0) {
-        outer.scrollLeft = outer.scrollWidth / 2
-      }
-      
-      outer.scrollBy({ left: -slideWidth, behavior: 'smooth' })
+    // Bounce Back evaluation
+    if (targetIndex < 0) {
+      targetIndex = 1
+      setSlideDirection('forward')
+    } else {
+      setSlideDirection('backward')
     }
+    
+    activateManualOverride(targetIndex)
   }
 
   const handleNextClick = () => {
-    setHoveredSlideKey(null)
-    
-    const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
-    const firstSlide = trackRef.current?.querySelector('.projects-slide')
-    
-    if (outer && firstSlide) {
-      const slideWidth = firstSlide.getBoundingClientRect().width + 24
-      
-      // FIXED BOUNDS: Check if the user is approaching the end of the cloned sets
-      const maxScrollLeft = outer.scrollWidth - outer.clientWidth
-      if (outer.scrollLeft >= maxScrollLeft - slideWidth) {
-        outer.scrollTo({ left: 0, behavior: 'instant' }) // Instantly jump back to start before moving
-      }
-      
-      outer.scrollBy({ left: slideWidth, behavior: 'smooth' })
+    let targetIndex = isManualMode ? manualIndex + 1 : 1
+    const maxIndex = PROJECTS.length - 1
+
+    // Bounce Back evaluation
+    if (targetIndex > maxIndex) {
+      targetIndex = maxIndex - 1
+      setSlideDirection('backward')
+    } else {
+      setSlideDirection('forward')
     }
+
+    activateManualOverride(targetIndex)
   }
 
-  const items = [...PROJECTS, ...PROJECTS]
+  // Switches dataset structure seamlessly based on active control modes
+  const items = isManualMode ? PROJECTS : [...PROJECTS, ...PROJECTS]
 
   return (
     <section
@@ -260,8 +323,8 @@ export default function Projects() {
         <div className="projects-fade projects-fade--left" aria-hidden />
         <div className="projects-fade projects-fade--right" aria-hidden />
 
-        <div className="projects-marquee-outer">
-          <div className="projects-marquee-track" ref={trackRef}>
+        <div className={`projects-marquee-outer ${isManualMode ? 'is-manual-mode' : ''}`}>
+          <div className={`projects-marquee-track ${isManualMode ? 'is-manual-sliding' : ''}`} ref={trackRef}>
             {items.map((project, i) => {
               const projectIndex = i % PROJECTS.length
               const slideKey = `${project.title}-${i}`
