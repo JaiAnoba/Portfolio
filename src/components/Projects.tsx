@@ -198,14 +198,13 @@ export default function Projects() {
           return prevIndex - 1
         }
       })
-    }, 2500) // Transition period when running automatically in manual mode
+    }, 2500) 
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
   }, [isManualMode, slideDirection])
 
-  // Registers manual execution action and starts/renews the 3 second delay count
   const activateManualOverride = (newTargetIndex: number) => {
     setHoveredSlideKey(null)
     setIsManualMode(true)
@@ -233,7 +232,7 @@ export default function Projects() {
   }
 
   const handleSlideEnter = (slideKey: string, e: React.MouseEvent) => {
-    if (activeProjectIndex !== null) return // Removed 'isManualMode' constraint here
+    if (activeProjectIndex !== null) return 
     const carousel = carouselRef.current
     if (!carousel) return
 
@@ -259,7 +258,6 @@ export default function Projects() {
   const handlePrevClick = () => {
     let targetIndex = isManualMode ? manualIndex - 1 : PROJECTS.length - 1
     
-    // Bounce Back evaluation
     if (targetIndex < 0) {
       targetIndex = 1
       setSlideDirection('forward')
@@ -274,7 +272,6 @@ export default function Projects() {
     let targetIndex = isManualMode ? manualIndex + 1 : 1
     const maxIndex = PROJECTS.length - 1
 
-    // Bounce Back evaluation
     if (targetIndex > maxIndex) {
       targetIndex = maxIndex - 1
       setSlideDirection('backward')
@@ -285,7 +282,6 @@ export default function Projects() {
     activateManualOverride(targetIndex)
   }
 
-  // Switches dataset structure seamlessly based on active control modes
   const items = isManualMode ? PROJECTS : [...PROJECTS, ...PROJECTS]
 
   return (

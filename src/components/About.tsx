@@ -2,7 +2,7 @@ import './About.css'
 
 const SOCIALS = [
   { name: 'GitHub', icon: '/images/github.png', href: 'https://github.com/JaiAnoba' },
-  { name: 'LinkedIn', icon: '/images/linkedin.png', href: 'https://www.linkedin.com/in/jamaica-anuba-97732839a/' },
+  { name: 'LinkedIn', icon: '/images/linkedin.png', href: 'https://www.linkedin.com/in/jamaica-anuba/' },
   { name: 'Facebook', icon: '/images/facebook.png', href: 'https://www.facebook.com/jai.anoba/' },
   { name: 'Instagram', icon: '/images/instagram.png', href: 'https://www.instagram.com/aa_im5/' },
 ]

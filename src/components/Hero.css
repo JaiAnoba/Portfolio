@@ -111,8 +111,6 @@
   pointer-events: none;
   overflow: hidden;
   flex-shrink: 0;
-  
-  /* Global Animation Settings — Standard across all viewports */
   opacity: 0; 
   animation: slideUpFade 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -172,9 +170,7 @@
   text-align: right;
 }
 
-/* ── SMOOTH SLIDE-UP INTRO (Fixed Position Version) ── */
-
-/* 1. Reset animation-specific state to ensure no layout impact */
+/* ── SMOOTH SLIDE-UP INTRO ── */
 .hero-signature,
 .hero-title,
 .hero-tech,
@@ -184,14 +180,11 @@
   animation: slideUpFadeFixed 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* 2. Staggered timing */
 .hero-signature { animation-delay: 0.2s; }
 .hero-title     { animation-delay: 0.4s; }
 .hero-tech      { animation-delay: 0.6s; }
 .hero-roles     { animation-delay: 0.8s; }
 
-/* 3. Keyframes that specifically return to 'none' or neutral transform 
-      to prevent layout drift */
 @keyframes slideUpFadeFixed {
   from {
     opacity: 0;
@@ -203,7 +196,6 @@
   }
 }
 
-/* ── Large desktop (Unchanged) ── */
 @media (min-width: 1025px) {
   .hero-stage {
     display: block;
@@ -258,7 +250,6 @@
   }
 }
 
-/* ── Tablet ── */
 @media (max-width: 1024px) {
   .hero {
     overflow-x: clip;
@@ -328,7 +319,6 @@
     width: min(65vw, 380px); 
     max-height: min(56vw, 480px);
     margin: clamp(4rem, 10vw, 6rem) auto 0; 
-    /* Overrides removed so base animation runs smoothly */
   }
 
   .hero-photo {
@@ -369,7 +359,6 @@
     width: min(95vw, 500px);
     max-height: min(88vw, 640px);
     margin-top: clamp(3.5rem, 9vw, 5.5rem); 
-    /* Overrides removed so base animation runs smoothly */
   }
 
   .hero-title {
@@ -404,8 +393,7 @@
   .hero-photo-wrap {
     width: min(62vw, 310px);
     max-height: min(52vw, 340px);
-    margin-top: clamp(3rem, 8vw, 4.5rem); 
-    /* Overrides removed so base animation runs smoothly */
+    margin-top: clamp(3rem, 8vw, 4.5rem);
   }
 
   .hero-photo {
@@ -424,7 +412,7 @@
   }
 }
 
-/* ── ANIMATION KEYFRAMES (Unchanged) ── */
+/* ── ANIMATION KEYFRAMES ── */
 @keyframes slideUpFade {
   from {
     opacity: 0;

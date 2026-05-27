@@ -295,7 +295,7 @@
      ========================================================================== */
   @media (max-width: 1024px) {
     .project-panel-layout {
-      display: flex; /* Swapped layout engine to flex block layout */
+      display: flex; 
       flex-direction: column;
       justify-content: flex-start;
       align-items: stretch;
@@ -308,7 +308,7 @@
   
     .project-panel-media {
       width: 100%;
-      height: auto; /* Drops rigid container boxes */
+      height: auto;
       background: transparent;
       display: block;
     }
@@ -322,8 +322,8 @@
     .project-panel-img,
     .project-panel-media-img--natural {
       width: 100% !important;
-      height: auto !important; /* Image renders accurately to its own aspect bounds */
-      max-height: 60vh !important; /* Never runs off the viewport screen */
+      height: auto !important; 
+      max-height: 60vh !important; 
       object-fit: contain !important; 
       border-radius: 12px;
     }
@@ -341,7 +341,6 @@
       text-align: left;
     }
   
-    /* Make nav buttons fully interactive and visible on mobile touch viewports */
     .project-panel-nav-btn {
       opacity: 0.9 !important;
       padding: 0.6rem;

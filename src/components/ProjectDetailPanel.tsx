@@ -32,7 +32,6 @@ export default function ProjectDetailPanel({
   const [isClosing, setIsClosing] = useState(false)
   const [autoplay, setAutoplay] = useState(true)
   
-  // State to manage smooth image crossfading
   const [displayedImage, setDisplayedImage] = useState(project.images[0] || { src: '', alt: '' })
   const [isImageChanging, setIsImageChanging] = useState(false)
 
@@ -43,17 +42,15 @@ export default function ProjectDetailPanel({
     setAutoplay(true)
   }, [project.title, project.images])
 
-  // Handle image changes with a smooth state bridge
   const triggerImageChange = (nextIndex: number) => {
     setIsImageChanging(true)
     setTimeout(() => {
       setActiveImageIndex(nextIndex)
       setDisplayedImage(project.images[nextIndex])
       setIsImageChanging(false)
-    }, 250) // Brief fade out duration before switching sources
+    }, 250) 
   }
 
-  // Auto-advance every 6 seconds
   useEffect(() => {
     if (!autoplay || project.images.length <= 1) return
     const timer = setInterval(() => {

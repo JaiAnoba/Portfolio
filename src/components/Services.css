@@ -46,7 +46,7 @@
   box-sizing: border-box;
 }
 
-/* ── Service Card Styles (As shown in mockup) ── */
+/* ── Service Card Styles ── */
 .service-card {
   position: relative;
   display: flex;
@@ -105,7 +105,7 @@
   }
 }
 
-/* Tablet Layout Changes */
+/* Tablet Layout */
 @media (max-width: 900px) {
   .services-container {
     gap: 1.5rem;
@@ -129,7 +129,7 @@
   }
 }
 
-/* Mobile Layout Changes */
+/* Mobile Layout */
 @media (max-width: 680px) {
   .services {
     padding: 3rem 1rem;
@@ -141,7 +141,7 @@
   }
 
   .services-container {
-    grid-template-columns: 1fr; /* Switch to a vertical row stack */
+    grid-template-columns: 1fr; 
     gap: 1.5rem;
     max-width: 450px;
   }

@@ -135,33 +135,28 @@
     grid-template-columns: 1fr;
     min-height: 0;
     gap: 2.5rem;
-    
-    /* ENHANCED PADDING: Deepened both vertical and horizontal spacing channels */
     padding: clamp(5rem, 10vw, 7rem) clamp(2rem, 6vw, 4rem) clamp(4rem, 8vw, 6rem);
   }
 
-  /* THE LINE: Repositioned coordinates dynamically follow the increased side padding */
   .about::before {
     content: "";
     display: block;
     position: absolute;
     
     top: 0;
-    left: clamp(2rem, 6vw, 4rem);  /* Expanded left buffer */
-    right: clamp(2rem, 6vw, 4rem); /* Expanded right buffer */
+    left: clamp(2rem, 6vw, 4rem);  
+    right: clamp(2rem, 6vw, 4rem); 
     
     height: 2px;
     background-color: #c90000;
     border-radius: 10px;
-    
-    /* Reset layout properties */
+  
     width: auto;
     filter: none;
     opacity: 1;
     z-index: 5;
   }
 
-  /* PORTRAIT REMOVED */
   .about-portrait-wrap {
     display: none !important;
   }
@@ -191,7 +186,6 @@
     line-height: 1.45;
   }
 
-  /* GLOW REMOVALS RETAINED */
   .about::after,
   .about-glow-portrait {
     display: none !important;
@@ -212,11 +206,9 @@
 
 @media (max-width: 480px) {
   .about {
-    /* Enhanced padding baseline for small handheld screens */
     padding: 4.5rem 2rem 3.5rem;
   }
 
-  /* Ensures the line snaps nicely to the 480px mobile viewport padding */
   .about::before {
     left: 2rem;
     right: 2rem;
@@ -227,7 +219,6 @@
   }
 
   .about-heading {
-    /* Hardcoded high static sizes to absolutely bypass clamp boundaries */
     font-size: 3.6rem !important; 
     line-height: 1.05 !important;
   }

@@ -65,7 +65,6 @@
   overflow: hidden;
   width: 100%;
   padding: 1rem 0;
-  /* Smoothly applies programmatic scroll manipulations alongside infinite animation track states */
   scroll-behavior: smooth; 
 }
 

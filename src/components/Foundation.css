@@ -86,7 +86,7 @@
   transform: translateX(6px) scale(1.02);
 }
 
-/* ── Single Certificate Canvas (No Stacking) ── */
+/* ── Single Certificate Canvas ── */
 .foundation-right-canvas,
 .certificate-single-container {
   overflow: visible !important;
@@ -133,9 +133,8 @@
   background: #0d0d0d;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.85);
   overflow: hidden;
-  /* Smoothed duration with a cinematic timing function */
   transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-  display: block; /* Modified to allow uninterrupted animations */
+  display: block; 
 }
 
 .certificate-solo-frame.solo-active {
@@ -150,7 +149,7 @@
   inset: 0;
   opacity: 0;
   z-index: 1;
-  transform: scale(0.985); /* Micro-scaling prevents jarring asset swaps */
+  transform: scale(0.985); 
   pointer-events: none;
 }
 
