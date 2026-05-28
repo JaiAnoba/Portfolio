@@ -121,6 +121,84 @@ const PROJECTS: ProjectDetail[] = [
       },
     ],
   },
+  {
+    title: 'Smart Solar',
+    subtitle: 'Smart Solar Decisions Landing Page',
+    description:
+      'Premium, dark-themed user interface designed to guide homeowners through estimating energy costs, viewing savings metrics, and calculating custom solar setups.',
+    stack: ['Figma', 'UI/UX Design'],
+    category: 'UI/UX Design',
+    detailDescription:
+      'Helping homeowners transition to renewable energy requires a clear, data-driven entry point. I designed the user interface for a solar service platform that puts key savings and system lifespans front and center. My focus was on shaping an easy user path for the built-in calculator, letting users find their ideal solar setup and see potential bill cuts in under a minute.',
+    images: [
+      {
+        src: '/images/s_home.png',
+        alt: 'Hero section of the Smart Solar Decisions landing page featuring a dark premium theme, a bold headline, and key energy savings metrics.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/s_setup.png',
+        alt: 'Interactive solar calculator step interface displaying custom fields and options for estimating home solar configurations.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/s_how.png',
+        alt: 'Process section showing a clean step-by-step layout explaining how the solar installation and calculation system works.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/s_contact.png',
+        alt: 'Contact and inquiry section with a minimal form designed to collect user requirements for final solar setup consulting.',
+        width: 1024,
+        height: 630,
+      },
+    ],
+  },
+  {
+    title: 'Video Editing Service',
+    subtitle: 'Video Editing Services Landing Page',
+    description:
+      'High-converting landing page layout designed to showcase professional video portfolios, highlight client proof metrics, and streamline the project upload process.',
+    stack: ['Figma', 'UI/UX Design'],
+    category: 'UI/UX Design',
+    detailDescription:
+      'Establishing creative trust immediately requires a compelling presentation. I designed a dark-themed landing page for a professional video editing service. The layout highlights key performance metrics and operational proof while placing prominent action buttons to streamline client onboarding and inquiry paths.',
+    images: [
+      {
+        src: '/images/v_home.png',
+        alt: 'Hero section of the video editing landing page featuring a dark theme, an editor at a workstation, key performance metrics, and a prominent upload button.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/v_featured.png',
+        alt: 'Featured portfolio section showcasing video project thumbnails in a clean grid layout to highlight editing quality.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/v_services.png',
+        alt: 'Services section detailing different video editing tiers, specialties, and professional capabilities offered to clients.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/v_works.png',
+        alt: 'Process workflow section mapping out the step-by-step client journey from initial video upload to final file delivery.',
+        width: 1024,
+        height: 630,
+      },
+      {
+        src: '/images/v_blogs.png',
+        alt: 'Resources and blog section displaying content cards with tips on video marketing, production, and editing strategies.',
+        width: 1024,
+        height: 630,
+      },
+    ],
+  },
 ]
 
 function getCardImage(project: ProjectDetail) {
@@ -142,7 +220,6 @@ export default function Projects() {
     null,
   )
 
-  // Override State Engines
   const [isManualMode, setIsManualMode] = useState<boolean>(false)
   const [manualIndex, setManualIndex] = useState<number>(0)
   const [slideDirection, setSlideDirection] = useState<'forward' | 'backward'>('forward')
