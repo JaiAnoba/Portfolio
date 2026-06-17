@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import ProjectDetailPanel, { type ProjectDetail } from './ProjectDetailPanel'
 import './Projects.css'
 
@@ -6,8 +6,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'Worxist',
     subtitle: 'Virtual Art Gallery System',
-    description:
-      'Web-based platform for artists and collectors to host digital exhibitions, manage auctions, and securely sell original artwork.',
+    description: 'Virtual art gallery for digital exhibitions, auctions, and artwork sales.',
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Vite', 'Three.js'],
     category: 'Front-End Development',
     detailDescription:
@@ -34,8 +33,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'SplitBill System',
     subtitle: 'Expense Management Utility',
-    description:
-      'Web application engineered to track shared expenses, calculate individual balances, and automate group bill-splitting.',
+    description: 'Tracks shared expenses and auto-calculates individual balances.',
     stack: ['React.js', 'TypeScript', 'Tailwind CSS', 'Vite'],
     category: 'Full-Stack',
     detailDescription:
@@ -50,8 +48,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'AirLux Odyssey',
     subtitle: 'Flight Booking System',
-    description:
-      'Responsive travel platform featuring intuitive search engines, dynamic ticket selection, and streamlined booking flows.',
+    description: 'Responsive travel platform with flight search and streamlined booking.',
     stack: ['HTML', 'CSS'],
     category: 'Full-Stack Development',
     detailDescription:
@@ -70,8 +67,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'Burgify',
     subtitle: 'Burger Recipe Application',
-    description:
-      'Mobile-focused app designed for exploring structured ingredients, custom creations, and step-by-step preparation guides.',
+    description: 'Mobile app for browsing burger recipes and saving custom creations.',
     stack: ['React Native', 'Expo', 'API', 'Firebase'],
     category: 'Front-End Development',
     detailDescription:
@@ -94,8 +90,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'Jewelry Foto Editor',
     subtitle: 'Service Platform Landing Page',
-    description:
-      'High-converting, responsive website built with a luxury aesthetic to showcase professional editing portfolios and drive client inquiries.',
+    description: 'Luxury landing page showcasing a professional photo editing portfolio.',
     stack: ['WordPress'],
     category: 'Front-End Development',
     detailDescription:
@@ -124,8 +119,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'Smart Solar',
     subtitle: 'Smart Solar Decisions Landing Page',
-    description:
-      'Premium, dark-themed user interface designed to guide homeowners through estimating energy costs, viewing savings metrics, and calculating custom solar setups.',
+    description: 'Dark-themed UI guiding homeowners through a custom solar calculator.',
     stack: ['Figma', 'UI/UX Design'],
     category: 'UI/UX Design',
     detailDescription:
@@ -160,8 +154,7 @@ const PROJECTS: ProjectDetail[] = [
   {
     title: 'Video Editing Service',
     subtitle: 'Video Editing Services Landing Page',
-    description:
-      'High-converting landing page layout designed to showcase professional video portfolios, highlight client proof metrics, and streamline the project upload process.',
+    description: 'Landing page highlighting editing portfolios and client onboarding flows.',
     stack: ['Figma', 'UI/UX Design'],
     category: 'UI/UX Design',
     detailDescription:
@@ -223,6 +216,7 @@ export default function Projects() {
   const [isManualMode, setIsManualMode] = useState<boolean>(false)
   const [manualIndex, setManualIndex] = useState<number>(0)
   const [slideDirection, setSlideDirection] = useState<'forward' | 'backward'>('forward')
+  const [activeDotIndex, setActiveDotIndex] = useState(0)
   
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -286,6 +280,7 @@ export default function Projects() {
     setHoveredSlideKey(null)
     setIsManualMode(true)
     setManualIndex(newTargetIndex)
+    setActiveDotIndex(newTargetIndex)
 
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
@@ -295,7 +290,7 @@ export default function Projects() {
       if (outer) {
         outer.scrollTo({ left: 0, behavior: 'instant' })
       }
-    }, 3000)
+    }, 6000)
   }
 
   const handleCarouselMouseMove = (e: React.MouseEvent) => {
@@ -333,33 +328,69 @@ export default function Projects() {
   }
 
   const handlePrevClick = () => {
-    let targetIndex = isManualMode ? manualIndex - 1 : PROJECTS.length - 1
-    
-    if (targetIndex < 0) {
-      targetIndex = 1
-      setSlideDirection('forward')
-    } else {
-      setSlideDirection('backward')
-    }
-    
+    const currentIndex = isManualMode ? manualIndex : activeDotIndex
+    const targetIndex =
+      (currentIndex - 1 + PROJECTS.length) % PROJECTS.length
+
+    setSlideDirection('backward')
     activateManualOverride(targetIndex)
   }
 
   const handleNextClick = () => {
-    let targetIndex = isManualMode ? manualIndex + 1 : 1
-    const maxIndex = PROJECTS.length - 1
+    const currentIndex = isManualMode ? manualIndex : activeDotIndex
+    const targetIndex = (currentIndex + 1) % PROJECTS.length
 
-    if (targetIndex > maxIndex) {
-      targetIndex = maxIndex - 1
-      setSlideDirection('backward')
-    } else {
-      setSlideDirection('forward')
-    }
-
+    setSlideDirection('forward')
     activateManualOverride(targetIndex)
   }
 
   const items = isManualMode ? PROJECTS : [...PROJECTS, ...PROJECTS]
+
+  const updateActiveDotFromCenter = useCallback(() => {
+    const outer = carouselRef.current?.querySelector(
+      '.projects-marquee-outer',
+    ) as HTMLElement | null
+    if (!outer) return
+
+    const outerRect = outer.getBoundingClientRect()
+    const outerCenterX = outerRect.left + outerRect.width / 2
+    const slides = outer.querySelectorAll<HTMLElement>('[data-project-index]')
+
+    let bestIndex = 0
+    let bestDistance = Infinity
+
+    slides.forEach((slide) => {
+      const rect = slide.getBoundingClientRect()
+      if (rect.width === 0) return
+
+      const slideCenter = rect.left + rect.width / 2
+      const distance = Math.abs(slideCenter - outerCenterX)
+      const index = Number(slide.dataset.projectIndex)
+
+      if (!Number.isNaN(index) && distance < bestDistance) {
+        bestDistance = distance
+        bestIndex = index
+      }
+    })
+
+    setActiveDotIndex(bestIndex)
+  }, [])
+
+  useEffect(() => {
+    if (isManualMode) {
+      setActiveDotIndex(manualIndex)
+      return
+    }
+
+    updateActiveDotFromCenter()
+    const interval = setInterval(updateActiveDotFromCenter, 120)
+    return () => clearInterval(interval)
+  }, [isManualMode, manualIndex, updateActiveDotFromCenter, items.length])
+
+  const handleDotClick = (index: number) => {
+    setSlideDirection(index >= activeDotIndex ? 'forward' : 'backward')
+    activateManualOverride(index)
+  }
 
   return (
     <section
@@ -407,6 +438,7 @@ export default function Projects() {
               return (
                 <article
                   key={slideKey}
+                  data-project-index={projectIndex}
                   className={[
                     'projects-slide',
                     cardImage.width && cardImage.height
@@ -437,22 +469,40 @@ export default function Projects() {
                   <div className="projects-slide-detail" aria-hidden={!isHovered}>
                     <div className="projects-slide-detail-backdrop" />
                     <div className="projects-slide-detail-copy">
-                      <h3 className="projects-slide-detail-title">
-                        {project.title}
-                      </h3>
-                      <p className="projects-slide-detail-desc">
-                        {project.description}
-                      </p>
-                      <button
-                        type="button"
-                        className="projects-slide-detail-link"
-                        onClick={(event) => {
-                          event.stopPropagation()
-                          openProjectPanel(projectIndex)
-                        }}
-                      >
-                        View Details &gt;
-                      </button>
+                      <div className="projects-slide-detail-backdrop" />
+                      <div className="projects-slide-detail-copy">
+                        <div className="projects-slide-detail-text">
+                          <h3 className="projects-slide-detail-title">
+                            {project.title}
+                          </h3>
+                          <p className="projects-slide-detail-desc">
+                            {project.description}
+                          </p>
+                        </div>
+                        <button
+                          type="button"
+                          className="projects-slide-detail-link"
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            openProjectPanel(projectIndex)
+                          }}
+                        >
+                          Details
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.25"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <polyline points="9 18 15 12 9 6" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </article>
@@ -460,29 +510,44 @@ export default function Projects() {
             })}
           </div>
         </div>
+      </div>
 
-        <div className="projects-nav-controls">
-          <button 
-            type="button" 
-            className="projects-nav-btn projects-nav-btn--prev" 
-            onClick={handlePrevClick}
-            aria-label="Previous projects"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="15 18 9 12 15 6"></polyline>
-            </svg>
-          </button>
-          <button 
-            type="button" 
-            className="projects-nav-btn projects-nav-btn--next" 
-            onClick={handleNextClick}
-            aria-label="Next projects"
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </button>
+      <div className="projects-pagination">
+        <button
+          type="button"
+          className="projects-nav-btn projects-nav-btn--prev"
+          onClick={handlePrevClick}
+          aria-label="Previous projects"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <div className="projects-dots" role="tablist" aria-label="Project slides">
+          {PROJECTS.map((project, index) => (
+            <button
+              key={project.title}
+              type="button"
+              role="tab"
+              className={`projects-dot${index === activeDotIndex ? ' is-active' : ''}`}
+              aria-label={`Go to ${project.title}`}
+              aria-selected={index === activeDotIndex}
+              onClick={() => handleDotClick(index)}
+            />
+          ))}
         </div>
+
+        <button
+          type="button"
+          className="projects-nav-btn projects-nav-btn--next"
+          onClick={handleNextClick}
+          aria-label="Next projects"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
 
       {activeProjectIndex !== null && (
