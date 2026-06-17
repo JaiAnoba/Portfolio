@@ -451,7 +451,7 @@ export default function Projects() {
                           openProjectPanel(projectIndex)
                         }}
                       >
-                        View Project &gt;
+                        View Details &gt;
                       </button>
                     </div>
                   </div>
