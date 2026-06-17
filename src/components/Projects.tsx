@@ -468,8 +468,6 @@ export default function Projects() {
 
                   <div className="projects-slide-detail" aria-hidden={!isHovered}>
                     <div className="projects-slide-detail-backdrop" />
-                    <div className="projects-slide-detail-copy">
-                      <div className="projects-slide-detail-backdrop" />
                       <div className="projects-slide-detail-copy">
                         <div className="projects-slide-detail-text">
                           <h3 className="projects-slide-detail-title">
@@ -503,7 +501,6 @@ export default function Projects() {
                           </svg>
                         </button>
                       </div>
-                    </div>
                   </div>
                 </article>
               )
