@@ -84,6 +84,15 @@
   }
 }
 
+@keyframes projects-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* ── Individual slide ── */
 .projects-slide {
   position: relative;
@@ -229,7 +238,7 @@
 .projects-slide--expanded {
   z-index: 20;
   transform: scale(1.05) translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.72);
 }
 
 .projects-slide--dimmed {
@@ -389,7 +398,28 @@
 
   .projects-marquee-track {
     gap: 1.5rem;
-    animation: marquee-scroll 40s linear infinite;
+    animation: none;
+  }
+
+  .projects-fade-viewport {
+    display: flex;
+    justify-content: center;
+    padding: 1rem clamp(1.25rem, 4vw, 2rem);
+  }
+
+  .projects-slide--compact {
+    width: min(100%, 580px);
+    animation: projects-fade-in 0.55s ease;
+  }
+
+  .projects-slide--compact.projects-slide--expanded {
+    transform: none;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.58);
+  }
+
+  .projects-slide--compact .projects-slide-detail {
+    transform: translateY(0);
+    pointer-events: auto;
   }
 
   .projects-slide {
@@ -420,7 +450,7 @@
   }
 
   .projects-slide-detail-title {
-    font-size: clamp(1.2rem, 3.2vw, 1.55rem);
+    font-size: clamp(1.55rem, 4.8vw, 2rem);
     margin: 0;
     padding-bottom: 0;
   }
@@ -458,6 +488,10 @@
     width: clamp(300px, 78vw, 520px);
   }
 
+  .projects-slide--compact {
+    width: min(100%, 520px);
+  }
+
   .projects-fade {
     display: none;
   }
@@ -473,6 +507,10 @@
 
   .projects-slide-detail-text {
     gap: 0.35rem;
+  }
+
+  .projects-slide-detail-title {
+    font-size: clamp(1.45rem, 5.2vw, 1.9rem);
   }
 
   .projects-pagination {
@@ -515,6 +553,10 @@
     width: clamp(280px, 88vw, 440px);
   }
 
+  .projects-slide--compact {
+    width: min(100%, 440px);
+  }
+
   .projects-fade {
     display: none;
   }
@@ -529,12 +571,16 @@
   }
 
   .projects-slide-detail-title {
-    font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+    font-size: clamp(1.35rem, 6vw, 1.75rem);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .projects-marquee-track {
+    animation: none;
+  }
+
+  .projects-slide--compact {
     animation: none;
   }
 }

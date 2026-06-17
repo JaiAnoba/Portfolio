@@ -205,7 +205,110 @@ function isInFadeZone(carousel: HTMLDivElement, mouseX: number): boolean {
   return mouseX < left + fadeWidth || mouseX > right - fadeWidth
 }
 
+const COMPACT_MEDIA_QUERY = '(max-width: 1024px)'
+
+function useCompactViewport() {
+  const [isCompact, setIsCompact] = useState(
+    () =>
+      typeof window !== 'undefined' &&
+      window.matchMedia(COMPACT_MEDIA_QUERY).matches,
+  )
+
+  useEffect(() => {
+    const media = window.matchMedia(COMPACT_MEDIA_QUERY)
+    const onChange = (event: MediaQueryListEvent) => setIsCompact(event.matches)
+
+    setIsCompact(media.matches)
+    media.addEventListener('change', onChange)
+    return () => media.removeEventListener('change', onChange)
+  }, [])
+
+  return isCompact
+}
+
+type ProjectSlideCardProps = {
+  project: ProjectDetail
+  projectIndex: number
+  isHovered?: boolean
+  isDimmed?: boolean
+  isCompact?: boolean
+  onMouseEnter?: (event: React.MouseEvent) => void
+  onOpenDetails: (index: number) => void
+}
+
+function ProjectSlideCard({
+  project,
+  projectIndex,
+  isHovered = false,
+  isDimmed = false,
+  isCompact = false,
+  onMouseEnter,
+  onOpenDetails,
+}: ProjectSlideCardProps) {
+  const cardImage = getCardImage(project)
+  const showDetail = isCompact || isHovered
+
+  return (
+    <article
+      data-project-index={projectIndex}
+      className={[
+        'projects-slide',
+        cardImage.width && cardImage.height ? 'projects-slide--natural' : '',
+        isCompact ? 'projects-slide--compact' : '',
+        showDetail ? 'projects-slide--expanded' : '',
+        isDimmed ? 'projects-slide--dimmed' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      style={
+        cardImage.width && cardImage.height
+          ? ({
+              '--slide-aspect': `${cardImage.width} / ${cardImage.height}`,
+            } as React.CSSProperties)
+          : undefined
+      }
+      onMouseEnter={onMouseEnter}
+    >
+      <img src={cardImage.src} alt={cardImage.alt} loading="lazy" />
+
+      <div className="projects-slide-detail" aria-hidden={!showDetail}>
+        <div className="projects-slide-detail-backdrop" />
+        <div className="projects-slide-detail-copy">
+          <div className="projects-slide-detail-text">
+            <h3 className="projects-slide-detail-title">{project.title}</h3>
+            <p className="projects-slide-detail-desc">{project.description}</p>
+          </div>
+          <button
+            type="button"
+            className="projects-slide-detail-link"
+            onClick={(event) => {
+              event.stopPropagation()
+              onOpenDetails(projectIndex)
+            }}
+          >
+            Details
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </article>
+  )
+}
+
 export default function Projects() {
+  const isCompactView = useCompactViewport()
   const trackRef = useRef<HTMLDivElement>(null)
   const carouselRef = useRef<HTMLDivElement>(null)
   const [hoveredSlideKey, setHoveredSlideKey] = useState<string | null>(null)
@@ -223,17 +326,17 @@ export default function Projects() {
 
   useEffect(() => {
     const track = trackRef.current
-    if (!track || isManualMode) return
+    if (!track || isManualMode || isCompactView) return
 
     track.style.animationPlayState =
       hoveredSlideKey !== null && activeProjectIndex === null
         ? 'paused'
         : 'running'
-  }, [hoveredSlideKey, activeProjectIndex, isManualMode])
+  }, [hoveredSlideKey, activeProjectIndex, isManualMode, isCompactView])
 
   // Handles smooth programmatic jumps during manual sliding layout
   useEffect(() => {
-    if (!isManualMode) return
+    if (!isManualMode || isCompactView) return
 
     const outer = carouselRef.current?.querySelector('.projects-marquee-outer') as HTMLDivElement
     const firstSlide = trackRef.current?.querySelector('.projects-slide')
@@ -242,11 +345,11 @@ export default function Projects() {
       const slideWidth = firstSlide.getBoundingClientRect().width + 24
       outer.scrollTo({ left: manualIndex * slideWidth, behavior: 'smooth' })
     }
-  }, [manualIndex, isManualMode])
+  }, [manualIndex, isManualMode, isCompactView])
 
   // Handles automated loops with direct bounce parameters while inside manual control window
   useEffect(() => {
-    if (!isManualMode) {
+    if (!isManualMode || isCompactView) {
       if (intervalRef.current) clearInterval(intervalRef.current)
       return
     }
@@ -274,7 +377,18 @@ export default function Projects() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [isManualMode, slideDirection])
+  }, [isManualMode, slideDirection, isCompactView])
+
+  // Gentle auto-advance on compact screens
+  useEffect(() => {
+    if (!isCompactView || activeProjectIndex !== null) return
+
+    const autoAdvance = setInterval(() => {
+      setActiveDotIndex((prevIndex) => (prevIndex + 1) % PROJECTS.length)
+    }, 5000)
+
+    return () => clearInterval(autoAdvance)
+  }, [isCompactView, activeProjectIndex])
 
   const activateManualOverride = (newTargetIndex: number) => {
     setHoveredSlideKey(null)
@@ -328,17 +442,35 @@ export default function Projects() {
   }
 
   const handlePrevClick = () => {
-    const currentIndex = isManualMode ? manualIndex : activeDotIndex
+    const currentIndex = isCompactView
+      ? activeDotIndex
+      : isManualMode
+        ? manualIndex
+        : activeDotIndex
     const targetIndex =
       (currentIndex - 1 + PROJECTS.length) % PROJECTS.length
+
+    if (isCompactView) {
+      setActiveDotIndex(targetIndex)
+      return
+    }
 
     setSlideDirection('backward')
     activateManualOverride(targetIndex)
   }
 
   const handleNextClick = () => {
-    const currentIndex = isManualMode ? manualIndex : activeDotIndex
+    const currentIndex = isCompactView
+      ? activeDotIndex
+      : isManualMode
+        ? manualIndex
+        : activeDotIndex
     const targetIndex = (currentIndex + 1) % PROJECTS.length
+
+    if (isCompactView) {
+      setActiveDotIndex(targetIndex)
+      return
+    }
 
     setSlideDirection('forward')
     activateManualOverride(targetIndex)
@@ -377,6 +509,8 @@ export default function Projects() {
   }, [])
 
   useEffect(() => {
+    if (isCompactView) return
+
     if (isManualMode) {
       setActiveDotIndex(manualIndex)
       return
@@ -385,16 +519,21 @@ export default function Projects() {
     updateActiveDotFromCenter()
     const interval = setInterval(updateActiveDotFromCenter, 120)
     return () => clearInterval(interval)
-  }, [isManualMode, manualIndex, updateActiveDotFromCenter, items.length])
+  }, [isCompactView, isManualMode, manualIndex, updateActiveDotFromCenter, items.length])
 
   const handleDotClick = (index: number) => {
+    if (isCompactView) {
+      setActiveDotIndex(index)
+      return
+    }
+
     setSlideDirection(index >= activeDotIndex ? 'forward' : 'backward')
     activateManualOverride(index)
   }
 
   return (
     <section
-      className={`projects${hoveredSlideKey !== null ? ' projects--hovered' : ''}`}
+      className={`projects${hoveredSlideKey !== null && !isCompactView ? ' projects--hovered' : ''}${isCompactView ? ' projects--compact' : ''}`}
       id="projects"
     >
       <div className="red-glow projects-glow" aria-hidden />
@@ -421,92 +560,49 @@ export default function Projects() {
         className="projects-carousel"
         ref={carouselRef}
         aria-label="Projects showcase"
-        onMouseMove={handleCarouselMouseMove}
-        onMouseLeave={handleCarouselLeave}
+        onMouseMove={isCompactView ? undefined : handleCarouselMouseMove}
+        onMouseLeave={isCompactView ? undefined : handleCarouselLeave}
       >
-        <div className="projects-fade projects-fade--left" aria-hidden />
-        <div className="projects-fade projects-fade--right" aria-hidden />
+        {!isCompactView && (
+          <>
+            <div className="projects-fade projects-fade--left" aria-hidden />
+            <div className="projects-fade projects-fade--right" aria-hidden />
+          </>
+        )}
 
-        <div className={`projects-marquee-outer ${isManualMode ? 'is-manual-mode' : ''}`}>
-          <div className={`projects-marquee-track ${isManualMode ? 'is-manual-sliding' : ''}`} ref={trackRef}>
-            {items.map((project, i) => {
-              const projectIndex = i % PROJECTS.length
-              const slideKey = `${project.title}-${i}`
-              const isHovered = hoveredSlideKey === slideKey
-              const cardImage = getCardImage(project)
-
-              return (
-                <article
-                  key={slideKey}
-                  data-project-index={projectIndex}
-                  className={[
-                    'projects-slide',
-                    cardImage.width && cardImage.height
-                      ? 'projects-slide--natural'
-                      : '',
-                    isHovered ? 'projects-slide--expanded' : '',
-                    hoveredSlideKey !== null && !isHovered
-                      ? 'projects-slide--dimmed'
-                      : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                  style={
-                    cardImage.width && cardImage.height
-                      ? ({
-                          '--slide-aspect': `${cardImage.width} / ${cardImage.height}`,
-                        } as React.CSSProperties)
-                      : undefined
-                  }
-                  onMouseEnter={(e) => handleSlideEnter(slideKey, e)}
-                >
-                  <img
-                    src={cardImage.src}
-                    alt={cardImage.alt}
-                    loading="lazy"
-                  />
-
-                  <div className="projects-slide-detail" aria-hidden={!isHovered}>
-                    <div className="projects-slide-detail-backdrop" />
-                      <div className="projects-slide-detail-copy">
-                        <div className="projects-slide-detail-text">
-                          <h3 className="projects-slide-detail-title">
-                            {project.title}
-                          </h3>
-                          <p className="projects-slide-detail-desc">
-                            {project.description}
-                          </p>
-                        </div>
-                        <button
-                          type="button"
-                          className="projects-slide-detail-link"
-                          onClick={(event) => {
-                            event.stopPropagation()
-                            openProjectPanel(projectIndex)
-                          }}
-                        >
-                          Details
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2.25"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden="true"
-                          >
-                            <polyline points="9 18 15 12 9 6" />
-                          </svg>
-                        </button>
-                      </div>
-                  </div>
-                </article>
-              )
-            })}
+        {isCompactView ? (
+          <div className="projects-fade-viewport">
+            <ProjectSlideCard
+              key={activeDotIndex}
+              project={PROJECTS[activeDotIndex]}
+              projectIndex={activeDotIndex}
+              isCompact
+              onOpenDetails={openProjectPanel}
+            />
           </div>
-        </div>
+        ) : (
+          <div className={`projects-marquee-outer ${isManualMode ? 'is-manual-mode' : ''}`}>
+            <div className={`projects-marquee-track ${isManualMode ? 'is-manual-sliding' : ''}`} ref={trackRef}>
+              {items.map((project, i) => {
+                const projectIndex = i % PROJECTS.length
+                const slideKey = `${project.title}-${i}`
+                const isHovered = hoveredSlideKey === slideKey
+
+                return (
+                  <ProjectSlideCard
+                    key={slideKey}
+                    project={project}
+                    projectIndex={projectIndex}
+                    isHovered={isHovered}
+                    isDimmed={hoveredSlideKey !== null && !isHovered}
+                    onMouseEnter={(e) => handleSlideEnter(slideKey, e)}
+                    onOpenDetails={openProjectPanel}
+                  />
+                )
+              })}
+            </div>
+          </div>
+        )}
       </div>
 
       <div className="projects-pagination">
