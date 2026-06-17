@@ -63,7 +63,7 @@ ul {
 }
 
 .gradient-text-vertical {
-  background: linear-gradient(180deg, #ffffff 10%, #c90000 100%, #4a0000 80%);
+  background: linear-gradient(180deg, #ffffff 20%, #c90000 80%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

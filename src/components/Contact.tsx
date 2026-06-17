@@ -29,7 +29,7 @@ export default function Contact() {
       <div className="contact-layout">
         <div className="contact-left">
           <h2 className="contact-title">
-            LET&apos;S BUILD <span className="gradient-text-vertical">SOMETHING</span>
+            LET&apos;S <span className="gradient-text-vertical">CONNECT</span>
           </h2>
 
           <p className="contact-desc">
@@ -55,6 +55,32 @@ export default function Contact() {
                 {copied && <span className="contact-copied">Copied!</span>}
               </button>
             </div>
+          </div>
+
+          <div className="contact-actions">
+            <a
+              href="/resume/ANUBA_RESUME.pdf"
+              download
+              className="contact-resume-btn"
+            >
+              Resume
+
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 3v12" />
+                <path d="M7 10l5 5 5-5" />
+                <path d="M5 21h14" />
+              </svg>
+            </a>
           </div>
         </div>
 
