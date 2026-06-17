@@ -315,14 +315,12 @@
 @media (min-width: 1025px) {
   .projects-nav-btn {
     opacity: 0;
-    pointer-events: none;
+    pointer-events: auto;
   }
 
-  .projects-pagination:has(.projects-dots:hover) .projects-nav-btn,
-  .projects-pagination:has(.projects-nav-btn:hover) .projects-nav-btn,
+  .projects-pagination:hover .projects-nav-btn,
   .projects-pagination:has(.projects-nav-btn:focus-visible) .projects-nav-btn {
     opacity: 0.7;
-    pointer-events: auto;
   }
 
   .projects-nav-btn:hover {
@@ -409,7 +407,7 @@
   }
 
   .projects-slide-detail {
-    min-height: 4.25rem;
+    min-height: 3.25rem;
   }
 
   .projects-slide-detail-copy {
@@ -424,13 +422,11 @@
   .projects-slide-detail-title {
     font-size: clamp(1.2rem, 3.2vw, 1.55rem);
     margin: 0;
+    padding-bottom: 0;
   }
 
   .projects-slide-detail-desc {
-    font-size: clamp(0.72rem, 1.8vw, 0.82rem);
-    line-height: 1.45;
-    -webkit-line-clamp: 2;
-    min-height: calc(0.82rem * 1.45 * 2);
+    display: none;
   }
 
   .projects-slide-detail-link {
@@ -467,7 +463,7 @@
   }
 
   .projects-slide-detail {
-    min-height: 4.5rem;
+    min-height: 3.5rem;
   }
 
   .projects-slide-detail-copy {
@@ -477,12 +473,6 @@
 
   .projects-slide-detail-text {
     gap: 0.35rem;
-  }
-
-  /* 1 row + ellipsis on tablet/mobile */
-  .projects-slide-detail-desc {
-    -webkit-line-clamp: 1;
-    min-height: auto;
   }
 
   .projects-pagination {
@@ -540,13 +530,6 @@
 
   .projects-slide-detail-title {
     font-size: clamp(1.1rem, 4.5vw, 1.4rem);
-  }
-
-  /* 1 row + ellipsis on small mobile */
-  .projects-slide-detail-desc {
-    font-size: clamp(0.65rem, 2.5vw, 0.72rem);
-    -webkit-line-clamp: 1;
-    min-height: auto;
   }
 }
 
