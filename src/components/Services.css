@@ -1,159 +1,254 @@
+/* ─── Services Section ────────────────────────────────────────────────── */
+
 .services {
   position: relative;
-  padding: 3rem 4rem;
-  background: #000000;
+  padding: 6rem 4rem 4rem;
+  background: #0a0000;
   text-align: center;
   width: 100%;
   box-sizing: border-box;
   overflow: hidden;
-} 
-
-.services-sub {
-  font-family: var(--font-hand);
-  color: #ffffff;
-  margin: 0 0 0.25rem 0;
-  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-  font-style: italic;
 }
 
+/* ─── Section label ("Services") ─────────────────────────────────────── */
+
+.services-sub {
+  font-family: var(--font-hand, 'Dancing Script', cursive);
+  color: #ffffff;
+  margin: 0 0 0.1rem 0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Section heading ("What I Offer") ───────────────────────────────── */
+
 .services-title {
-  font-family: var(--font-oswald), sans-serif;
-  font-weight: 700;
-  font-size: clamp(3.5rem, 7vw, 7rem);
-  line-height: 0.9;
-  margin: 0 0 4rem 0;
-  padding: 1px;
-  text-transform: uppercase;
-  background: linear-gradient(
-    180deg, 
-    #ffffff 40%, 
-    #a3a3a3 100%
-  );
+  font-family: var(--font-oswald, 'Oswald', sans-serif);
+  font-weight: 800;
+  font-size: clamp(3.8rem, 6vw, 5.5rem);
+  line-height: 0.95;
+  margin: 0 0 5rem 0;
+  text-transform: none;
+  background: linear-gradient(180deg, #ffffff 30%, #cc0000 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
 }
 
-/* ── 4-Card Responsive Grid Layout ── */
+/* ─── 4-column grid wrapper ──────────────────────────────────────────── */
+
 .services-container {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem 2rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0 0.5rem;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 1rem;
   box-sizing: border-box;
+  padding-top: 1rem;
 }
 
-/* ── Service Card Styles ── */
-.service-card {
+/* ─── Dashed arc SVG overlay ─────────────────────────────────────────── */
+
+.services-arcs {
+  position: absolute;
+  top: clamp(2.2rem, 3.5vw, 3rem);
+  left: 1rem;
+  right: 1rem;
+  width: calc(100% - 2rem);
+  height: 100px;
+  pointer-events: none;
+  z-index: 3;
+  overflow: visible;
+}
+
+/* ─── Individual service column ──────────────────────────────────────── */
+
+.service-item {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  min-height: 150px;
-  padding: 1.8rem 1.5rem 1.5rem;
-  border-radius: 12px;
-  box-sizing: border-box;
   text-align: center;
-  overflow: hidden;
-  background: linear-gradient(
-    to bottom,
-    rgba(101, 0, 0, 0.85) 0%, 
-    rgba(10, 10, 10, 1) 100%
-  );
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  padding: 0 0.5rem 1.5rem;
+  z-index: 2;
 }
 
-.service-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(139, 0, 0, 0.15);
-  
-  background: linear-gradient(
-    to bottom,
-    rgba(171, 0, 0, 0.717) 0%,
-    rgba(10, 10, 10, 1) 100%
+/* ─── Number clipping stage ──────────────────────────────────────────── */
+.service-number-stage {
+  --num-size: clamp(4rem, 7vw, 6rem);
+  position: relative;
+  width: 100%;
+  font-size: var(--num-size);
+  height: 0.57em;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+/* ─── The number itself ──────────────────────────────────────────────── */
+.service-number {
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: 1em;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  background: #FF5B5B;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  display: block;
+  user-select: none;
+  -webkit-text-stroke: 1.5px #FF5B5B;
+  paint-order: stroke fill;
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 15%,
+    rgba(0, 0, 0, 0.75) 35%,
+    rgba(0, 0, 0, 0.3) 52%,
+    rgba(0, 0, 0, 0.05) 68%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 15%,
+    rgba(0, 0, 0, 0.75) 35%,
+    rgba(0, 0, 0, 0.3) 52%,
+    rgba(0, 0, 0, 0.05) 68%,
+    transparent 100%
   );
 }
+
+/* ─── Service heading ────────────────────────────────────────────────── */
+.service-heading {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-weight: 800;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  color: #ffffff;
+  margin: 1.2rem 0 1rem 0;
+  line-height: 1.2;
+  text-transform: none;
+  letter-spacing: 0.01em;
+}
+
+.service-heading-line {
+  display: block;
+}
+
+/* ─── Service description ────────────────────────────────────────────── */
 
 .service-text {
-  font-family: var(--font-poppins), sans-serif;
-  font-size: clamp(0.8rem, 1vw, 0.9rem);
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-  max-width: 440px;
-  margin: 0;
+  font-family: var(--font-poppins, 'Poppins', sans-serif);
+  font-size: clamp(0.96rem, 1.2vw, 1.05rem);
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 240px;
+  margin: 0 auto;
+  padding-inline: 2rem;
 }
 
-.service-heading {
-  font-family: var(--font-hand);
-  font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 400;
-  color: #ffffff;
-  margin: 0.75rem 0 0 0; 
-  text-transform: lowercase;
-  letter-spacing: 0.02em;
-  line-height: 1.1;
-}
-/* ── Responsive Viewports ── */
-@media (max-width: 1000px) {
-  .services-title {
-    margin-bottom: 2.5rem;
-    font-size: 5rem;
-  }
-}
+/* ═══ Responsive breakpoints ═══════════════════════════════════════════ */
 
-/* Tablet Layout */
-@media (max-width: 900px) {
-  .services-container {
-    gap: 1.5rem;
-  }
-  
-  .service-card {
-    min-height: 240px;
-    padding: 2rem 1.5rem 1.5rem;
-  }
-
-  .services-title {
-    margin-bottom: 2.5rem;
-    font-size: 5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .services-title {
-    margin-bottom: 2.5rem;
-    font-size: 5rem;
-  }
-}
-
-/* Mobile Layout */
-@media (max-width: 680px) {
+@media (max-width: 1024px) {
   .services {
-    padding: 3rem 1rem;
+    padding: 3rem 2.5rem 4rem;
   }
 
-  .services-title {
-    margin-bottom: 2.5rem;
-    font-size: 4rem;
+  .services-arcs {
+    display: none;
   }
 
   .services-container {
-    grid-template-columns: 1fr; 
-    gap: 1.5rem;
-    max-width: 450px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 2rem;
+    max-width: 680px;
   }
 
-  .service-card {
-    min-height: auto;
-    padding: 2rem 1.5rem;
+  .service-number-stage {
+    --num-size: clamp(3.5rem, 10vw, 5.5rem);
+  }
+
+  .service-heading {
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+  }
+
+  .service-text {
+    max-width: 260px;
+    font-size: clamp(0.92rem, 1.4vw, 1.05rem);
   }
 }
 
+/* Large phone: still 2-column */
+@media (max-width: 768px) {
+  .services {
+    padding: 2.5rem 1.5rem 3.5rem;
+  }
+
+  .services-title {
+    font-size: clamp(3rem, 11vw, 5rem);
+    margin-bottom: 2rem;
+  }
+
+  .services-container {
+    gap: 2.5rem 1rem;
+    max-width: 560px;
+  }
+
+  .service-number-stage {
+    --num-size: clamp(3.2rem, 12vw, 5rem);
+  }
+
+  .service-heading {
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  }
+}
+
+/* Small phone: single column */
+@media (max-width: 500px) {
+  .services {
+    padding: 2.5rem 1rem 3rem;
+  }
+
+  .services-title {
+    font-size: clamp(2.8rem, 14vw, 4.5rem);
+  }
+
+  .services-container {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    max-width: 320px;
+  }
+
+  .service-number-stage {
+    --num-size: clamp(3.5rem, 16vw, 5rem);
+  }
+
+  .service-heading {
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
+  }
+
+  .service-text {
+    max-width: 290px;
+    font-size: clamp(0.92rem, 3.2vw, 1.05rem);
+  }
+}
+
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .service-card {
+  .service-item {
     transition: none;
   }
 }

@@ -1,12 +1,5 @@
 import './About.css'
 
-const SOCIALS = [
-  { name: 'GitHub', icon: '/images/github.png', href: 'https://github.com/JaiAnoba' },
-  { name: 'LinkedIn', icon: '/images/linkedin.png', href: 'https://www.linkedin.com/in/jamaica-anuba/' },
-  { name: 'Facebook', icon: '/images/facebook.png', href: 'https://www.facebook.com/jai.anoba/' },
-  { name: 'Instagram', icon: '/images/instagram.png', href: 'https://www.instagram.com/aa_im5/' },
-]
-
 export default function About() {
   return (
     <section className="about" id="about">
@@ -17,29 +10,35 @@ export default function About() {
         <p className="hand-label-sm about-location">Based in Cebu, PH</p>
 
         <h2 className="about-heading oswald-display">
-          HELLO, I&apos;M <span className="about-name">JAMAICA ANUBA</span>
+        BEYOND THE <span className="about-name">PORTFOLIO</span>
         </h2>
 
         <p className="about-text">
-          I am a UI/UX Designer and Web Developer driven by the pursuit of building smooth,
-          production-ready digital products. My approach to technology is strictly
-          multidisciplinary. I bridge the gap between high-fidelity aesthetics and functional web
-          engineering.
+          I design and build across UI/UX, front-end, web, and mobile app development, driven by the pursuit of creating smooth, production-ready digital products. 
+          My approach to technology is strictly multidisciplinary. I bridge the gap between high-fidelity aesthetics and functional engineering, end to end.
         </p>
 
-        <p className="about-text">
-          With my background in Information Technology, I can take a project from the very first
-          sketch to the final code. I spend my time mapping out user flows and prototyping in Figma,
-          then bringing those designs to life.
+        <p className="about-text about-tagline">
+          “No handoffs. No gaps. Just one person seeing it through, from concept to code.”
         </p>
 
-        <div className="about-socials">
-          {SOCIALS.map((s) => (
-            <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name}>
-              <img src={s.icon} alt="" width={34} height={34} />
-            </a>
-          ))}
-        </div>
+        <a href="#projects" className="about-projects-btn">
+          View Projects
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.25"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="7" y1="17" x2="17" y2="7" />
+            <polyline points="7 7 17 7 17 17" />
+          </svg>
+        </a>
       </div>
 
       <div className="about-portrait-wrap">
