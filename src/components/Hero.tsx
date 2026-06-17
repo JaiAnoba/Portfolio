@@ -1,23 +1,46 @@
 import './Hero.css'
+import HeroRoleTypewriter from './HeroRoleTypewriter'
+
+const SOCIALS = [
+  { name: 'GitHub', icon: '/images/github.png', href: 'https://github.com/JaiAnoba' },
+  { name: 'LinkedIn', icon: '/images/linkedin.png', href: 'https://www.linkedin.com/in/jamaica-anuba/' },
+  { name: 'Facebook', icon: '/images/facebook.png', href: 'https://www.facebook.com/jai.anoba/' },
+]
 
 export default function Hero() {
   return (
     <header className="hero" id="home">
-      <div className="red-glow hero-glow-left" aria-hidden />
-      <div className="red-glow hero-glow-right" aria-hidden />
+      <div className="hero-top">
+        <a href="#home" className="hero-logo" aria-label="Home">
+          <img src="/jai_logo.png" alt="Jai Anoba" />
+        </a>
 
-      <p className="hero-signature">Jai Anoba</p>
+        <nav className="hero-socials" aria-label="Social links">
+          {SOCIALS.map((s) => (
+            <a
+              key={s.name}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.name}
+            >
+              <img src={s.icon} alt="" width={38} height={38} />
+            </a>
+          ))}
+        </nav>
+      </div>
 
-      <div className="hero-stage">
-        <div className="hero-head">
-          <h1 className="hero-title oswald-display">PORTFOLIO</h1>
-          <p className="hero-tech">
-            <span>Figma | Expo | WordPress | PHP | HTML5 |</span>
-            <span>CSS3 | React JS & Native | Typescript</span>
-          </p>
+      <div className="hero-content">
+        <div className="hero-intro">
+          <p className="hero-greeting">Hello, I&apos;m</p>
+          <h1 className="hero-name">
+            <span>Jamaica</span>
+            <span>Anuba</span>
+          </h1>
         </div>
 
         <div className="hero-photo-wrap">
+          <div className="hero-photo-glow" aria-hidden />
           <img
             src="/images/grad-pic.jpg"
             alt="Jamaica Anuba in graduation cap and gown"
@@ -25,9 +48,9 @@ export default function Hero() {
           />
         </div>
 
-        <div className="hero-roles">
-          <span className="hero-role hero-role--left">ui/ux designer</span>
-          <span className="hero-role hero-role--right">web developer</span>
+        <div className="hero-title-block">
+          <p className="hero-role-label">Creative</p>
+          <HeroRoleTypewriter />
         </div>
       </div>
     </header>

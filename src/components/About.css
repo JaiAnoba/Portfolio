@@ -13,36 +13,18 @@
    BACKGROUND GLOW LAYER (Desktop)
 ========================= */
 
-/* Left glow (Desktop Default) */
-.about::before {
-  content: "";
-  position: absolute;
-  width: 360px;
-  height: 400px;
-  left: -18rem;
-  top: -10rem;
-
-  background: var(--red-dark);
-  opacity: 0.8;
-  filter: blur(130px);
-  border-radius: 50%;
-
-  z-index: 0;
-  pointer-events: none;
-}
-
 /* Right glow (Desktop Default) */
 .about::after {
   content: "";
   position: absolute;
-  width: 540px;
-  height: 310px;
+  width: 490px;
+  height: 280px;
   right: 2%;
-  top: 20%;
+  top: 24%;
 
   background: var(--red-dark);
   opacity: 0.85;
-  filter: blur(150px);
+  filter: blur(140px);
   border-radius: 50%;
 
   z-index: 0;
