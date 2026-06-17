@@ -458,7 +458,7 @@ export default function Projects() {
                         } as React.CSSProperties)
                       : undefined
                   }
-                  onMouseEnter={(e) => handleSlideEnter(slideKey, e)}
+                  onMouseEnter={() => setHoveredSlideKey(slideKey)}
                 >
                   <img
                     src={cardImage.src}
