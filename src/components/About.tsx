@@ -1,3 +1,4 @@
+import FadeContent from './FadeContent/FadeContent'
 import './About.css'
 
 export default function About() {
@@ -5,7 +6,7 @@ export default function About() {
     <section className="about" id="about">
       <div className="red-glow about-glow about-glow-portrait" aria-hidden />
 
-      <div className="about-content">
+      <FadeContent className="about-content" delay={0}>
         <div className="red-glow about-glow about-glow-name" aria-hidden />
         <p className="hand-label-sm about-location">Based in Cebu, PH</p>
 
@@ -39,9 +40,9 @@ export default function About() {
             <polyline points="7 7 17 7 17 17" />
           </svg>
         </a>
-      </div>
+      </FadeContent>
 
-      <div className="about-portrait-wrap">
+      <FadeContent className="about-portrait-wrap" delay={120}>
         <img
           src="/images/about pic.png"
           alt="Jamaica Anuba portrait"
@@ -50,7 +51,7 @@ export default function About() {
           height={1024}
           decoding="async"
         />
-      </div>
+      </FadeContent>
     </section>
   )
 }

@@ -1,3 +1,4 @@
+import FadeContent from './FadeContent/FadeContent'
 import './Services.css'
 
 const SERVICES_DATA = [
@@ -22,8 +23,12 @@ const SERVICES_DATA = [
 export default function Services() {
   return (
     <section className="services" id="services">
-      <p className="services-sub">Services</p>
-      <h2 className="services-title">What I Offer</h2>
+      <FadeContent>
+        <p className="services-sub">Services</p>
+      </FadeContent>
+      <FadeContent delay={80}>
+        <h2 className="services-title">What I Offer</h2>
+      </FadeContent>
 
       <div className="services-container">
         {/* Dashed arc connectors between items — rendered behind content */}
@@ -63,7 +68,7 @@ export default function Services() {
         </svg>
 
         {SERVICES_DATA.map((service, index) => (
-          <div key={index} className="service-item">
+          <FadeContent key={index} className="service-item" delay={140 + index * 90}>
             <div className="service-number-stage" aria-hidden="true">
               <span className="service-number">
                 {String(index + 1).padStart(2, '0')}
@@ -74,7 +79,7 @@ export default function Services() {
               <span className="service-heading-line">{service.titleLines[1]}</span>
             </h3>
             <p className="service-text">{service.text}</p>
-          </div>
+          </FadeContent>
         ))}
       </div>
     </section>

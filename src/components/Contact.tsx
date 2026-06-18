@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import FadeContent from './FadeContent/FadeContent'
 import './Contact.css'
 
 const EMAIL = 'JAMAICAANUBA3@GMAIL.COM'
@@ -27,7 +28,7 @@ export default function Contact() {
       <div className="red-glow contact-glow" aria-hidden />
 
       <div className="contact-layout">
-        <div className="contact-left">
+        <FadeContent className="contact-left">
           <h2 className="contact-title">
             LET&apos;S <span className="gradient-text-vertical">CONNECT</span>
           </h2>
@@ -82,9 +83,9 @@ export default function Contact() {
               </svg>
             </a>
           </div>
-        </div>
+        </FadeContent>
 
-        <div className="contact-right">
+        <FadeContent className="contact-right" delay={140}>
           <div className="contact-socials">
             {SOCIALS.map((s) => (
               <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.name}>
@@ -92,7 +93,7 @@ export default function Contact() {
               </a>
             ))}
           </div>
-        </div>
+        </FadeContent>
       </div>
 
       <div className="contact-footer">

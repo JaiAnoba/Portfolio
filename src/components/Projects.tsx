@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import FadeContent from './FadeContent/FadeContent'
 import ProjectDetailPanel, { type ProjectDetail } from './ProjectDetailPanel'
 import './Projects.css'
 
@@ -538,7 +539,7 @@ export default function Projects() {
     >
       <div className="red-glow projects-glow" aria-hidden />
 
-      <div className="projects-header">
+      <FadeContent className="projects-header">
         <span className="script-accent projects-accent" aria-hidden>
           <span className="pa-p">p</span>
           <span className="pa-r">r</span>
@@ -554,58 +555,60 @@ export default function Projects() {
           A showcase of web systems, responsive interfaces, and cross-platform
           mobile development.
         </p>
-      </div>
+      </FadeContent>
 
-      <div
-        className="projects-carousel"
-        ref={carouselRef}
-        aria-label="Projects showcase"
-        onMouseMove={isCompactView ? undefined : handleCarouselMouseMove}
-        onMouseLeave={isCompactView ? undefined : handleCarouselLeave}
-      >
-        {!isCompactView && (
-          <>
-            <div className="projects-fade projects-fade--left" aria-hidden />
-            <div className="projects-fade projects-fade--right" aria-hidden />
-          </>
-        )}
+      <FadeContent delay={120}>
+        <div
+          className="projects-carousel"
+          ref={carouselRef}
+          aria-label="Projects showcase"
+          onMouseMove={isCompactView ? undefined : handleCarouselMouseMove}
+          onMouseLeave={isCompactView ? undefined : handleCarouselLeave}
+        >
+          {!isCompactView && (
+            <>
+              <div className="projects-fade projects-fade--left" aria-hidden />
+              <div className="projects-fade projects-fade--right" aria-hidden />
+            </>
+          )}
 
-        {isCompactView ? (
-          <div className="projects-fade-viewport">
-            <ProjectSlideCard
-              key={activeDotIndex}
-              project={PROJECTS[activeDotIndex]}
-              projectIndex={activeDotIndex}
-              isCompact
-              onOpenDetails={openProjectPanel}
-            />
-          </div>
-        ) : (
-          <div className={`projects-marquee-outer ${isManualMode ? 'is-manual-mode' : ''}`}>
-            <div className={`projects-marquee-track ${isManualMode ? 'is-manual-sliding' : ''}`} ref={trackRef}>
-              {items.map((project, i) => {
-                const projectIndex = i % PROJECTS.length
-                const slideKey = `${project.title}-${i}`
-                const isHovered = hoveredSlideKey === slideKey
-
-                return (
-                  <ProjectSlideCard
-                    key={slideKey}
-                    project={project}
-                    projectIndex={projectIndex}
-                    isHovered={isHovered}
-                    isDimmed={hoveredSlideKey !== null && !isHovered}
-                    onMouseEnter={(e) => handleSlideEnter(slideKey, e)}
-                    onOpenDetails={openProjectPanel}
-                  />
-                )
-              })}
+          {isCompactView ? (
+            <div className="projects-fade-viewport">
+              <ProjectSlideCard
+                key={activeDotIndex}
+                project={PROJECTS[activeDotIndex]}
+                projectIndex={activeDotIndex}
+                isCompact
+                onOpenDetails={openProjectPanel}
+              />
             </div>
-          </div>
-        )}
-      </div>
+          ) : (
+            <div className={`projects-marquee-outer ${isManualMode ? 'is-manual-mode' : ''}`}>
+              <div className={`projects-marquee-track ${isManualMode ? 'is-manual-sliding' : ''}`} ref={trackRef}>
+                {items.map((project, i) => {
+                  const projectIndex = i % PROJECTS.length
+                  const slideKey = `${project.title}-${i}`
+                  const isHovered = hoveredSlideKey === slideKey
 
-      <div className="projects-pagination">
+                  return (
+                    <ProjectSlideCard
+                      key={slideKey}
+                      project={project}
+                      projectIndex={projectIndex}
+                      isHovered={isHovered}
+                      isDimmed={hoveredSlideKey !== null && !isHovered}
+                      onMouseEnter={(e) => handleSlideEnter(slideKey, e)}
+                      onOpenDetails={openProjectPanel}
+                    />
+                  )
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </FadeContent>
+
+      <FadeContent className="projects-pagination" delay={220}>
         <button
           type="button"
           className="projects-nav-btn projects-nav-btn--prev"
@@ -641,7 +644,7 @@ export default function Projects() {
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         </button>
-      </div>
+      </FadeContent>
 
       {activeProjectIndex !== null && (
         <ProjectDetailPanel

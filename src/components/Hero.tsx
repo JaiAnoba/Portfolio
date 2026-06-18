@@ -1,3 +1,4 @@
+import FadeContent from './FadeContent/FadeContent'
 import './Hero.css'
 import HeroRoleTypewriter from './HeroRoleTypewriter'
 
@@ -10,7 +11,7 @@ const SOCIALS = [
 export default function Hero() {
   return (
     <header className="hero" id="home">
-      <div className="hero-top">
+      <FadeContent className="hero-top" blur={false} distance={20} duration={800}>
         <a href="#home" className="hero-logo" aria-label="Home">
           <img src="/jai_logo.png" alt="Jai Anoba" />
         </a>
@@ -28,30 +29,30 @@ export default function Hero() {
             </a>
           ))}
         </nav>
-      </div>
+      </FadeContent>
 
       <div className="hero-content">
-        <div className="hero-intro">
+        <FadeContent className="hero-intro" delay={100}>
           <p className="hero-greeting">Hello, I&apos;m</p>
           <h1 className="hero-name">
             <span>Jamaica</span>
             <span>Anuba</span>
           </h1>
-        </div>
+        </FadeContent>
 
-        <div className="hero-photo-wrap">
+        <FadeContent className="hero-photo-wrap" delay={220}>
           <div className="hero-photo-glow" aria-hidden />
           <img
             src="/images/grad-pic.jpg"
             alt="Jamaica Anuba in graduation cap and gown"
             className="hero-photo"
           />
-        </div>
+        </FadeContent>
 
-        <div className="hero-title-block">
+        <FadeContent className="hero-title-block" delay={340}>
           <p className="hero-role-label">Creative</p>
           <HeroRoleTypewriter />
-        </div>
+        </FadeContent>
       </div>
     </header>
   )

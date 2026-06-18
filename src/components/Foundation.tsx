@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import FadeContent from './FadeContent/FadeContent'
 import './Foundation.css'
 
 type TabId = 'education' | 'certificates' | 'tech-stack'
@@ -189,7 +190,7 @@ export default function Foundation() {
     <section className="foundation" id="foundation">
       {/* <div className="foundation-glow" aria-hidden /> */}
 
-      <header className="foundation-header">
+      <FadeContent className="foundation-header">
         <h2 className="foundation-heading">
           Background <span className="foundation-heading-accent">Showcase</span>
         </h2>
@@ -197,25 +198,29 @@ export default function Foundation() {
           Explore my academic foundation, certifications, and core technical skills. This overview
           highlights the background and expertise I bring to every project.
         </p>
-      </header>
+      </FadeContent>
 
-      <nav className="foundation-tabs" aria-label="Background showcase tabs">
-        {TABS.map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            className={`foundation-tab${activeTab === tab.id ? ' foundation-tab--active' : ''}`}
-            onClick={() => setActiveTab(tab.id)}
-            aria-selected={activeTab === tab.id}
-            role="tab"
-          >
-            <TabIcon tab={tab.id} />
-            {tab.label}
-          </button>
-        ))}
-      </nav>
+      <FadeContent delay={100}>
+        <nav className="foundation-tabs" aria-label="Background showcase tabs">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`foundation-tab${activeTab === tab.id ? ' foundation-tab--active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+              aria-selected={activeTab === tab.id}
+              role="tab"
+            >
+              <TabIcon tab={tab.id} />
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+      </FadeContent>
 
-      <div
+      <FadeContent
+        delay={180}
+        role="tabpanel"
         className={`foundation-content${
           activeTab === 'certificates'
             ? ' foundation-content--certificates'
@@ -223,7 +228,6 @@ export default function Foundation() {
               ? ' foundation-content--education'
               : ''
         }`}
-        role="tabpanel"
       >
         <div key={activeTab} className="foundation-panel-animation">
           {activeTab === 'education' && (
@@ -309,15 +313,14 @@ export default function Foundation() {
             </div>
           )}
         </div>
+      </FadeContent>
 
-        {openCertificate && (
-          <CertificateLightbox
-            certificate={openCertificate}
-            onClose={() => setOpenCertificate(null)}
-          />
-        )}
-
-      </div>
+      {openCertificate && (
+        <CertificateLightbox
+          certificate={openCertificate}
+          onClose={() => setOpenCertificate(null)}
+        />
+      )}
     </section>
   )
 }
