@@ -167,12 +167,11 @@
 }
 
 .contact-socials a {
-  transition: transform 0.3s ease, filter 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .contact-socials a:hover {
   transform: translateY(-6px);
-  animation: float 1.5s ease-in-out infinite;
 }
 
 .contact-footer {

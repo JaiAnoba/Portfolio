@@ -28,6 +28,9 @@ interface TextTypeProps extends HTMLAttributes<HTMLElement> {
   textColors?: string[]
   variableSpeed?: { min: number; max: number }
   onSentenceComplete?: (sentence: string, index: number) => void
+  onTypeComplete?: (sentence: string, index: number) => void
+  holdAfterType?: boolean
+  mode?: 'type' | 'delete' | 'display'
   startOnVisible?: boolean
   reverseMode?: boolean
 }
@@ -49,6 +52,9 @@ export default function TextType({
   textColors = [],
   variableSpeed,
   onSentenceComplete,
+  onTypeComplete,
+  holdAfterType = false,
+  mode = 'type',
   startOnVisible = false,
   reverseMode = false,
   ...props
@@ -58,6 +64,7 @@ export default function TextType({
   const [isDeleting, setIsDeleting] = useState(false)
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [isVisible, setIsVisible] = useState(!startOnVisible)
+  const typeCompleteCalledRef = useRef(false)
   const cursorRef = useRef<HTMLSpanElement>(null)
   const containerRef = useRef<HTMLElement>(null)
 
@@ -91,6 +98,30 @@ export default function TextType({
   }, [startOnVisible])
 
   useEffect(() => {
+    typeCompleteCalledRef.current = false
+
+    const currentText = textArray[currentTextIndex] ?? ''
+
+    if (mode === 'display') {
+      setDisplayedText(currentText)
+      setCurrentCharIndex(currentText.length)
+      setIsDeleting(false)
+      return
+    }
+
+    if (mode === 'delete') {
+      setDisplayedText(currentText)
+      setCurrentCharIndex(currentText.length)
+      setIsDeleting(true)
+      return
+    }
+
+    setDisplayedText('')
+    setCurrentCharIndex(0)
+    setIsDeleting(false)
+  }, [mode, textArray, currentTextIndex])
+
+  useEffect(() => {
     if (!showCursor || !cursorRef.current) return
 
     gsap.set(cursorRef.current, { opacity: 1 })
@@ -104,7 +135,7 @@ export default function TextType({
   }, [showCursor, cursorBlinkDuration])
 
   useEffect(() => {
-    if (!isVisible) return
+    if (!isVisible || mode === 'display') return
 
     let timeout: ReturnType<typeof setTimeout>
 
@@ -115,9 +146,8 @@ export default function TextType({
       if (isDeleting) {
         if (displayedText === '') {
           setIsDeleting(false)
-          if (currentTextIndex === textArray.length - 1 && !loop) return
-
           onSentenceComplete?.(textArray[currentTextIndex], currentTextIndex)
+          if (currentTextIndex === textArray.length - 1 && !loop) return
 
           setCurrentTextIndex((prev) => (prev + 1) % textArray.length)
           setCurrentCharIndex(0)
@@ -136,12 +166,18 @@ export default function TextType({
           variableSpeed ? getRandomSpeed() : typingSpeed,
         )
       } else if (textArray.length >= 1) {
+        if (!typeCompleteCalledRef.current) {
+          onTypeComplete?.(textArray[currentTextIndex], currentTextIndex)
+          typeCompleteCalledRef.current = true
+        }
+
+        if (holdAfterType) return
         if (!loop && currentTextIndex === textArray.length - 1) return
         timeout = setTimeout(() => setIsDeleting(true), pauseDuration)
       }
     }
 
-    if (currentCharIndex === 0 && !isDeleting && displayedText === '') {
+    if (currentCharIndex === 0 && !isDeleting && displayedText === '' && mode === 'type') {
       timeout = setTimeout(executeTypingAnimation, initialDelay)
     } else {
       executeTypingAnimation()
@@ -163,6 +199,9 @@ export default function TextType({
     reverseMode,
     variableSpeed,
     onSentenceComplete,
+    onTypeComplete,
+    holdAfterType,
+    mode,
     getRandomSpeed,
   ])
 
