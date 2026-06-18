@@ -178,7 +178,7 @@
 .contact-footer {
   border-top: 1px solid rgba(255, 255, 255, 0.3);
   padding-top: 2rem;
-  margin-top: 7rem;
+  margin-top: 3rem; 
   display: flex;
   justify-content: space-between;
   align-items: center;
