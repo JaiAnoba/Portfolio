@@ -17,7 +17,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: clamp(0.75rem, 2vw, 1.5rem) var(--hero-pad-x) 0;
+  padding: clamp(1.5rem, 3.5vw, 2.5rem) var(--hero-pad-x) 0;
   position: relative;
   z-index: 10;
 }
