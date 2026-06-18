@@ -30,7 +30,7 @@ const ACHIEVEMENTS = [
   },
   {
     title: 'Leadership & Involvement',
-    description: 'Active student officer and consistent IT Congress participant.',
+    description: 'Held leadership roles as Mass Media Officer and Class Vice Mayor/Officer.',
   },
 ]
 
