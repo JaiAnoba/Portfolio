@@ -539,18 +539,19 @@
 
   .projects-accent {
     left: 1.25rem;
-    top: clamp(0.3rem, 1vw, 0.55rem);
+    top: clamp(0.2rem, 0.5vw, 0.2rem);
     font-size: clamp(2.15rem, 7.5vw, 3.5rem);
     letter-spacing: 0.36em !important;
   }
 
-  .pa-p { left: 2em !important; }
-  .pa-r { left: 0.13em !important; }
-  .pa-o { left: 0.16em !important; }
-  .pa-j { left: 0.12em !important; }
-  .pa-e { left: 0.13em !important; }
-  .pa-c { left: 0.13em !important; }
+  .pa-p { left: 0.1em !important; }
+  .pa-r { left: 0.12em !important; }
+  .pa-o { left: 0.14em !important; }
+  .pa-j { left: 0.1em !important; }
+  .pa-e { left: 0.1em !important; }
+  .pa-c { left: 0.1em !important; }
   .pa-t { top: 0.1em !important; right: 0.1em !important; }
+  .pa-s { left: 0.1em !important; }
 
   .projects-desc {
     font-size: 0.875rem;
