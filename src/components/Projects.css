@@ -539,9 +539,9 @@
 
   .projects-accent {
     left: 1.25rem;
-    top: clamp(-0.2rem, -0.5vw, -0.2rem);
+    top: clamp(-0.2rem, -0.5vw, -0.2rem) !important;
     font-size: clamp(2rem, 7vw, 3rem);
-    letter-spacing: 0.15em !important;
+    letter-spacing: 0.25em !important;
   }
 
   .pa-p { left: 0.1em !important; }
