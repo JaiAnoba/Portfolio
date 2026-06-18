@@ -127,6 +127,41 @@
   text-align: left;
 }
 
+.foundation-panel-animation {
+  animation: foundation-tab-content-in 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top center;
+}
+
+.foundation-panel-animation > * {
+  animation: foundation-tab-content-children-in 0.65s ease both;
+}
+
+@keyframes foundation-tab-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes foundation-tab-content-children-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .foundation-content--certificates {
   max-width: 1050px;
 }
@@ -239,6 +274,7 @@
   padding: 1.1rem 1.25rem;
   background: rgba(115, 1, 1, 0.2);
   border-radius: 8px;
+  animation: foundation-tab-item-in 0.55s ease both;
 }
 
 .foundation-achievement-icon {
@@ -298,6 +334,7 @@
   text-align: left;
   cursor: pointer;
   transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+  animation: foundation-tab-item-in 0.55s ease both;
 }
 
 .foundation-certificate-card:hover {
@@ -355,6 +392,7 @@
 
 .foundation-tech-section {
   text-align: center;
+  animation: foundation-tab-item-in 0.55s ease both;
 }
 
 .foundation-tech-label {
@@ -386,6 +424,62 @@
   border: none;
   border-radius: 5px;
   transition: border-color 0.25s ease, background-color 0.25s ease, transform 0.25s ease;
+  animation: foundation-tab-item-in 0.55s ease both;
+}
+
+@keyframes foundation-tab-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.foundation-achievements > li:nth-child(1),
+.foundation-certificates > li:nth-child(1),
+.foundation-tech-section:nth-child(1),
+.foundation-tech-grid > li:nth-child(1) {
+  animation-delay: 0.06s;
+}
+
+.foundation-achievements > li:nth-child(2),
+.foundation-certificates > li:nth-child(2),
+.foundation-tech-section:nth-child(2),
+.foundation-tech-grid > li:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.foundation-achievements > li:nth-child(3),
+.foundation-certificates > li:nth-child(3),
+.foundation-tech-section:nth-child(3),
+.foundation-tech-grid > li:nth-child(3) {
+  animation-delay: 0.18s;
+}
+
+.foundation-certificates > li:nth-child(4),
+.foundation-tech-grid > li:nth-child(4) {
+  animation-delay: 0.24s;
+}
+
+.foundation-certificates > li:nth-child(5),
+.foundation-tech-grid > li:nth-child(5) {
+  animation-delay: 0.3s;
+}
+
+.foundation-tech-grid > li:nth-child(6) {
+  animation-delay: 0.36s;
+}
+
+.foundation-tech-grid > li:nth-child(7) {
+  animation-delay: 0.42s;
+}
+
+.foundation-tech-grid > li:nth-child(8) {
+  animation-delay: 0.48s;
 }
 
 .foundation-tech-tile:hover {
@@ -567,5 +661,18 @@
 
   .foundation-tech-tile {
     width: clamp(64px, 18vw, 76px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .foundation-panel-animation,
+  .foundation-panel-animation > *,
+  .foundation-achievement-card,
+  .foundation-certificate-card,
+  .foundation-tech-section,
+  .foundation-tech-tile {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
   }
 }

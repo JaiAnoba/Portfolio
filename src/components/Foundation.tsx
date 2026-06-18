@@ -225,70 +225,90 @@ export default function Foundation() {
         }`}
         role="tabpanel"
       >
-        {activeTab === 'education' && (
-          <div className="foundation-education">
-            <div className="foundation-education-logos">
-              <div className="foundation-education-logos-glow" aria-hidden />
-              <img
-                src="/images/scc.png"
-                alt="St. Cecilia's College Cebu"
-                className="foundation-logo-scc"
-              />
-              <img
-                src="/images/itech.png"
-                alt="St. Cecilia's College College of Information Technology"
-                className="foundation-logo-itech"
-              />
-            </div>
-
-            <div className="foundation-education-details">
-              <div className="foundation-education-header">
-                <h3 className="foundation-degree">BS in Information Technology</h3>
-                <div className="foundation-education-meta">
-                  <p className="foundation-school">St. Cecilia&apos;s College-Cebu, Inc.</p>
-                  <span className="foundation-years">2022-2026</span>
-                </div>
+        <div key={activeTab} className="foundation-panel-animation">
+          {activeTab === 'education' && (
+            <div className="foundation-education">
+              <div className="foundation-education-logos">
+                <div className="foundation-education-logos-glow" aria-hidden />
+                <img
+                  src="/images/scc.png"
+                  alt="St. Cecilia's College Cebu"
+                  className="foundation-logo-scc"
+                />
+                <img
+                  src="/images/itech.png"
+                  alt="St. Cecilia's College College of Information Technology"
+                  className="foundation-logo-itech"
+                />
               </div>
 
-              <ul className="foundation-achievements">
-                {ACHIEVEMENTS.map((item) => (
-                  <li key={item.title} className="foundation-achievement-card">
-                    <span className="foundation-achievement-icon">
-                      <AchievementIcon />
-                    </span>
-                    <div className="foundation-achievement-text">
-                      <strong>{item.title}</strong>
-                      <p>{item.description}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'certificates' && (
-          <ul className="foundation-certificates">
-            {CERTIFICATES.map((cert, index) => (
-              <li key={cert.text}>
-                <button
-                  type="button"
-                  className="foundation-certificate-card"
-                  onClick={() => setOpenCertificate(cert)}
-                  aria-label={`View certificate: ${cert.text}`}
-                >
-                  <span className="foundation-cert-number">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <div className="foundation-cert-text">
-                    <strong>{cert.text}</strong>
-                    <p>St. Cecilia&apos;s College-Cebu, Inc. · 2026</p>
+              <div className="foundation-education-details">
+                <div className="foundation-education-header">
+                  <h3 className="foundation-degree">BS in Information Technology</h3>
+                  <div className="foundation-education-meta">
+                    <p className="foundation-school">St. Cecilia&apos;s College-Cebu, Inc.</p>
+                    <span className="foundation-years">2022-2026</span>
                   </div>
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+                </div>
+
+                <ul className="foundation-achievements">
+                  {ACHIEVEMENTS.map((item) => (
+                    <li key={item.title} className="foundation-achievement-card">
+                      <span className="foundation-achievement-icon">
+                        <AchievementIcon />
+                      </span>
+                      <div className="foundation-achievement-text">
+                        <strong>{item.title}</strong>
+                        <p>{item.description}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'certificates' && (
+            <ul className="foundation-certificates">
+              {CERTIFICATES.map((cert, index) => (
+                <li key={cert.text}>
+                  <button
+                    type="button"
+                    className="foundation-certificate-card"
+                    onClick={() => setOpenCertificate(cert)}
+                    aria-label={`View certificate: ${cert.text}`}
+                  >
+                    <span className="foundation-cert-number">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div className="foundation-cert-text">
+                      <strong>{cert.text}</strong>
+                      <p>St. Cecilia&apos;s College-Cebu, Inc. · 2026</p>
+                    </div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          {activeTab === 'tech-stack' && (
+            <div className="foundation-tech">
+              {TECH_SECTIONS.map((section) => (
+                <div key={section.label} className="foundation-tech-section">
+                  <h4 className="foundation-tech-label">{section.label}</h4>
+                  <ul className="foundation-tech-grid">
+                    {section.items.map((item) => (
+                      <li key={item.name} className="foundation-tech-tile">
+                        <img src={item.icon} alt="" className="foundation-tech-icon" />
+                        <span>{item.name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
 
         {openCertificate && (
           <CertificateLightbox
@@ -297,23 +317,6 @@ export default function Foundation() {
           />
         )}
 
-        {activeTab === 'tech-stack' && (
-          <div className="foundation-tech">
-            {TECH_SECTIONS.map((section) => (
-              <div key={section.label} className="foundation-tech-section">
-                <h4 className="foundation-tech-label">{section.label}</h4>
-                <ul className="foundation-tech-grid">
-                  {section.items.map((item) => (
-                    <li key={item.name} className="foundation-tech-tile">
-                      <img src={item.icon} alt="" className="foundation-tech-icon" />
-                      <span>{item.name}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
     </section>
   )
