@@ -539,7 +539,7 @@
 
   .projects-accent {
     left: 1.25rem;
-    top: clamp(-0.2rem, -0.5vw, -0.2rem) !important;
+    top: clamp(-0.1rem, -0.4vw, -0.1rem) !important;
     font-size: clamp(2rem, 7vw, 3rem);
     letter-spacing: 0.25em !important;
   }
@@ -549,9 +549,9 @@
   .pa-o { left: 0.14em !important; }
   .pa-j { left: 0.1em !important; }
   .pa-e { left: 0.1em !important; }
-  .pa-c { left: 0.1em !important; }
-  .pa-t { top: 0.1em !important; right: 0.1em !important; }
-  .pa-s { left: 0.1em !important; }
+  .pa-c { left: 0.05em !important; }
+  .pa-t { top: 0.05em !important; right: 0.1em !important; }
+  .pa-s { left: 0.05em !important; }
 
   .projects-desc {
     font-size: 0.8rem;
