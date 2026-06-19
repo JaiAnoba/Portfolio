@@ -11,7 +11,7 @@ export default function About() {
         <p className="hand-label-sm about-location">Based in Cebu, PH</p>
 
         <h2 className="about-heading oswald-display">
-        BEYOND THE <span className="about-name">PORTFOLIO</span>
+        BUILT WITH <span className="about-name">INTENTION</span>
         </h2>
 
         <p className="about-text">
