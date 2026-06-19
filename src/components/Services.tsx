@@ -8,7 +8,7 @@ const SERVICES_DATA = [
   },
   {
     titleLines: ['Front-End', 'Development'],
-    text: 'Building fast, smooth mobile and web tools using React Native and TypeScript.',
+    text: 'Building scalable, user-centric web applications using React, TypeScript, and Tailwind CSS.',
   },
   {
     titleLines: ['Web', 'Development'],
